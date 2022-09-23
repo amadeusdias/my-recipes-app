@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import AppRecipesContext from './AppRecipesContext';
 
 function AppRecipesProvider({ children }) {
+  const [userEmail, setUserEmail] = useState('');
+
+  const context = {
+    setUserEmail,
+    userEmail,
+  };
+
   return (
-    <AppRecipesContext.Provider value="">
+    <AppRecipesContext.Provider value={ context }>
       {children}
     </AppRecipesContext.Provider>
   );
