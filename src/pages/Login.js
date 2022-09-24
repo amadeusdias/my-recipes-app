@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import Header from '../components/Header';
 import AppRecipesContext from '../context/AppRecipesContext';
 
 function Login() {
@@ -41,6 +42,7 @@ function Login() {
 
   return (
     <div>
+      <Header />
       <input
         type="text"
         data-testid="email-input"

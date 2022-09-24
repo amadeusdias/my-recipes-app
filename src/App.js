@@ -21,6 +21,15 @@ function App() {
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={ Login } />
+            <Route path="/meals" />
+            <Route path="/drinks" />
+            <Route path="/meals/:id" />
+            <Route path="/drinks/:id" />
+            <Route path="/drinks/:id/in-progress" />
+            <Route path="/meals/:id/in-progress" />
+            <Route path="/profile" />
+            <Route path="/done-recipes" />
+            <Route path="/favorite-recipes" />
           </Switch>
         </BrowserRouter>
       </AppRecipesProvider>
