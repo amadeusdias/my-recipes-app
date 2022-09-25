@@ -1,43 +1,41 @@
 import React, { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import AppRecipesContext from '../context/AppRecipesContext';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 function Login() {
   const { setUserEmail } = useContext(AppRecipesContext);
-  // const [userInfo, setUserInfo] = useState({
-  //   email: '',
-  //   password: '',
-  //   disable: true,
-  // });
-  const [email, setEmail] = useState('');
-  const [userPassword, setUserPassword] = useState('');
+  const [, setLocalStorageEmail] = useLocalStorage('user');
+  const [, setLocalStorageMeal] = useLocalStorage('mealsToken');
+  const [, setLocalStorageDrinks] = useLocalStorage('drinksToken');
+  const [email, setEmail] = useState({
+    email: '',
+  });
+  const [password, setPassword] = useState('');
   const [disabled, setDisabled] = useState(true);
-
-  // function handleInput({ target }) {
-  //   const { name, value } = target;
-  //   setUserInfo({
-  //     ...userInfo,
-  //     [name]: value,
-  //   });
-  //   validateButton();
-  // }
+  const history = useHistory();
 
   function validateEmail() {
-    const verifyRegexEmail = /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/.test(email);
+    const verifyRegexEmail = /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/.test(email.email);
     return verifyRegexEmail;
   }
 
   function verifyPassword() {
     const passwordMinLength = 6;
-    return userPassword.length >= passwordMinLength;
+    return password.length >= passwordMinLength;
   }
 
   function validateButton() {
     setDisabled(!(validateEmail() && verifyPassword()));
   }
 
-  function handleClick() {
-    setUserEmail(email);
+  async function handleClick() {
+    await setUserEmail(email.email);
+    await setLocalStorageEmail(email);
+    await setLocalStorageMeal(1);
+    await setLocalStorageDrinks(1);
+    history.push('/meals');
   }
 
   return (
@@ -46,10 +44,10 @@ function Login() {
       <input
         type="text"
         data-testid="email-input"
-        // value={ userEmail }
+        value={ email.email }
         name="email"
         onChange={ (e) => {
-          setEmail(e.target.value);
+          setEmail({ ...email, email: e.target.value });
           validateButton();
         } }
       />
@@ -57,9 +55,9 @@ function Login() {
         type="text"
         data-testid="password-input"
         name="password"
-        // value={ userInfo.password }
+        value={ password }
         onChange={ (p) => {
-          setUserPassword(p.target.value);
+          setPassword(p.target.value);
           validateButton();
         } }
       />
