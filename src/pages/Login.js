@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
-import AppRecipesContext from '../context/AppRecipesContext';
 import { useHistory } from 'react-router-dom';
+import AppRecipesContext from '../context/AppRecipesContext';
 import Header from '../components/Header';
 import useLocalStorage from '../hooks/useLocalStorage';
 import '../css/login.css';
@@ -43,7 +43,7 @@ function Login() {
 
   return (
     <div className="container-login-page">
-    <Header />
+      <Header />
       <div className="container-top">
         <img src={ logo } alt="logoRecipesApp" />
       </div>
