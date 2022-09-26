@@ -72,7 +72,7 @@ function Login() {
           name="password"
           placeholder="Password"
           onChange={ (p) => {
-            setUserPassword(p.target.value);
+            setPassword(p.target.value);
             validateButton();
           } }
         />
