@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import AppRecipesContext from './AppRecipesContext';
 import { fetchMealsCards, fetchDrinksCards } from '../service/fetchCards';
-// import useFetch from '../hooks/useFetch';
 
 function AppRecipesProvider({ children }) {
-  // const { request, data } = useFetch();
   const [userEmail, setUserEmail] = useState({
     email: '',
   });
   const [drinksCards, setDrinkCards] = useState([]);
   const [mealsCards, setMealsCards] = useState([]);
+  const [foods, setFoods] = useState([]);
+  const [searchInput, setSearchInput] = useState('');
+  const [radioInput, setRadioInput] = useState('');
 
   useEffect(() => {
     async function mealsDataForCards() {
@@ -27,25 +29,57 @@ function AppRecipesProvider({ children }) {
     drinksDataForCards();
   }, []);
 
-  // useEffect(() => {
-  //   async function mealsDataForCards() {
-  //     const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-  //     await request(url);
-  //     const cards = await data ? data.meals.slice(ZERO, TWELVE) : null;
-  //     setMealsCards(cards);
-  //     console.log(mealsCards);
-  //   }
+  async function fetchApi(url) {
+    const request = await fetch(url);
+    const response = await request.json();
 
-  //   async function drinksDataForCards() {
-  //     const url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
-  //     await request(url);
-  //     const cards = data ? data.drinks.slice(ZERO, TWELVE) : null;
-  //     setDrinkCards(cards);
-  //   }
+    return response.meals;
+  }
 
-  //   mealsDataForCards();
-  //   drinksDataForCards();
-  // }, []);
+  const apiMeals = useCallback(async () => {
+    let api = [];
+    if (radioInput === 'ingredient') {
+      api = await fetchApi(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${searchInput}`);
+    }
+    if (radioInput === 'name') {
+      api = await fetchApi(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchInput}`);
+    }
+    if (radioInput === 'first-letter') {
+      if (radioInput.length > 1) {
+        return global.alert('Your search must have only 1 (one) character');
+      }
+      api = await fetchApi(`https://www.themealdb.com/api/json/v1/1/search.php?f=${searchInput}`);
+    }
+    console.log(api);
+    setFoods(api);
+  });
+
+  const apiDrinks = async () => {
+    let api = [];
+    if (radioInput === 'ingredient') {
+      api = await fetchApi(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${searchInput}`);
+    }
+    if (radioInput === 'name') {
+      api = await fetchApi(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchInput}`);
+    }
+    if (radioInput === 'first-letter') {
+      if (radioInput.length > 1) {
+        return global.alert('Your search must have only 1 (one) character');
+      }
+      api = await fetchApi(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${searchInput}`);
+    }
+    setFoods(api);
+  };
+
+  function getApiResponse() {
+    const location = useHistory().location.pathname;
+    if (location === /meals/i) {
+      apiMeals();
+    }
+    if (location === /drinks/i) {
+      apiDrinks();
+    }
+  }
 
   const context = {
     setUserEmail,
@@ -54,6 +88,13 @@ function AppRecipesProvider({ children }) {
     mealsCards,
     setDrinkCards,
     setMealsCards,
+    setFoods,
+    foods,
+    searchInput,
+    setSearchInput,
+    radioInput,
+    setRadioInput,
+    getApiResponse,
   };
 
   return (
