@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import AppRecipesContext from '../context/AppRecipesContext';
-import Header from '../components/Header';
 import useLocalStorage from '../hooks/useLocalStorage';
 import '../css/login.css';
 import logo from '../images/logoRecipesApp.png';
