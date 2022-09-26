@@ -1,22 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Header from '../components/Header';
 import Recipes from '../components/Recipes';
+import Header from '../components/Header';
 
-function Meals({ match: { path } }) {
+function Drinks({ match: { path } }) {
   return (
     <div>
-      <Header title="Meals" />
+      <Header title="Drinks" />
       <Recipes path={ path } />
-      {/* FALTA O FOOTER! */}
+      {/* FALTA O FOOTER AQUI! */}
     </div>
   );
 }
 
-Meals.propTypes = {
+Drinks.propTypes = {
   match: PropTypes.shape({
     path: PropTypes.string.isRequired,
   }),
 }.isRequired;
 
-export default Meals;
+export default Drinks;
