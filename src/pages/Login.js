@@ -1,8 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import Header from '../components/Header';
 import AppRecipesContext from '../context/AppRecipesContext';
 import useLocalStorage from '../hooks/useLocalStorage';
+import '../css/login.css';
+import logo from '../images/logoRecipesApp.png';
+import tomate from '../images/tomate.png';
 
 function Login() {
   const { setUserEmail } = useContext(AppRecipesContext);
@@ -39,36 +41,49 @@ function Login() {
   }
 
   return (
-    <div>
-      <Header />
-      <input
-        type="text"
-        data-testid="email-input"
-        value={ email.email }
-        name="email"
-        onChange={ (e) => {
-          setEmail({ ...email, email: e.target.value });
-          validateButton();
-        } }
-      />
-      <input
-        type="text"
-        data-testid="password-input"
-        name="password"
-        value={ password }
-        onChange={ (p) => {
-          setPassword(p.target.value);
-          validateButton();
-        } }
-      />
-      <button
-        type="button"
-        data-testid="login-submit-btn"
-        onClick={ handleClick }
-        disabled={ disabled }
-      >
-        Enter
-      </button>
+    <div className="container-login-page">
+      <div className="container-top">
+        <img src={ logo } alt="logoRecipesApp" />
+      </div>
+      <div className="tomate">
+        <img src={ tomate } alt="tomate" />
+      </div>
+      <div className="container-down">
+        <h1 className="Title-login">LOGIN</h1>
+        <input
+          className="input-login"
+          type="email"
+          data-testid="email-input"
+          // value={ userEmail }
+          name="email"
+          placeholder="E-mail"
+          onChange={ (e) => {
+            setEmail(e.target.value);
+            validateButton();
+          } }
+        />
+        <input
+          className="input-login"
+          type="password"
+          data-testid="password-input"
+          // value={ userInfo.password }
+          name="password"
+          placeholder="Password"
+          onChange={ (p) => {
+            setPassword(p.target.value);
+            validateButton();
+          } }
+        />
+        <button
+          className="btn-enter"
+          type="button"
+          data-testid="login-submit-btn"
+          onClick={ handleClick }
+          disabled={ disabled }
+        >
+          ENTER
+        </button>
+      </div>
     </div>
   );
 }
