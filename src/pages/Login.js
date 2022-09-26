@@ -5,7 +5,6 @@ import useLocalStorage from '../hooks/useLocalStorage';
 import '../css/login.css';
 import logo from '../images/logoRecipesApp.png';
 import tomate from '../images/tomate.png';
-import SearchBar from '../components/SearchBar';
 
 function Login() {
   const { setUserEmail } = useContext(AppRecipesContext);
@@ -43,7 +42,6 @@ function Login() {
 
   return (
     <div className="container-login-page">
-      <SearchBar />
       <div className="container-top">
         <img src={ logo } alt="logoRecipesApp" />
       </div>

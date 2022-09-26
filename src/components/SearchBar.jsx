@@ -62,7 +62,7 @@ function SearchBar() {
         <button
           type="button"
           data-testid="exec-search-btn"
-          onClick={ getApiResponse(useHistory.location.pathname) }
+          onClick={ getApiResponse }
         >
           SEARCH
         </button>
