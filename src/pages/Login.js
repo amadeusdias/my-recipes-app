@@ -43,7 +43,6 @@ function Login() {
 
   return (
     <div className="container-login-page">
-      <Header />
       <div className="container-top">
         <img src={ logo } alt="logoRecipesApp" />
       </div>
