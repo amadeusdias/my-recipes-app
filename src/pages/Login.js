@@ -54,11 +54,11 @@ function Login() {
           className="input-login"
           type="email"
           data-testid="email-input"
-          // value={ userEmail }
+          value={ email.email }
           name="email"
           placeholder="E-mail"
           onChange={ (e) => {
-            setEmail(e.target.value);
+            setEmail({ ...email, email: e.target.value });
             validateButton();
           } }
         />
@@ -66,7 +66,7 @@ function Login() {
           className="input-login"
           type="password"
           data-testid="password-input"
-          // value={ userInfo.password }
+          value={ password }
           name="password"
           placeholder="Password"
           onChange={ (p) => {
