@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import AppRecipesContext from './AppRecipesContext';
 
 function AppRecipesProvider({ children }) {
-  const [userEmail, setUserEmail] = useState('');
+  const [userEmail, setUserEmail] = useState({
+    email: '',
+  });
 
   const context = {
     setUserEmail,
