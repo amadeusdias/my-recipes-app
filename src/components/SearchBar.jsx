@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-// import { useHistory } from 'react-router-dom';
 import AppRecipesContext from '../context/AppRecipesContext';
 
 function SearchBar() {

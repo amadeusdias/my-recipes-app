@@ -1,10 +1,11 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import AppRecipesContext from './AppRecipesContext';
 import { fetchMealsCards, fetchDrinksCards } from '../service/fetchCards';
 
 function AppRecipesProvider({ children }) {
+  const location = useHistory();
   const [userEmail, setUserEmail] = useState({
     email: '',
   });
@@ -36,7 +37,7 @@ function AppRecipesProvider({ children }) {
     return response.meals;
   }
 
-  const apiMeals = useCallback(async () => {
+  const apiMeals = async () => {
     let api = [];
     if (radioInput === 'ingredient') {
       api = await fetchApi(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${searchInput}`);
@@ -52,7 +53,7 @@ function AppRecipesProvider({ children }) {
     }
     console.log(api);
     setFoods(api);
-  });
+  };
 
   const apiDrinks = async () => {
     let api = [];
@@ -72,11 +73,10 @@ function AppRecipesProvider({ children }) {
   };
 
   function getApiResponse() {
-    const location = useHistory().location.pathname;
-    if (location === /meals/i) {
+    if (location.location.pathname === /meals/i) {
       apiMeals();
     }
-    if (location === /drinks/i) {
+    if (location.location.pathname === /drinks/i) {
       apiDrinks();
     }
   }
