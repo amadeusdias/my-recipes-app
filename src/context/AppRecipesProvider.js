@@ -4,6 +4,7 @@ import AppRecipesContext from './AppRecipesContext';
 import { fetchMealsCards, fetchDrinksCards } from '../service/fetchCards';
 
 function AppRecipesProvider({ children }) {
+  const location = useHistory();
   const [userEmail, setUserEmail] = useState({
     email: '',
   });
