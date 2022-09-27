@@ -9,7 +9,7 @@ function AppRecipesProvider({ children }) {
   });
   const [drinksCards, setDrinkCards] = useState([]);
   const [mealsCards, setMealsCards] = useState([]);
-  const [foods, setFoods] = useState([]);
+  const [, setFoods] = useState([]);
   const [searchInput, setSearchInput] = useState('');
   const [radioInput, setRadioInput] = useState('');
 
