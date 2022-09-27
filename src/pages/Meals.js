@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Recipes from '../components/Recipes';
 import '../css/meals.css';
-// import SearchBar from '../components/SearchBar';
 
 function Meals({ match: { path } }) {
   return (
