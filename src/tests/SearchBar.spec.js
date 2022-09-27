@@ -1,8 +1,9 @@
-import { screen, waitFor } from '@testing-library/react';
+import { act, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import renderWithRouter from './helpers/renderWithRouter';
 import mockMeals from './helpers/dataByIngredientMeals';
+import mockDrinks from './helpers/dataByFirstLetterDrinks';
 
 const searchButton = 'search-top-btn';
 const searchedInput = 'search-input';
@@ -21,6 +22,14 @@ async function accessToMeals() {
 }
 
 describe('test component <SearchBar />', () => {
+  beforeEach(() => {
+    global.fetch = jest.fn().mockResolvedValue({
+      json: jest.fn().mockResolvedValue({
+        meals: mockMeals,
+        drinks: mockDrinks,
+      }),
+    });
+  });
   it('should inputs in screen', async () => {
     renderWithRouter(<App />);
 
@@ -38,14 +47,9 @@ describe('test component <SearchBar />', () => {
     expect(firstLetter).toBeInTheDocument();
   });
   it('should test if api is called with endpoint correct in meals', async () => {
-    global.fetch = jest.fn().mockResolvedValue({
-      json: jest.fn().mockResolvedValue({
-        meals: mockMeals,
-      }),
-    });
     renderWithRouter(<App />);
 
-    accessToMeals();
+    await accessToMeals();
     userEvent.click(screen.getByTestId(searchButton));
 
     const searchInput = screen.getByTestId(searchedInput);
@@ -61,28 +65,28 @@ describe('test component <SearchBar />', () => {
 
     expect(global.fetch).toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/filter.php?i=lamb');
   });
-  // it('should test if api is called with endpoint correct in drinks', async () => {
-  //   global.fetch = jest.fn().mockResolvedValue({
-  //     json: jest.fn().mockResolvedValue({
-  //       meals: mockDrinks,
-  //     }),
-  //   });
-  //   renderWithRouter(<App />);
-  //   accessToMeals();
+  it('should test if api is called with endpoint correct in drinks', async () => {
+    global.fetch = jest.fn().mockResolvedValue({
+      json: jest.fn().mockResolvedValue({
+        meals: mockDrinks,
+      }),
+    });
+    const { history } = renderWithRouter(<App />);
+    act(() => history.push('/drinks'));
 
-  //   userEvent.click(screen.getByTestId(searchButton));
+    userEvent.click(screen.getByTestId(searchButton));
 
-  //   const searchInput = screen.getByTestId(searchedInput);
-  //   const firstLetter = screen.getByTestId('first-letter-search-radio');
-  //   const buttonSearch = screen.getByTestId('exec-search-btn');
+    const searchInput = screen.getByTestId(searchedInput);
+    const firstLetter = screen.getByTestId('first-letter-search-radio');
+    const buttonSearch = screen.getByTestId('exec-search-btn');
 
-  //   expect(searchInput).toBeInTheDocument();
-  //   expect(first).toBeInTheDocument();
+    expect(searchInput).toBeInTheDocument();
+    expect(firstLetter).toBeInTheDocument();
 
-  //   userEvent.type(searchInput, 't');
-  //   userEvent.click(firstLetter);
-  //   userEvent.click(buttonSearch);
+    userEvent.type(searchInput, 't');
+    userEvent.click(firstLetter);
+    userEvent.click(buttonSearch);
 
-  //   expect(global.fetch).toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/filter.php?i=lamb');
-  // });
+    expect(global.fetch).toHaveBeenCalledWith('https://www.thecocktaildb.com/api/json/v1/1/search.php?f=t');
+  });
 });
