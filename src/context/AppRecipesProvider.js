@@ -23,7 +23,6 @@ function AppRecipesProvider({ children }) {
       const cards = await fetchMealsCards();
       // const cards12List = cards.meals.slice(ZERO, TWELVE);
       setMealsCards(cards);
-      // setAllMeals(cards.meals);
     }
 
     async function drinksDataForCards() {
