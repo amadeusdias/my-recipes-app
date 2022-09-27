@@ -1,0 +1,29 @@
+.container-recipe-card {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.recipe-card {
+  background: white;
+  border: 0.518px solid #b1b1b1;
+  border-radius: 5px;
+  height: 166.12px;
+  margin: 5px;
+  width: 163.2px;
+}
+
+.recipe-card img {
+  height: 134.85px;
+  width: 163.35px;
+}
+
+.recipe-card h2 {
+  color: #1a1b1c;
+  font-family: Epilogue , sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 12px;
+  margin-top: 9px; /* remover posteriormente */
+  text-align: center;
+}
