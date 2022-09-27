@@ -3,7 +3,6 @@ import userEvent from '@testing-library/user-event';
 import App from '../App';
 import renderWithRouter from './helpers/renderWithRouter';
 import mockMeals from './helpers/dataByIngredientMeals';
-import mockDrinks from './helpers/dataByFirstLetterDrinks';
 
 const searchButton = 'search-top-btn';
 const searchedInput = 'search-input';
