@@ -35,9 +35,6 @@ function Cards({ path }) {
     get5DrinksCategory();
   }, [filteredMeal]);
 
-  // console.log(list5Meals);
-  // console.log(list5Drinks);
-
   let render = [];
   if (!filteredMeal && !filteredDrinks) {
     if (path === '/meals') {
@@ -49,31 +46,18 @@ function Cards({ path }) {
     }
   }
 
-  // console.log(path);
-
-  // function handleClickFiltered({ target: { name } }) {
-  //   if (path === '/meals') {
-  //     fetchCategoryMeals(() => {
-  //       const filteredResult = list5Meals.filter((item) => item.strCategory === name).strCategory;
-  //       setFilteredMeal(filteredResult);
-  //     });
-  //     console.log(filteredMeal);
-  //   }
-  // }
-
   async function handleClickFiltered({ target: { name } }) {
     if (path === '/meals') {
-      const filteredResult = await fetchCategoryMeals(name);
-      setFilteredMeal(filteredResult.slice(ZERO, TWELVE));
-      // console.log(filteredMeal);
-      // console.log('Entrou em meal');
-      console.log(filteredResult);
+      if (filteredMeal.length === 0) {
+        const filteredResult = await fetchCategoryMeals(name);
+        setFilteredMeal(filteredResult.slice(ZERO, TWELVE));
+      } else setFilteredMeal('');
     }
     if (path === '/drinks') {
-      const filteredResult = await fetchCategoryDrinks(name);
-      setFilteredDrinks(filteredResult.slice(ZERO, TWELVE));
-      // console.log(filteredDrinks);
-      // console.log('entrou em drinks');
+      if (filteredDrinks.length === 0) {
+        const filteredResult = await fetchCategoryDrinks(name);
+        setFilteredDrinks(filteredResult.slice(ZERO, TWELVE));
+      } else setFilteredDrinks('');
     }
   }
 
