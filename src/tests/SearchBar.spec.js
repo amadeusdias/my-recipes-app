@@ -69,7 +69,6 @@ describe('test component <SearchBar />', () => {
   //     }),
   //   });
   //   renderWithRouter(<App />);
-
   //   accessToMeals();
 
   //   userEvent.click(screen.getByTestId(searchButton));
