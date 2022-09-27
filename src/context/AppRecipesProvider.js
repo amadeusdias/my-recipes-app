@@ -50,6 +50,7 @@ function AppRecipesProvider({ children }) {
       api = await fetchApi(`https://www.themealdb.com/api/json/v1/1/search.php?f=${searchInput}`);
     }
     setFoods(api.meals);
+    
   };
 
   const apiDrinks = async () => {

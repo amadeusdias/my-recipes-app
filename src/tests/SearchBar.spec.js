@@ -1,30 +1,55 @@
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import renderWithRouter from './helpers/renderWithRouter';
 
-function accessToMeals() {
-  const email = screen.getByPlaceholderText(/e-mail/i);
-  const password = screen.getByPlaceholderText(/password/i);
+const searchButton = 'search-top-btn';
+
+async function accessToMeals() {
+  const email = screen.getByTestId('email-input');
+  const password = screen.getByTestId('password-input');
   const button = screen.getByTestId('login-submit-btn');
 
   userEvent.type(email, 'test@test.com');
   userEvent.type(password, '123456789');
   userEvent.click(button);
+
+  await waitFor(() => expect(screen.getByTestId(searchButton)).toBeInTheDocument());
 }
 
 describe('test component <SearchBar />', () => {
-  it('Testing inputs', () => {
+  
+  it('should inputs in screen', async () => {
     renderWithRouter(<App />);
 
-    const email = screen.getByTestId('password-input');
-    const password = screen.getByTestId('email-input');
-    const button = screen.getByTestId('login-submit-btn');
+    await accessToMeals();
+    userEvent.click(screen.getByTestId(searchButton));
 
-    userEvent.type(email, 'test@test.com');
-    userEvent.type(password, '123456789');
-    userEvent.click(button);
+    const searchInput = screen.getByTestId('search-input');
+    const ingredientInput = screen.getByTestId('ingredient-search-radio');
+    const nameInput = screen.getByTestId('name-search-radio');
+    const firtLetter = screen.getByTestId('first-letter-search-radio');
 
-    screen.getByTestId('search-top-btn');
+    expect(searchInput).toBeInTheDocument();
+    expect(ingredientInput).toBeInTheDocument();
+    expect(nameInput).toBeInTheDocument();
+    expect(firtLetter).toBeInTheDocument();
+  });
+  it('should text if api is called with endpoint correct', async () => {
+    renderWithRouter(<App />);
+
+    accessToMeals();
+    userEvent.click(screen.getByTestId(searchButton));
+
+    const searchInput = screen.getByTestId('search-input');
+    const ingredientInput = screen.getByTestId('ingredient-search-radio');
+
+    expect(searchInput).toBeInTheDocument();
+    expect(ingredientInput).toBeInTheDocument();
+
+    userEvent.type(searchInput, 'lamb');
+    userEvent.click(ingredientInput);
+
+    expect(global.fetch).toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/filter.php?i=lamb');
   });
 });
