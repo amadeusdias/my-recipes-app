@@ -1,10 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AppRecipesContext from '../context/AppRecipesContext';
+import { fetchCategoryMeals, fetchCategoryDrinks } from '../service/fetchCards';
 import '../css/cards.css';
 
 const ZERO = 0;
 const FIVE = 5;
+const TWELVE = 12;
 
 function Cards({ path }) {
   const { drinksCards,
@@ -12,6 +14,8 @@ function Cards({ path }) {
   } = useContext(AppRecipesContext);
   const [list5Meals, setList5Meals] = useState([]);
   const [list5Drinks, setList5Drinks] = useState([]);
+  const [filteredMeal, setFilteredMeal] = useState('');
+  const [filteredDrinks, setFilteredDrinks] = useState('');
 
   useEffect(() => {
     async function get5MealsCategory() {
@@ -29,21 +33,54 @@ function Cards({ path }) {
     }
     get5MealsCategory();
     get5DrinksCategory();
-  }, []);
+  }, [filteredMeal]);
 
-  console.log(list5Meals);
+  // console.log(list5Meals);
   // console.log(list5Drinks);
 
   let render = [];
-  if (path === '/meals') {
-    render = mealsCards;
-  }
+  if (!filteredMeal && !filteredDrinks) {
+    if (path === '/meals') {
+      render = mealsCards;
+    }
 
-  if (path === '/drinks') {
-    render = drinksCards;
+    if (path === '/drinks') {
+      render = drinksCards;
+    }
   }
 
   // console.log(path);
+
+  // function handleClickFiltered({ target: { name } }) {
+  //   if (path === '/meals') {
+  //     fetchCategoryMeals(() => {
+  //       const filteredResult = list5Meals.filter((item) => item.strCategory === name).strCategory;
+  //       setFilteredMeal(filteredResult);
+  //     });
+  //     console.log(filteredMeal);
+  //   }
+  // }
+
+  async function handleClickFiltered({ target: { name } }) {
+    if (path === '/meals') {
+      const filteredResult = await fetchCategoryMeals(name);
+      setFilteredMeal(filteredResult.slice(ZERO, TWELVE));
+      // console.log(filteredMeal);
+      // console.log('Entrou em meal');
+      console.log(filteredResult);
+    }
+    if (path === '/drinks') {
+      const filteredResult = await fetchCategoryDrinks(name);
+      setFilteredDrinks(filteredResult.slice(ZERO, TWELVE));
+      // console.log(filteredDrinks);
+      // console.log('entrou em drinks');
+    }
+  }
+
+  function handleClickResetFilters() {
+    setFilteredMeal('');
+    setFilteredDrinks('');
+  }
 
   return (
     <div className="container-recipe-card">
@@ -54,11 +91,20 @@ function Cards({ path }) {
           <button
             type="button"
             data-testid={ `${item.strCategory}-category-filter` }
+            onClick={ handleClickFiltered }
+            name={ item.strCategory }
           >
             {item.strCategory}
           </button>
         </div>
       ))}
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ handleClickResetFilters }
+      >
+        All
+      </button>
       {list5Drinks && path === '/drinks' && list5Drinks.map((item, index) => (
         <div
           key={ index }
@@ -67,13 +113,15 @@ function Cards({ path }) {
           <button
             type="button"
             data-testid={ `${item.strCategory}-category-filter` }
+            onClick={ handleClickFiltered }
+            name={ item.strCategory }
           >
             {item.strCategory}
           </button>
         </div>
       ))}
 
-      {render.map((item, index) => (
+      {!filteredMeal && !filteredDrinks && render.map((item, index) => (
         <div
           key={ index }
           data-testid={ `${index}-recipe-card` }
@@ -88,6 +136,28 @@ function Cards({ path }) {
           <h2 data-testid={ `${index}-card-name` }>
             {path === '/meals' ? item.strMeal : item.strDrink}
           </h2>
+        </div>
+      ))}
+      {filteredMeal && filteredMeal.map((item, index) => (
+        <div key={ index } data-testid={ `${index}-recipe-card` }>
+          <img
+            src={ item.strMealThumb }
+            alt={ item.strMeal }
+            id={ item.idMeal }
+            data-testid={ `${index}-card-img` }
+          />
+          <h2 data-testid={ `${index}-card-name` }>{item.strMeal}</h2>
+        </div>
+      ))}
+      {filteredDrinks && filteredDrinks.map((item, index) => (
+        <div key={ index } data-testid={ `${index}-recipe-card` }>
+          <img
+            src={ item.strDrinkThumb }
+            alt={ item.strDrink }
+            id={ item.idDrink }
+            data-testid={ `${index}-card-img` }
+          />
+          <h2 data-testid={ `${index}-card-name` }>{item.strDrink}</h2>
         </div>
       ))}
     </div>
