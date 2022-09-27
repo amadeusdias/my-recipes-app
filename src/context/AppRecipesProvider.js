@@ -3,10 +3,15 @@ import PropTypes from 'prop-types';
 import AppRecipesContext from './AppRecipesContext';
 import { fetchMealsCards, fetchDrinksCards } from '../service/fetchCards';
 
+// const ZERO = 0;
+// const TWELVE = 12;
+
 function AppRecipesProvider({ children }) {
   const [userEmail, setUserEmail] = useState({
     email: '',
   });
+  // const [allMeals, setAllMeals] = useState([]);
+  // const [allDrinks, setAllDrinks] = useState([]);
   const [drinksCards, setDrinkCards] = useState([]);
   const [mealsCards, setMealsCards] = useState([]);
   const [, setFoods] = useState([]);
@@ -16,17 +21,24 @@ function AppRecipesProvider({ children }) {
   useEffect(() => {
     async function mealsDataForCards() {
       const cards = await fetchMealsCards();
+      // const cards12List = cards.meals.slice(ZERO, TWELVE);
       setMealsCards(cards);
+      // setAllMeals(cards.meals);
     }
 
     async function drinksDataForCards() {
       const cards = await fetchDrinksCards();
+      // const cards12List = cards.drinks.slice(ZERO, TWELVE);
       setDrinkCards(cards);
+      // setAllDrinks(cards.drinks);
     }
 
     mealsDataForCards();
     drinksDataForCards();
   }, []);
+
+  // console.log(allMeals);
+  // console.log(allDrinks);
 
   async function fetchApi(url) {
     const request = await fetch(url);
