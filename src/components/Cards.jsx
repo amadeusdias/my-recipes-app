@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AppRecipesContext from '../context/AppRecipesContext';
+import '../css/cards.css';
 
 const ZERO = 0;
 const FIVE = 5;
@@ -45,7 +46,7 @@ function Cards({ path }) {
   // console.log(path);
 
   return (
-    <div>
+    <div className="container-recipe-card">
       {list5Meals && path === '/meals' && list5Meals.map((item, index) => (
         <div
           key={ index }
@@ -71,10 +72,12 @@ function Cards({ path }) {
           </button>
         </div>
       ))}
+
       {render.map((item, index) => (
         <div
           key={ index }
           data-testid={ `${index}-recipe-card` }
+          className="recipe-card"
         >
           <img
             data-testid={ `${index}-card-img` }
