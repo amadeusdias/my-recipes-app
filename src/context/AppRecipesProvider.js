@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
 import AppRecipesContext from './AppRecipesContext';
 import { fetchMealsCards, fetchDrinksCards } from '../service/fetchCards';
 
 function AppRecipesProvider({ children }) {
-  const location = useHistory();
   const [userEmail, setUserEmail] = useState({
     email: '',
   });
   const [drinksCards, setDrinkCards] = useState([]);
   const [mealsCards, setMealsCards] = useState([]);
-  const [foods, setFoods] = useState([]);
+  const [, setFoods] = useState([]);
   const [searchInput, setSearchInput] = useState('');
   const [radioInput, setRadioInput] = useState('');
 
@@ -34,7 +32,7 @@ function AppRecipesProvider({ children }) {
     const request = await fetch(url);
     const response = await request.json();
 
-    return response.meals;
+    return response;
   }
 
   const apiMeals = async () => {
@@ -46,13 +44,12 @@ function AppRecipesProvider({ children }) {
       api = await fetchApi(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchInput}`);
     }
     if (radioInput === 'first-letter') {
-      if (radioInput.length > 1) {
+      if (searchInput.length > 1) {
         return global.alert('Your search must have only 1 (one) character');
       }
       api = await fetchApi(`https://www.themealdb.com/api/json/v1/1/search.php?f=${searchInput}`);
     }
-    console.log(api);
-    setFoods(api);
+    setFoods(api.meals);
   };
 
   const apiDrinks = async () => {
@@ -64,22 +61,13 @@ function AppRecipesProvider({ children }) {
       api = await fetchApi(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchInput}`);
     }
     if (radioInput === 'first-letter') {
-      if (radioInput.length > 1) {
+      if (searchInput.length > 1) {
         return global.alert('Your search must have only 1 (one) character');
       }
       api = await fetchApi(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${searchInput}`);
     }
-    setFoods(api);
+    setFoods(api.drinks);
   };
-
-  function getApiResponse() {
-    if (location.location.pathname === /meals/i) {
-      apiMeals();
-    }
-    if (location.location.pathname === /drinks/i) {
-      apiDrinks();
-    }
-  }
 
   const context = {
     setUserEmail,
@@ -88,13 +76,11 @@ function AppRecipesProvider({ children }) {
     mealsCards,
     setDrinkCards,
     setMealsCards,
-    setFoods,
-    foods,
     searchInput,
     setSearchInput,
-    radioInput,
     setRadioInput,
-    getApiResponse,
+    apiDrinks,
+    apiMeals,
   };
 
   return (

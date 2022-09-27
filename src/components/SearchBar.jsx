@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import AppRecipesContext from '../context/AppRecipesContext';
 import '../css/searchBar.css';
 
@@ -7,10 +8,23 @@ function SearchBar() {
     searchInput,
     setSearchInput,
     setRadioInput,
-    getApiResponse } = useContext(AppRecipesContext);
+    apiDrinks,
+    apiMeals,
+  } = useContext(AppRecipesContext);
 
   function handleRadioButton({ target }) {
     setRadioInput(target.value);
+  }
+
+  const location = useHistory().location.pathname;
+
+  function getApiResponse() {
+    if (location.includes('meals')) {
+      apiMeals();
+    }
+    if (location.includes('drinks')) {
+      apiDrinks();
+    }
   }
 
   return (
