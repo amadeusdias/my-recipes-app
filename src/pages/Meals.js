@@ -2,13 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Recipes from '../components/Recipes';
-import SearchBar from '../components/SearchBar';
+// import SearchBar from '../components/SearchBar';
 
 function Meals({ match: { path } }) {
   return (
     <div>
-      <SearchBar />
-      <Header title="Meals" />
+      <Header />
       <Recipes path={ path } />
       {/* FALTA O FOOTER! */}
     </div>

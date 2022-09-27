@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 
 function Header() {
   const [showSearchIcon, setShowSearchIcon] = useState(false);
   const [pageName, setPageName] = useState('');
+  const [showSearch, setShowSearch] = useState(false);
   const location = useLocation();
   const history = useHistory();
 
@@ -31,12 +33,21 @@ function Header() {
     }
   }, [location.pathname]);
 
+  function handleSearch() {
+    setShowSearch(!showSearch);
+  }
+
   const htmlSearchIcon = (
-    <img
-      src={ searchIcon }
-      alt="search-icon"
-      data-testid="search-top-btn"
-    />
+    <button
+      type="button"
+      onClick={ handleSearch }
+    >
+      <img
+        src={ searchIcon }
+        alt="search-icon"
+        data-testid="search-top-btn"
+      />
+    </button>
   );
   function handleClick() {
     history.push('/profile');
@@ -56,6 +67,7 @@ function Header() {
 
       </button>
       { showSearchIcon ? htmlSearchIcon : null }
+      {showSearch ? <SearchBar /> : null}
       <h2 data-testid="page-title">{pageName }</h2>
     </div>
   );
