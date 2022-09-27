@@ -4,7 +4,6 @@ import AppRecipesContext from './AppRecipesContext';
 import { fetchMealsCards, fetchDrinksCards } from '../service/fetchCards';
 
 function AppRecipesProvider({ children }) {
-  const location = useHistory();
   const [userEmail, setUserEmail] = useState({
     email: '',
   });
@@ -33,7 +32,7 @@ function AppRecipesProvider({ children }) {
     const request = await fetch(url);
     const response = await request.json();
 
-    return response.meals;
+    return response;
   }
 
   const apiMeals = async () => {
@@ -50,8 +49,7 @@ function AppRecipesProvider({ children }) {
       }
       api = await fetchApi(`https://www.themealdb.com/api/json/v1/1/search.php?f=${searchInput}`);
     }
-    console.log(api);
-    setFoods(api);
+    setFoods(api.meals);
   };
 
   const apiDrinks = async () => {
@@ -68,7 +66,7 @@ function AppRecipesProvider({ children }) {
       }
       api = await fetchApi(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${searchInput}`);
     }
-    setFoods(api);
+    setFoods(api.drinks);
   };
 
   const context = {
