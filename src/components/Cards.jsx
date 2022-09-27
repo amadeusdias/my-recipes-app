@@ -5,8 +5,6 @@ import AppRecipesContext from '../context/AppRecipesContext';
 function Cards({ path }) {
   const { drinksCards, mealsCards } = useContext(AppRecipesContext);
 
-  console.log(mealsCards);
-  console.log(path);
   let render = [];
 
   if (path === '/meals') {
