@@ -3,6 +3,9 @@ import { useLocation, useHistory } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
+import recipesApp from '../images/recipesApp.png';
+import headerIcon from '../images/headerIcon.png';
+import '../css/header.css';
 
 function Header() {
   const [showSearchIcon, setShowSearchIcon] = useState(false);
@@ -54,22 +57,28 @@ function Header() {
   }
 
   return (
-    <div>
-      <button
-        type="button"
-        onClick={ handleClick }
-      >
-        <img
-          src={ profileIcon }
-          alt="profile-icon"
-          data-testid="profile-top-btn"
-        />
+    <header>
+      <div className="container-top-bar">
+        <img src={ headerIcon } alt="headerIcon" />
+        <img src={ recipesApp } alt="recipesApp" />
+        <div>
+          <button
+            type="button"
+            onClick={ handleClick }
+          >
+            <img
+              src={ profileIcon }
+              alt="profile-icon"
+              data-testid="profile-top-btn"
+            />
 
-      </button>
-      { showSearchIcon ? htmlSearchIcon : null }
+          </button>
+          { showSearchIcon ? htmlSearchIcon : null }
+        </div>
+      </div>
       {showSearch ? <SearchBar /> : null}
-      <h2 data-testid="page-title">{pageName }</h2>
-    </div>
+      <h2 data-testid="page-title" className="title-page-title">{pageName }</h2>
+    </header>
   );
 }
 

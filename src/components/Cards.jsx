@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import AppRecipesContext from '../context/AppRecipesContext';
+import '../css/cards.css';
 
 function Cards({ path }) {
   const { drinksCards, mealsCards } = useContext(AppRecipesContext);
@@ -17,11 +18,12 @@ function Cards({ path }) {
     render = drinksCards;
   }
   return (
-    <div>
+    <div className="container-recipe-card">
       {render.map((item, index) => (
         <div
           key={ index }
           data-testid={ `${index}-recipe-card` }
+          className="recipe-card"
         >
           <img
             data-testid={ `${index}-card-img` }
