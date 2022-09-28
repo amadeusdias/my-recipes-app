@@ -8,7 +8,7 @@ function MealsDetails({ match: { params: { id } } }) {
 
   useEffect(() => {
     setFindMeal(mealsCards.filter((meal) => meal.idMeal === id));
-  }, [mealsCards]); //eslint-disable-line
+  }, [mealsCards]);
 
   return (
     <div>
