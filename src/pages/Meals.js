@@ -8,7 +8,7 @@ import '../css/meals.css';
 function Meals({ match: { path } }) {
   return (
     <div className="container-meals-page">
-      <Header />
+      <Header title="Meals" />
       <Recipes path={ path } />
       {/* FALTA O FOOTER! */}
     </div>
