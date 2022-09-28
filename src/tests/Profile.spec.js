@@ -1,8 +1,6 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-// import App from '../App';
-import AppRecipesProvider from '../context/AppRecipesProvider';
 import renderWithRouter from './helpers/renderWithRouter';
 import Profile from '../pages/Profile';
 
