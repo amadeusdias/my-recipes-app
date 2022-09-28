@@ -25,8 +25,6 @@ function Header() {
     const word2 = result[1];
     return `${word1.charAt(0).toUpperCase() + word1.substr(1)} 
     ${word2.charAt(0).toUpperCase() + word2.substr(1)}`;
-    // const format = tittle.charAt(0).toUpperCase() + tittle.substr(1);
-    // return format.replace('-', ' ');
   }
 
   useEffect(() => {

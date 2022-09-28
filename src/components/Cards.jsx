@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import AppRecipesContext from '../context/AppRecipesContext';
 import { fetchCategoryMeals, fetchCategoryDrinks } from '../service/fetchCards';
 import '../css/cards.css';
@@ -82,13 +83,7 @@ function Cards({ path }) {
           </button>
         </div>
       ))}
-      <button
-        type="button"
-        data-testid="All-category-filter"
-        onClick={ handleClickResetFilters }
-      >
-        All
-      </button>
+
       {list5Drinks && path === '/drinks' && list5Drinks.map((item, index) => (
         <div
           key={ index }
@@ -105,23 +100,37 @@ function Cards({ path }) {
         </div>
       ))}
 
-      {!filteredMeal && !filteredDrinks && render.map((item, index) => (
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ handleClickResetFilters }
+      >
+        All
+      </button>
+
+      {render.map((item, index) => (
         <div
           key={ index }
           data-testid={ `${index}-recipe-card` }
           className="recipe-card"
         >
-          <img
-            data-testid={ `${index}-card-img` }
-            src={ path === '/meals' ? item.strMealThumb : item.strDrinkThumb }
-            alt={ item }
-          />
+          <Link
+            to={ path === '/meals' ? `/meals/${item.idMeal}`
+              : `/drinks/${item.idDrink}` }
+          >
+            <img
+              data-testid={ `${index}-card-img` }
+              src={ path === '/meals' ? item.strMealThumb : item.strDrinkThumb }
+              alt={ item }
+            />
+          </Link>
 
           <h2 data-testid={ `${index}-card-name` }>
             {path === '/meals' ? item.strMeal : item.strDrink}
           </h2>
         </div>
       ))}
+
       {filteredMeal && filteredMeal.map((item, index) => (
         <div key={ index } data-testid={ `${index}-recipe-card` }>
           <img
@@ -133,6 +142,7 @@ function Cards({ path }) {
           <h2 data-testid={ `${index}-card-name` }>{item.strMeal}</h2>
         </div>
       ))}
+
       {filteredDrinks && filteredDrinks.map((item, index) => (
         <div key={ index } data-testid={ `${index}-recipe-card` }>
           <img
