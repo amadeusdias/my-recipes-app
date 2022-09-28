@@ -14,6 +14,7 @@ function RecipeDrinkInProgress() {
       <p data-testid="recipe-category">texto da categoria </p>
       <p data-testid="instructions">texto de instruções</p>
       <button type="button" data-testid="finish-recipe-btn">Finalizar</button>
+      {/* asssss */}
     </div>
   );
 }
