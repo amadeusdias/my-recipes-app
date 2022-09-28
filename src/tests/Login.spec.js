@@ -19,8 +19,4 @@ describe('Testa a tela de login', () => {
     expect(buttao).toBeEnabled();
     userEvent.click(buttao);
   });
-//   it('Testa a password', () => {
-//     const password = screen.getByTestId('password-input');
-//     expect(password).toBeInTheDocument();
-//   });
 });
