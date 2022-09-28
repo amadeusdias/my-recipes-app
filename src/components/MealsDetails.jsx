@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import AppRecipesContext from '../context/AppRecipesContext';
 import { useParams } from 'react-router-dom';
+import AppRecipesContext from '../context/AppRecipesContext';
 
 function MealsDetails({ match: { params: { id } } }) {
   const { mealsCards } = useContext(AppRecipesContext);
