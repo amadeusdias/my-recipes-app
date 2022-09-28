@@ -1,11 +1,13 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import App from '../App';
+// import App from '../App';
+import renderWithRouter from './helpers/renderWithRouter';
+import Login from '../pages/Login';
 
 describe('Testa a tela de login', () => {
   it('Testa a tela de login', () => {
-    render(<App />);
+    renderWithRouter(<Login />);
     const stringValida = 'dias@gmail.com';
     const numberValido = '1234567';
     const email = screen.getByTestId('email-input');
