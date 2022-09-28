@@ -28,3 +28,9 @@ export async function fetchCategoryDrinks(category) {
   const result = await response.json();
   return result.drinks;
 }
+
+// export async function fetchAPI(url) {
+//   const response = await fetchAPI(url);
+//   const result = await response.json();
+//   return result.drinks;
+// }
