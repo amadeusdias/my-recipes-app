@@ -16,13 +16,13 @@ function SearchBar() {
     setRadioInput(target.value);
   }
 
-  const location = useHistory().location.pathname;
+  const location = useHistory();
 
   function getApiResponse() {
-    if (location.includes('meals')) {
+    if (location.location.pathname.includes('meals')) {
       apiMeals();
     }
-    if (location.includes('drinks')) {
+    if (location.location.pathname.includes('drinks')) {
       apiDrinks();
     }
   }

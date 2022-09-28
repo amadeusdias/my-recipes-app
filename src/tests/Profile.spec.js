@@ -13,7 +13,7 @@ describe('Testa a tela de Profile', () => {
 
   it('verify if the email appears on screen and if the Done Recipes button is working', () => {
     const { history } = renderWithRouter(
-      <AppRecipesProvider><Profile /></AppRecipesProvider>,
+      <Profile />,
     );
 
     // const email = screen.getByRole('heading', { name: /batata@gma/i });
@@ -27,7 +27,7 @@ describe('Testa a tela de Profile', () => {
   });
 
   it('verify if favorite recipes button is working', () => {
-    const { history } = renderWithRouter(<AppRecipesProvider><Profile /></AppRecipesProvider>, ['/profile']);
+    const { history } = renderWithRouter(<Profile />, ['/profile']);
 
     const favBtn = screen.getByRole('button', { name: /favorite recipes/i });
 
@@ -37,7 +37,7 @@ describe('Testa a tela de Profile', () => {
   });
 
   it('verify if logout button is working', () => {
-    const { history } = renderWithRouter(<AppRecipesProvider><Profile /></AppRecipesProvider>, ['/profile']);
+    const { history } = renderWithRouter(<Profile />, ['/profile']);
 
     const logoutBtn = screen.getByRole('button', { name: /logout/i });
 
