@@ -1,6 +1,8 @@
 .container-recipe-card {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  width: 360px;
 }
 
 .recipe-card {
@@ -26,4 +28,63 @@
   line-height: 12px;
   margin-top: 9px; /* remover posteriormente */
   text-align: center;
+}
+
+.Beef-icon, .Breakfast-icon, .Chicken-icon, .Dessert-icon, .Goat-icon, .All-icon {
+  background-color: white;
+  background-repeat: no-repeat;
+  border: none;
+  height: 60px;
+  margin-left: 7px;
+  width: 50px;
+}
+
+.Shake-icon, .Cocktail-icon, .other-icon, .Cocoa-icon, .Ordinary {
+  background-color: white;
+  background-repeat: no-repeat;
+  border: none;
+  height: 60px;
+  margin-left: 7px;
+  width: 50px;
+}
+
+.Beef-icon {
+  background-image: url('../images/beef.png');
+}
+
+.Breakfast-icon {
+  background-image: url('../images/breakfast.png');
+  width: 54px;
+}
+
+.Chicken-icon {
+  background-image: url('../images/chicken.png');
+}
+
+.Dessert-icon {
+  background-image: url('../images/dessert.png');
+}
+
+.Goat-icon {
+  background-image: url('../images/lamb.png');
+}
+
+.All-icon {
+  background-image: url('../images/All.png');
+}
+
+.Cocoa-icon {
+  background-image: url('../images/cocoa.png');
+}
+
+.Shake-icon {
+  background-image: url('../images/shake.png');
+}
+
+.Cocktail-icon {
+  background-image: url('../images/cocktail.png');
+}
+
+.Ordinary {
+  background-image: url('../images/drink.png');
 }
