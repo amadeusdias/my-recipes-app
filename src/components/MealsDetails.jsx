@@ -22,7 +22,7 @@ function MealsDetails({ match: { params: { id } } }) {
     };
 
     fetchMealsDetails();
-  });
+  }, []); // eslint-disable-line
 
   console.log(returnApiMeals);
 

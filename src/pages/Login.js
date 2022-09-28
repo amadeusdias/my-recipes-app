@@ -33,7 +33,7 @@ function Login() {
   }
 
   async function handleClick() {
-    await setUserEmail(` ${email.email} `);
+    await setUserEmail(email.email);
     await setLocalStorageEmail(email);
     await setLocalStorageMeal(1);
     await setLocalStorageDrinks(1);
