@@ -8,7 +8,7 @@ function DrinksDetails({ match: { params: { id } } }) {
 
   useEffect(() => {
     setFindDrinks(drinksCards.filter((drink) => drink.idDrink === id));
-  }, [drinksCards]); //eslint-disable-line
+  }, [drinksCards]);
 
   return (
     <div>
