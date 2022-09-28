@@ -8,7 +8,7 @@ function Drinks({ match: { path } }) {
     <div>
       <Header title="Drinks" />
       <Recipes path={ path } />
-      {/* FALTA O FOOTER AQUI! */}
+      {/* FALTA O FOOTER AQUI!! */}
     </div>
   );
 }
