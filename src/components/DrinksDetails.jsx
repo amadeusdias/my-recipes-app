@@ -13,7 +13,7 @@ function DrinksDetails({ match: { params: { id } } }) {
 
   useEffect(() => {
     setFindDrinks(drinksCards.filter((drink) => drink.idDrink === id));
-  }, [drinksCards]);//eslint-disable-line
+  }, [drinksCards]); // eslint-disable-line
 
   useEffect(() => {
     const fetchDrinksDetails = async () => {
@@ -25,7 +25,7 @@ function DrinksDetails({ match: { params: { id } } }) {
     };
 
     fetchDrinksDetails();
-  }, []); //eslint-disable-line
+  }, []); // eslint-disable-line
 
   console.log(returnApiDrinks);
 
