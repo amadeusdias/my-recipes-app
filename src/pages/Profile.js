@@ -14,9 +14,14 @@ function Profile() {
     history.push('/done-recipes');
   }
 
-  // function handleClickToFavoriteRecipes() {
-  //   history.push('/favorite-recipes');
-  // }
+  function handleClickToFavoriteRecipes() {
+    history.push('/favorite-recipes');
+  }
+
+  function handleClickToLogout() {
+    window.localStorage.clear();
+    history.push('/');
+  }
 
   return (
     <div>
@@ -34,7 +39,7 @@ function Profile() {
       <button
         type="button"
         data-testid="profile-favorite-btn"
-        // onClick={ handleClickToFavoriteRecipes }
+        onClick={ handleClickToFavoriteRecipes }
       >
         Favorite Recipes
 
@@ -43,6 +48,7 @@ function Profile() {
       <button
         type="button"
         data-testid="profile-logout-btn"
+        onClick={ handleClickToLogout }
       >
         Logout
       </button>

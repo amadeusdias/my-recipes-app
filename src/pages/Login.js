@@ -8,7 +8,7 @@ import tomate from '../images/tomate.png';
 
 function Login() {
   const { setUserEmail } = useContext(AppRecipesContext);
-  const [, setLocalStorageEmail] = useLocalStorage('user');
+  const [, setLocalStorageEmail] = useLocalStorage('user', { email: '' });
   const [, setLocalStorageMeal] = useLocalStorage('mealsToken');
   const [, setLocalStorageDrinks] = useLocalStorage('drinksToken');
   const [email, setEmail] = useState({
@@ -33,7 +33,7 @@ function Login() {
   }
 
   async function handleClick() {
-    await setUserEmail(email.email);
+    await setUserEmail(` ${email.email} `);
     await setLocalStorageEmail(email);
     await setLocalStorageMeal(1);
     await setLocalStorageDrinks(1);
