@@ -8,6 +8,7 @@ import '../css/cards.css';
 const ZERO = 0;
 const FIVE = 5;
 const TWELVE = 12;
+// asdasdasd
 
 function Cards({ path }) {
   const { drinksCards,
