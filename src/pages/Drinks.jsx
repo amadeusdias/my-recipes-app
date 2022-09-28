@@ -1,14 +1,15 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import Recipes from '../components/Recipes';
+import React from 'react';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
+import Recipes from '../components/Recipes';
 
 function Drinks({ match: { path } }) {
   return (
     <div>
       <Header title="Drinks" />
       <Recipes path={ path } />
-      {/* FALTA O FOOTER AQUI! */}
+      <Footer />
     </div>
   );
 }

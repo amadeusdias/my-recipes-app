@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Recipes from '../components/Recipes';
 import '../css/meals.css';
+import Footer from '../components/Footer';
 
 function Meals({ match: { path } }) {
   return (
     <div className="container-meals-page">
       <Header title="Meals" />
       <Recipes path={ path } />
-      {/* FALTA O FOOTER! */}
+      <Footer />
     </div>
   );
 }

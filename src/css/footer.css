@@ -1,0 +1,6 @@
+.footer {
+  align-items: center;
+  display: flex;
+  margin-bottom: 0;
+  position: fixed;
+}
