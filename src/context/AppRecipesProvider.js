@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
+import { fetchDrinksCards, fetchMealsCards } from '../service/fetchCards';
 import AppRecipesContext from './AppRecipesContext';
-import { fetchMealsCards, fetchDrinksCards } from '../service/fetchCards';
 
 function AppRecipesProvider({ children }) {
   const [userEmail, setUserEmail] = useState({

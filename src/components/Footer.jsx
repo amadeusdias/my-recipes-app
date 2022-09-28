@@ -16,7 +16,7 @@ function Footer() {
   }, []);
   return (
     renderFooter && (
-      <footer id="footer" data-testid="footer">
+      <footer className="footer" data-testid="footer">
         <Link to="/drinks">
           <button type="button">
             <img
