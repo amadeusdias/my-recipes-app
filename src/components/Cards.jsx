@@ -70,17 +70,28 @@ function Cards({ path }) {
 
   return (
     <div className="container-recipe-card">
+
+      <button
+        className="All-icon"
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ handleClickResetFilters }
+      >
+        {/* All */}
+      </button>
+
       {list5Meals && path === '/meals' && list5Meals.map((item, index) => (
         <div
           key={ index }
         >
           <button
+            className={ `${item.strCategory}-icon` }
             type="button"
             data-testid={ `${item.strCategory}-category-filter` }
             onClick={ handleClickFiltered }
             name={ item.strCategory }
           >
-            {item.strCategory}
+            {/* {item.strCategory} */}
           </button>
         </div>
       ))}
@@ -91,23 +102,16 @@ function Cards({ path }) {
           id=""
         >
           <button
+            className={ `${item.strCategory}-icon` }
             type="button"
             data-testid={ `${item.strCategory}-category-filter` }
             onClick={ handleClickFiltered }
             name={ item.strCategory }
           >
-            {item.strCategory}
+            {/* {item.strCategory} */}
           </button>
         </div>
       ))}
-
-      <button
-        type="button"
-        data-testid="All-category-filter"
-        onClick={ handleClickResetFilters }
-      >
-        All
-      </button>
 
       {render.map((item, index) => (
         <div
@@ -133,7 +137,7 @@ function Cards({ path }) {
       ))}
 
       {filteredMeal && filteredMeal.map((item, index) => (
-        <div key={ index } data-testid={ `${index}-recipe-card` }>
+        <div key={ index } data-testid={ `${index}-recipe-card` } className="recipe-card">
           <img
             src={ item.strMealThumb }
             alt={ item.strMeal }
@@ -145,7 +149,7 @@ function Cards({ path }) {
       ))}
 
       {filteredDrinks && filteredDrinks.map((item, index) => (
-        <div key={ index } data-testid={ `${index}-recipe-card` }>
+        <div key={ index } data-testid={ `${index}-recipe-card` } className="recipe-card">
           <img
             src={ item.strDrinkThumb }
             alt={ item.strDrink }

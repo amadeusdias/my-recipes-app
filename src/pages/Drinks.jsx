@@ -3,10 +3,11 @@ import React from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Recipes from '../components/Recipes';
+import '../css/drinks.css';
 
 function Drinks({ match: { path } }) {
   return (
-    <div>
+    <div className="container-drinks-page">
       <Header title="Drinks" />
       <Recipes path={ path } />
       <Footer />

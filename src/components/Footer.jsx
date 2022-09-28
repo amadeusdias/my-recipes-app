@@ -17,24 +17,26 @@ function Footer() {
   return (
     renderFooter && (
       <footer className="footer" data-testid="footer">
-        <Link to="/drinks">
-          <button type="button">
-            <img
-              src={ drinkIcon }
-              alt="drinkIcon"
-              data-testid="drinks-bottom-btn"
-            />
-          </button>
-        </Link>
-        <Link to="/meals">
-          <button type="button">
-            <img
-              src={ mealIcon }
-              alt="mealIcon"
-              data-testid="meals-bottom-btn"
-            />
-          </button>
-        </Link>
+        <div className="btns-footer">
+          <Link to="/drinks">
+            <button type="button">
+              <img
+                src={ drinkIcon }
+                alt="drinkIcon"
+                data-testid="drinks-bottom-btn"
+              />
+            </button>
+          </Link>
+          <Link to="/meals">
+            <button type="button">
+              <img
+                src={ mealIcon }
+                alt="mealIcon"
+                data-testid="meals-bottom-btn"
+              />
+            </button>
+          </Link>
+        </div>
       </footer>
     )
   );
