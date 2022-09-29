@@ -7,8 +7,8 @@
 }
 
 .scroll-child {
-  background: #fff;
-  border: 0.517989px solid #b1b1b1;
+  background: white;
+  border: 0.518px solid #b1b1b1;
   border-radius: 5px;
   height: 100%;
   text-align: center;
@@ -21,7 +21,7 @@
   border-radius: 5px;
   bottom: 0;
   color: white;
-  font-family: Epilogue;
+  font-family: Epilogue , sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 700;
@@ -44,7 +44,7 @@
 
 .p-scroll {
   color: #1a1b1c;
-  font-family: Epilogue;
+  font-family: Epilogue , sans-serif;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
