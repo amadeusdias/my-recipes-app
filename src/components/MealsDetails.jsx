@@ -19,7 +19,7 @@ function MealsDetails({ match: { params: { id } } }) {
       .filter(([, v]) => v !== ' '));
     return Array(clean);
   };
-  console.log(numbers);
+  // console.log(numbers);
   console.log(findMeal);
 
   const cleanObj = (obj) => {
@@ -43,12 +43,12 @@ function MealsDetails({ match: { params: { id } } }) {
     };
 
     fetchMealsDetails();
-}, []); // eslint-disable-line
+  }, []); // eslint-disable-line
 
   // const entries = cleanEmpty(returnApiMeals);
   // console.log((Object.entries(entries)).flat());
   console.log(cleanObj(returnApiMeals) ? cleanEmpty(returnApiMeals)
-    .find((a, i) => Object.keys(a)) : null);
+    .find((a) => Object.keys(a)) : null);
   // console.log(Object.entries(cleanEmpty(returnApiMeals)[0]).filter((a) => a));
 
   const TRINTAEDOIS = 32;
@@ -63,7 +63,16 @@ function MealsDetails({ match: { params: { id } } }) {
             {item.strCategory}
           </p>
           <ul>
-            qualquer
+            {numbers.map((indexI) => returnApiMeals[`strIngredient${indexI}`]?.length
+            > 0 && (
+              <li
+                key={ returnApiMeals[`strIngredient${indexI}`] }
+                data-testid={ `${indexI - 1}-ingredient-name-and-measure` }
+              >
+                {returnApiMeals[`strIngredient${indexI}`]}
+                {returnApiMeals[`strMeasure${indexI}`]}
+              </li>
+            ))}
           </ul>
           <p data-testid="instructions">
             Instructions:
