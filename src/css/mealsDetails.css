@@ -1,5 +1,6 @@
 .container-meals-details {
   background-color: white;
+  height: 240vh;
   width: 360px;
 }
 
@@ -26,11 +27,11 @@
   line-height: 20px;
 }
 
-.youtube-video {
+/* .youtube-video {
   height: 200px;
   overflow: hidden;
   width: 336px;
-}
+} */
 
 .list-ingredients, .instructions {
   border: 0.554px solid #b1b1b1;
@@ -66,4 +67,10 @@
 
 .icon-favorite {
   left: 310px;
+}
+
+iframe {
+  height: 205.09px;
+  margin-bottom: 20px; /* temporario */
+  width: 336px;
 }

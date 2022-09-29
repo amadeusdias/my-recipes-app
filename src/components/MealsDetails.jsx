@@ -1,13 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import YoutubeEmbed from './YoutubeEmbed';
 import AppRecipesContext from '../context/AppRecipesContext';
 import '../css/carousel.css';
-import { ingredients } from '../tests/helpers/numbers';
 import '../css/mealsDetails.css';
-import share from '../images/share.svg';
 import favorite from '../images/favorite2.svg';
+import share from '../images/share.svg';
+import { ingredients } from '../tests/helpers/numbers';
+import YoutubeEmbed from './YoutubeEmbed';
 
 const SIX = 6;
 function MealsDetails({ match: { params: { id } } }) {
@@ -99,8 +99,8 @@ function MealsDetails({ match: { params: { id } } }) {
             {/* Category: */}
             {item.strCategory}
           </p>
-            <h2 className="title-meals-details">Ingredients</h2>
-            <ul className="list-ingredients">
+          <h2 className="title-meals-details">Ingredients</h2>
+          <ul className="list-ingredients">
             {ingredients.map((indexI) => returnApiMeals[`strIngredient${indexI}`]?.length
             > 0 && (
               <li
@@ -127,6 +127,7 @@ function MealsDetails({ match: { params: { id } } }) {
           </div>
         </div>
       ))}
+      <h2 className="title-meals-details">Recommended</h2>
       <div className="scroll">
         {returnAllDrinks.length > 0 && returnAllDrinks.map((drink, index) => (
           index < SIX && (
@@ -135,17 +136,17 @@ function MealsDetails({ match: { params: { id } } }) {
               key={ drink.idDrink }
               data-testid={ `${index}-recommendation-card` }
             >
+              <img
+                className="img-scroll"
+                src={ drink.strDrinkThumb }
+                alt={ drink.strDrink }
+              />
               <p
                 className="p-scroll"
                 data-testid={ `${index}-recommendation-title` }
               >
                 {drink.strDrink}
               </p>
-              <img
-                className="img-scroll"
-                src={ drink.strDrinkThumb }
-                alt={ drink.strDrink }
-              />
             </div>
           )
         ))}
