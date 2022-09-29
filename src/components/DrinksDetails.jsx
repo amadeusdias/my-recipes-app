@@ -3,14 +3,12 @@ import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import AppRecipesContext from '../context/AppRecipesContext';
 import numbers from '../tests/helpers/numbers';
-// import { fetchAPI } from '../service/fetchCards';
 
 function DrinksDetails({ match: { params: { id } } }) {
   const { drinksCards } = useContext(AppRecipesContext);
   const [findDrinks, setFindDrinks] = useState([]);
   const [returnApiDrinks, setReturnApiDrinks] = useState('');
   const params = useParams();
-  // console.log(params);
 
   useEffect(() => {
     setFindDrinks(drinksCards.filter((drink) => drink.idDrink === id));
@@ -21,7 +19,6 @@ function DrinksDetails({ match: { params: { id } } }) {
       const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${params.id}`;
       const response = await fetch(url);
       const result = await response.json();
-      // console.log(result.drinks);
       setReturnApiDrinks(result.drinks[0]);
     };
 
@@ -32,9 +29,7 @@ function DrinksDetails({ match: { params: { id } } }) {
 
   const cleanEmpty = (obj) => {
     const clean = Object.fromEntries(Object.entries(obj)
-      .filter(([, v]) => v != null)
-      .filter(([, v]) => v !== '')
-      .filter(([, v]) => v !== ' '));
+      .filter(([, v]) => v != null || v !== '' || v !== ' '));
     return Array(clean);
   };
 
@@ -64,7 +59,11 @@ function DrinksDetails({ match: { params: { id } } }) {
             Instructions:
             {item.strInstructions}
           </p>
-          <img src={ item.strDrinkThumb } alt={ item.strDrink } />
+          <img
+            src={ item.strDrinkThumb }
+            alt={ item.strDrink }
+            data-testid="recipe-photo"
+          />
         </div>
       ))}
     </div>
