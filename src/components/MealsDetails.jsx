@@ -1,10 +1,14 @@
 import PropTypes from 'prop-types';
+import { useHistory, useParams } from 'react-router-dom';
+import copy from 'clipboard-copy';
+import YoutubeEmbed from './YoutubeEmbed';
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import AppRecipesContext from '../context/AppRecipesContext';
 import '../css/carousel.css';
 import '../css/mealsDetails.css';
 import favorite from '../images/favorite2.svg';
+import shareIcon from '../images/shareIcon.svg';
 import share from '../images/share.svg';
 import { ingredients } from '../tests/helpers/numbers';
 import YoutubeEmbed from './YoutubeEmbed';
@@ -15,7 +19,10 @@ function MealsDetails({ match: { params: { id } } }) {
   const [findMeal, setFindMeal] = useState([]);
   const [returnApiMeals, setReturnApiMeals] = useState([]);
   const [returnAllDrinks, setReturnAllDrinks] = useState([]);
+  const [shareCopy, setShareCopy] = useState(false);
+  const [favoriteRecipes, setFavoritesRecipes] = useState([{}]);
   const params = useParams();
+  const history = useHistory();
 
   const cleanEmpty = (obj) => {
     const clean = Object.fromEntries(Object.entries(obj)
@@ -49,39 +56,65 @@ function MealsDetails({ match: { params: { id } } }) {
     fetchSixDrinksRecommended();
   }, []);
 
-  // useEffect(() => {
-  //   const doneRecipes = [{
-  //     id: '52771',
-  //     type: 'meal',
-  //     nationality: 'Italian',
-  //     category: 'Vegetarian',
-  //     alcoholicOrNot: '',
-  //     name: 'Spicy Arrabiata Penne',
-  //     image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
-  //     doneDate: '22/6/2020',
-  //     tags: ['Pasta', 'Curry'],
-  //   }];
-  //   localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
-  // }, []);
+  useEffect(() => {
+    localStorage.setItem(
+      'favoriteRecipes',
+      JSON.stringify(favoriteRecipes),
+    );
+  }, [favoriteRecipes]);
 
   const recipesDone = JSON.parse(localStorage.getItem('doneRecipes'));
+  const recipesProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+
   let startBtn = '';
+  const NameBtn = !recipesProgress ? 'Start Recipe' : 'Continue Recipe';
   if (recipesDone) startBtn = recipesDone.some((item) => item.id === params.id);
+
+  function handleClickToInProgress() {
+    history.push(`/meals/${params.id}/in-progress`);
+  }
+
+  function handleClickShareBtn() {
+    if (findMeal) {
+      copy(`http://localhost:3000${window.location.pathname}`);
+      setShareCopy(!shareCopy);
+    }
+  }
+
+  function handleClickFavoriteRecipes() {
+    setFavoritesRecipes({
+      id: findMeal[0].idMeal,
+      type: 'meals',
+      nationatity: findMeal[0].strArea,
+      category: findMeal[0].strCategory,
+      alcoholicOrNot: 'not',
+      name: findMeal[0].strMeal,
+      image: findMeal[0].strMealThumb,
+    });
+  }
 
   const TRINTAEDOIS = 32;
 
-  // const ingredients = [];
-  // const maxIngredientes = 20;
-  // for (let i = 0; i < maxIngredientes; i += 1) {
-  //   if (returnApiMeals && returnApiMeals[`strIngredient${i}`]) {
-  //     ingredients.push(returnApiMeals[`strIngredient${i}`]);
-  //   }
-  // }
-
-  // console.log(ingredients);
-
   return (
     <div className="container-meals-details">
+      <button
+        type="button"
+        data-testid="share-btn"
+        onClick={ handleClickShareBtn }
+      >
+        <img
+          src={ shareIcon }
+          alt="comida"
+        />
+      </button>
+      {shareCopy && <p>Link copied!</p>}
+      <button
+        type="button"
+        data-testid="favorite-btn"
+        onClick={ handleClickFavoriteRecipes }
+      >
+        Favoritos
+      </button>
       {cleanEmpty(returnApiMeals).map((item, index) => (
         <div key={ index }>
           <img src={ share } alt="favorite" className="icon-share" />
@@ -156,8 +189,9 @@ function MealsDetails({ match: { params: { id } } }) {
           className="scroll-btn"
           type="button"
           data-testid="start-recipe-btn"
+          onClick={ handleClickToInProgress }
         >
-          Start Recipe
+          {NameBtn}
         </button>
       )}
     </div>

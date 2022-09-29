@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
+import copy from 'clipboard-copy';
 import AppRecipesContext from '../context/AppRecipesContext';
 import { ingredients } from '../tests/helpers/numbers';
+import shareIcon from '../images/shareIcon.svg';
 
 const SIX = 6;
 
@@ -11,7 +13,9 @@ function DrinksDetails({ match: { params: { id } } }) {
   const [findDrinks, setFindDrinks] = useState([]);
   const [returnApiDrinks, setReturnApiDrinks] = useState('');
   const [returnAllMeals, setReturnAllMeals] = useState([]);
+  const [shareCopy, setShareCopy] = useState(false);
   const params = useParams();
+  const history = useHistory();
 
   useEffect(() => {
     setFindDrinks(drinksCards.filter((drink) => drink.idDrink === id));
@@ -47,11 +51,43 @@ function DrinksDetails({ match: { params: { id } } }) {
   };
 
   const recipesDone = JSON.parse(localStorage.getItem('doneRecipes'));
+  const recipesProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+
   let startBtn = '';
+  const NameBtn = !recipesProgress ? 'Start Recipe' : 'Continue Recipe';
   if (recipesDone) startBtn = recipesDone.some((item) => item.id === params.id);
+
+  function handleClickToInProgress() {
+    history.push(`/drinks/${params.id}/in-progress`);
+  }
+
+  function handleClickShareBtn() {
+    if (findDrinks) {
+      copy(`http://localhost:3000${window.location.pathname}`);
+      setShareCopy(!shareCopy);
+      console.log('aaaaa');
+    }
+  }
 
   return (
     <div>
+      <button
+        type="button"
+        data-testid="share-btn"
+        onClick={ handleClickShareBtn }
+      >
+        <img
+          src={ shareIcon }
+          alt="bebida"
+        />
+      </button>
+      {shareCopy && <p>Link copied!</p>}
+      <button
+        type="button"
+        data-testid="favorite-btn"
+      >
+        Favoritar Receita
+      </button>
       {cleanEmpty(returnApiDrinks).map((item, index) => (
         <div key={ index }>
           <h3 data-testid="recipe-title">
@@ -111,8 +147,9 @@ function DrinksDetails({ match: { params: { id } } }) {
           className="scroll-btn"
           type="button"
           data-testid="start-recipe-btn"
+          onClick={ handleClickToInProgress }
         >
-          Start Recipe
+          {NameBtn}
         </button>
       )}
     </div>
