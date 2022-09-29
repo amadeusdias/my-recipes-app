@@ -1,20 +1,34 @@
-import React from 'react';
-import './App.css';
-import rockGlass from './images/rockGlass.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+import DrinksDetails from './components/DrinksDetails';
+import MealsDetails from './components/MealsDetails';
+import RecipeDrinkInProgress from './components/RecipeDrinkInProgress';
+import RecipeMealsInProgress from './components/RecipeInProgress';
+import AppRecipesProvider from './context/AppRecipesProvider';
+import DoneRecipes from './pages/DoneRecipes';
+import Drinks from './pages/Drinks';
+import FavoriteRecipes from './pages/FavoriteRecipes';
+import Login from './pages/Login';
+import Meals from './pages/Meals';
+import Profile from './pages/Profile';
 
 function App() {
   return (
-    <div className="meals">
-      <span className="logo">TRYBE 2.0</span>
-      <object
-        className="rocksGlass"
-        type="image/svg+xml"
-        data={ rockGlass }
-      >
-        Glass
-      </object>
-    </div>
+    <AppRecipesProvider>
+      <Switch>
+        <Route exact path="/" component={ Login } />
+        <Route exact path="/meals" component={ Meals } />
+        <Route exact path="/drinks" component={ Drinks } />
+        <Route path="/meals/:id/in-progress" component={ RecipeMealsInProgress } />
+        <Route path="/meals/:id" component={ MealsDetails } />
+        <Route path="/drinks/:id/in-progress" component={ RecipeDrinkInProgress } />
+        <Route path="/drinks/:id" component={ DrinksDetails } />
+        <Route path="/profile" component={ Profile } />
+        <Route path="/done-recipes" component={ DoneRecipes } />
+        <Route path="/favorite-recipes" component={ FavoriteRecipes } />
+      </Switch>
+    </AppRecipesProvider>
   );
 }
 

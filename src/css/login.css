@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap') ;
+
+body {
+  background: rgb(215, 215, 215);
+}
+
+.container-login-page {
+  display: flex;
+  flex-direction: column;
+  width: 360px;
+}
+
+.container-top {
+  background: #41197f;
+  height: 422px;
+  width: 360px;
+}
+
+.container-top img {
+  left: 81px;
+
+  /* height: 157.25px; */
+  position: absolute;
+  top: 79.17px;
+  width: 198px;
+}
+
+.container-down {
+  align-items: center;
+  background: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  height: 378px;
+  justify-content: center;
+  width: 360px;
+}
+
+.Title-login {
+  color: #41197f;
+  font-family: Epilogue , sans-serif;
+  font-size: 20px;
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: 0.165em;
+  line-height: 20px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.input-login, .btn-enter {
+  font-family: Epilogue , sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  height: 40px;
+  line-height: 14px;
+}
+
+.input-login {
+  border: 0.5px solid #41197f;
+  border-radius: 5px;
+  color: #41197f;
+  font-weight: 300;
+  padding: 14px 0 12px 20px;
+  width: 276px;
+}
+
+.input-login::placeholder {
+  color: #41197f;
+}
+
+.btn-enter {
+  background: #fcc436;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-align: center;
+  text-transform: uppercase;
+  width: 276px;
+
+}
+
+.btn-enter:disabled {
+  background-color: #ccc;
+  border: 1px solid #999;
+  color: #666;
+}
+
+.tomate {
+  position: absolute;
+  top: 234px;
+  width: 458px;
+}
+

@@ -1,0 +1,48 @@
+.container-profile-page {
+  background: white;
+  height: 100vh;
+  width: 360px;
+}
+
+.profile-email {
+  color: #1a1b1c;
+  font-family: Epilogue , sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 16px;
+  text-align: center;
+}
+
+.container-profile-buttons {
+  display: flex;
+  flex-direction: column;
+  margin-left: 40px;
+  width: 360px;
+}
+
+.btn-profile {
+  background-color: white;
+  border: none;
+  color: #797d86;
+  font-family: Epilogue , sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  line-height: 16px;
+  margin-top: 22px;
+  text-transform: capitalize;
+  width: 290px;
+}
+
+.btn-favorite {
+  border-bottom: 0.5px solid #b1b1b1;
+  border-top: 0.5px solid #b1b1b1;
+  padding: 23px 0;
+}
+
+.logo-profile {
+  margin-right: 23px;
+}
+
