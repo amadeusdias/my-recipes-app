@@ -5,6 +5,7 @@ import YoutubeEmbed from './YoutubeEmbed';
 import AppRecipesContext from '../context/AppRecipesContext';
 import numbers from '../tests/helpers/numbers';
 import '../css/carousel.css';
+import { ingredients } from '../tests/helpers/numbers';
 
 const SIX = 6;
 function MealsDetails({ match: { params: { id } } }) {
@@ -69,7 +70,7 @@ function MealsDetails({ match: { params: { id } } }) {
             {item.strCategory}
           </p>
           <ul>
-            {numbers.map((indexI) => returnApiMeals[`strIngredient${indexI}`]?.length
+            {ingredients.map((indexI) => returnApiMeals[`strIngredient${indexI}`]?.length
             > 0 && (
               <li
                 key={ returnApiMeals[`strIngredient${indexI}`] }
