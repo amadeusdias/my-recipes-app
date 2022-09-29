@@ -18,6 +18,7 @@ function MealsDetails({ match: { params: { id } } }) {
   const [returnApiMeals, setReturnApiMeals] = useState([]);
   const [returnAllDrinks, setReturnAllDrinks] = useState([]);
   const [shareCopy, setShareCopy] = useState(false);
+  const [favoriteRecipes, setFavoritesRecipes] = useState([{}]);
   const params = useParams();
   const history = useHistory();
 
@@ -53,6 +54,13 @@ function MealsDetails({ match: { params: { id } } }) {
     fetchSixDrinksRecommended();
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem(
+      'favoriteRecipes',
+      JSON.stringify(favoriteRecipes),
+    );
+  }, [favoriteRecipes]);
+
   const recipesDone = JSON.parse(localStorage.getItem('doneRecipes'));
   const recipesProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
 
@@ -69,6 +77,18 @@ function MealsDetails({ match: { params: { id } } }) {
       copy(`http://localhost:3000${window.location.pathname}`);
       setShareCopy(!shareCopy);
     }
+  }
+
+  function handleClickFavoriteRecipes() {
+    setFavoritesRecipes({
+      id: findMeal[0].idMeal,
+      type: 'meals',
+      nationatity: findMeal[0].strArea,
+      category: findMeal[0].strCategory,
+      alcoholicOrNot: 'not',
+      name: findMeal[0].strMeal,
+      image: findMeal[0].strMealThumb,
+    });
   }
 
   const TRINTAEDOIS = 32;
@@ -89,8 +109,9 @@ function MealsDetails({ match: { params: { id } } }) {
       <button
         type="button"
         data-testid="favorite-btn"
+        onClick={ handleClickFavoriteRecipes }
       >
-        Favoritar Receita
+        Favoritos
       </button>
       {cleanEmpty(returnApiMeals).map((item, index) => (
         <div key={ index }>
