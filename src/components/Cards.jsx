@@ -4,12 +4,9 @@ import { Link } from 'react-router-dom';
 import AppRecipesContext from '../context/AppRecipesContext';
 import { fetchCategoryMeals, fetchCategoryDrinks } from '../service/fetchCards';
 import '../css/cards.css';
+import { ZERO, FIVE, TWELVE } from '../tests/helpers/numbers';
 
-const ZERO = 0;
-const FIVE = 5;
-const TWELVE = 12;
 const tres = 3;
-// asdasdasd
 
 function Cards({ path }) {
   const { drinksCards,
