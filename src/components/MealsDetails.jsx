@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import YoutubeEmbed from './YoutubeEmbed';
 import AppRecipesContext from '../context/AppRecipesContext';
-import numbers from '../tests/helpers/numbers';
 import '../css/carousel.css';
 import { ingredients } from '../tests/helpers/numbers';
 
@@ -33,7 +32,6 @@ function MealsDetails({ match: { params: { id } } }) {
       const result = await response.json();
       setReturnApiMeals(result.meals[0]);
     };
-
     fetchMealsDetails();
   }, []); // eslint-disable-line
 
@@ -47,6 +45,25 @@ function MealsDetails({ match: { params: { id } } }) {
 
     fetchSixDrinksRecommended();
   }, []);
+
+  // useEffect(() => {
+  //   const doneRecipes = [{
+  //     id: '52771',
+  //     type: 'meal',
+  //     nationality: 'Italian',
+  //     category: 'Vegetarian',
+  //     alcoholicOrNot: '',
+  //     name: 'Spicy Arrabiata Penne',
+  //     image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
+  //     doneDate: '22/6/2020',
+  //     tags: ['Pasta', 'Curry'],
+  //   }];
+  //   localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+  // }, []);
+
+  const recipesDone = JSON.parse(localStorage.getItem('doneRecipes'));
+  let startBtn = '';
+  if (recipesDone) startBtn = recipesDone.some((item) => item.id === params.id);
 
   const TRINTAEDOIS = 32;
 
@@ -123,13 +140,15 @@ function MealsDetails({ match: { params: { id } } }) {
           )
         ))}
       </div>
-      <button
-        className="scroll-btn"
-        type="button"
-        data-testid="start-recipe-btn"
-      >
-        Start Recipe
-      </button>
+      {!startBtn && (
+        <button
+          className="scroll-btn"
+          type="button"
+          data-testid="start-recipe-btn"
+        >
+          Start Recipe
+        </button>
+      )}
     </div>
   );
 }

@@ -46,6 +46,10 @@ function DrinksDetails({ match: { params: { id } } }) {
     return Array(clean);
   };
 
+  const recipesDone = JSON.parse(localStorage.getItem('doneRecipes'));
+  let startBtn = '';
+  if (recipesDone) startBtn = recipesDone.some((item) => item.id === params.id);
+
   return (
     <div>
       {cleanEmpty(returnApiDrinks).map((item, index) => (
@@ -102,13 +106,15 @@ function DrinksDetails({ match: { params: { id } } }) {
           )
         ))}
       </div>
-      <button
-        className="scroll-btn"
-        type="button"
-        data-testid="start-recipe-btn"
-      >
-        Start Recipe
-      </button>
+      {!startBtn && (
+        <button
+          className="scroll-btn"
+          type="button"
+          data-testid="start-recipe-btn"
+        >
+          Start Recipe
+        </button>
+      )}
     </div>
   );
 }
