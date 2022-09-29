@@ -8,27 +8,16 @@ import numbers from '../tests/helpers/numbers';
 function MealsDetails({ match: { params: { id } } }) {
   const { mealsCards } = useContext(AppRecipesContext);
   const [findMeal, setFindMeal] = useState([]);
-  // const [findCleanMeal, setFindCLeanMeal] = useState([]);
   const [returnApiMeals, setReturnApiMeals] = useState([]);
+  // const [returnAllMeals, setReturnAllMeals] = useState([]);
   const params = useParams();
 
   const cleanEmpty = (obj) => {
     const clean = Object.fromEntries(Object.entries(obj)
-      .filter(([, v]) => v != null)
-      .filter(([, v]) => v !== '')
-      .filter(([, v]) => v !== ' '));
+      .filter(([, v]) => v != null || v !== '' || v !== ' '));
     return Array(clean);
   };
-  // console.log(numbers);
   console.log(findMeal);
-
-  const cleanObj = (obj) => {
-    const clean = Object.fromEntries(Object.entries(obj)
-      .filter(([, v]) => v != null)
-      .filter(([, v]) => v !== '')
-      .filter(([, v]) => v !== ' '));
-    return (clean);
-  };
 
   useEffect(() => {
     setFindMeal(mealsCards.filter((meal) => meal.idMeal === id));
@@ -45,13 +34,17 @@ function MealsDetails({ match: { params: { id } } }) {
     fetchMealsDetails();
   }, []); // eslint-disable-line
 
-  // const entries = cleanEmpty(returnApiMeals);
-  // console.log((Object.entries(entries)).flat());
-  console.log(cleanObj(returnApiMeals) ? cleanEmpty(returnApiMeals)
-    .find((a) => Object.keys(a)) : null);
-  // console.log(Object.entries(cleanEmpty(returnApiMeals)[0]).filter((a) => a));
-
   const TRINTAEDOIS = 32;
+
+  // const ingredients = [];
+  // const maxIngredientes = 20;
+  // for (let i = 0; i < maxIngredientes; i += 1) {
+  //   if (returnApiMeals && returnApiMeals[`strIngredient${i}`]) {
+  //     ingredients.push(returnApiMeals[`strIngredient${i}`]);
+  //   }
+  // }
+
+  // console.log(ingredients);
 
   return (
     <div>
