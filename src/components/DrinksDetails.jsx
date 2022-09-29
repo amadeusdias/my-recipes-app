@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import AppRecipesContext from '../context/AppRecipesContext';
 import { ingredients } from '../tests/helpers/numbers';
 
@@ -12,6 +12,7 @@ function DrinksDetails({ match: { params: { id } } }) {
   const [returnApiDrinks, setReturnApiDrinks] = useState('');
   const [returnAllMeals, setReturnAllMeals] = useState([]);
   const params = useParams();
+  const history = useHistory();
 
   useEffect(() => {
     setFindDrinks(drinksCards.filter((drink) => drink.idDrink === id));
@@ -52,6 +53,10 @@ function DrinksDetails({ match: { params: { id } } }) {
   let startBtn = '';
   const NameBtn = !recipesProgress ? 'Start Recipe' : 'Continue Recipe';
   if (recipesDone) startBtn = recipesDone.some((item) => item.id === params.id);
+
+  function handleClickToInProgress() {
+    history.push(`/drinks/${params.id}/in-progress`);
+  }
 
   return (
     <div>
@@ -114,6 +119,7 @@ function DrinksDetails({ match: { params: { id } } }) {
           className="scroll-btn"
           type="button"
           data-testid="start-recipe-btn"
+          onClick={ handleClickToInProgress }
         >
           {NameBtn}
         </button>

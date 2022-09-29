@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import YoutubeEmbed from './YoutubeEmbed';
 import AppRecipesContext from '../context/AppRecipesContext';
 import '../css/carousel.css';
@@ -16,6 +16,7 @@ function MealsDetails({ match: { params: { id } } }) {
   const [returnApiMeals, setReturnApiMeals] = useState([]);
   const [returnAllDrinks, setReturnAllDrinks] = useState([]);
   const params = useParams();
+  const history = useHistory();
 
   const cleanEmpty = (obj) => {
     const clean = Object.fromEntries(Object.entries(obj)
@@ -49,42 +50,18 @@ function MealsDetails({ match: { params: { id } } }) {
     fetchSixDrinksRecommended();
   }, []);
 
-  // useEffect(() => {
-  //   const doneRecipes = [{
-  //     id: '52771',
-  //     type: 'meal',
-  //     nationality: 'Italian',
-  //     category: 'Vegetarian',
-  //     alcoholicOrNot: '',
-  //     name: 'Spicy Arrabiata Penne',
-  //     image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
-  //     doneDate: '22/6/2020',
-  //     tags: ['Pasta', 'Curry'],
-  //   }];
-  //   localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
-  // }, []);
-
   const recipesDone = JSON.parse(localStorage.getItem('doneRecipes'));
   const recipesProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
 
   let startBtn = '';
   const NameBtn = !recipesProgress ? 'Start Recipe' : 'Continue Recipe';
   if (recipesDone) startBtn = recipesDone.some((item) => item.id === params.id);
-  // if (recipesProgress) {
 
-  // }
+  function handleClickToInProgress() {
+    history.push(`/meals/${params.id}/in-progress`);
+  }
 
   const TRINTAEDOIS = 32;
-
-  // const ingredients = [];
-  // const maxIngredientes = 20;
-  // for (let i = 0; i < maxIngredientes; i += 1) {
-  //   if (returnApiMeals && returnApiMeals[`strIngredient${i}`]) {
-  //     ingredients.push(returnApiMeals[`strIngredient${i}`]);
-  //   }
-  // }
-
-  // console.log(ingredients);
 
   return (
     <div className="container-meals-details">
@@ -161,6 +138,7 @@ function MealsDetails({ match: { params: { id } } }) {
           className="scroll-btn"
           type="button"
           data-testid="start-recipe-btn"
+          onClick={ handleClickToInProgress }
         >
           {NameBtn}
         </button>
