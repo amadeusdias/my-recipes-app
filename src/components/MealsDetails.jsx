@@ -9,6 +9,7 @@ function MealsDetails({ match: { params: { id } } }) {
   const { mealsCards } = useContext(AppRecipesContext);
   const [findMeal, setFindMeal] = useState([]);
   const [returnApiMeals, setReturnApiMeals] = useState([]);
+  // const [returnAllMeals, setReturnAllMeals] = useState([]);
   const params = useParams();
 
   const cleanEmpty = (obj) => {
@@ -27,6 +28,7 @@ function MealsDetails({ match: { params: { id } } }) {
       const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${params.id}`;
       const response = await fetch(url);
       const result = await response.json();
+      // setReturnAllMeals(result.meals);
       setReturnApiMeals(result.meals[0]);
     };
 
@@ -35,21 +37,15 @@ function MealsDetails({ match: { params: { id } } }) {
 
   const TRINTAEDOIS = 32;
 
-  const ingredients = [];
-  const maxIngredientes = 20;
-  for (let i = 0; i < maxIngredientes; i += 1) {
-    if (returnApiMeals && returnApiMeals[`strIngredient${i}`]) {
-      ingredients.push(returnApiMeals[`strIngredient${i}`]);
-    }
-  }
+  // const ingredients = [];
+  // const maxIngredientes = 20;
+  // for (let i = 0; i < maxIngredientes; i += 1) {
+  //   if (returnApiMeals && returnApiMeals[`strIngredient${i}`]) {
+  //     ingredients.push(returnApiMeals[`strIngredient${i}`]);
+  //   }
+  // }
 
-  const measure = [];
-  for (let i = 0; i < maxIngredientes; i += 1) {
-    if (returnApiMeals && returnApiMeals[`strMeasure${i}`]) {
-      ingredients.push(returnApiMeals[`strMeasure${i}`]);
-    }
-  }
-  console.log(ingredients);
+  // console.log(ingredients);
 
   return (
     <div>
@@ -67,8 +63,8 @@ function MealsDetails({ match: { params: { id } } }) {
                 key={ returnApiMeals[`strIngredient${indexI}`] }
                 data-testid={ `${indexI - 1}-ingredient-name-and-measure` }
               >
-                {ingredients}
-                {measure}
+                {returnApiMeals[`strIngredient${indexI}`]}
+                {returnApiMeals[`strMeasure${indexI}`]}
               </li>
             ))}
           </ul>
