@@ -43,7 +43,7 @@ function MealsDetails({ match: { params: { id } } }) {
     };
 
     fetchMealsDetails();
-  }, []);
+}, []); // eslint-disable-line
 
   // const entries = cleanEmpty(returnApiMeals);
   // console.log((Object.entries(entries)).flat());
