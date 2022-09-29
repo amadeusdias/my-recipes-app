@@ -135,7 +135,6 @@ function Cards({ path }) {
           </h2>
         </div>
       ))}
-
       {filteredMeal && filteredMeal.map((item, index) => (
         <div key={ index } data-testid={ `${index}-recipe-card` } className="recipe-card">
           <img
@@ -147,7 +146,6 @@ function Cards({ path }) {
           <h2 data-testid={ `${index}-card-name` }>{item.strMeal}</h2>
         </div>
       ))}
-
       {filteredDrinks && filteredDrinks.map((item, index) => (
         <div key={ index } data-testid={ `${index}-recipe-card` } className="recipe-card">
           <img

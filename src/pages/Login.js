@@ -3,8 +3,8 @@ import { useHistory } from 'react-router-dom';
 import AppRecipesContext from '../context/AppRecipesContext';
 import useLocalStorage from '../hooks/useLocalStorage';
 import '../css/login.css';
-import logo from '../images/logoRecipesApp.png';
-import tomate from '../images/tomate.png';
+import logo from '../images/logoRecipesApp.svg';
+import tomate from '../images/tomate.svg';
 
 function Login() {
   const { setUserEmail } = useContext(AppRecipesContext);
