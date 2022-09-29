@@ -99,8 +99,8 @@ function MealsDetails({ match: { params: { id } } }) {
             {/* Category: */}
             {item.strCategory}
           </p>
-            <h2 className="title-meals-details">Ingredients</h2>
-            <ul className="list-ingredients">
+          <h2 className="title-meals-details">Ingredients</h2>
+          <ul className="list-ingredients">
             {ingredients.map((indexI) => returnApiMeals[`strIngredient${indexI}`]?.length
             > 0 && (
               <li
