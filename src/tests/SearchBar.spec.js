@@ -1,39 +1,27 @@
-import { act, screen, waitFor } from '@testing-library/react';
+import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import renderWithRouter from './helpers/renderWithRouter';
-import mockMeals from './helpers/dataByIngredientMeals';
-import mockDrinks from './helpers/dataByFirstLetterDrinks';
+import dataMeals from './helpers/mockMeals';
+import dataDrinks from './helpers/mockDrinks';
 
 const searchButton = 'search-top-btn';
 const searchedInput = 'search-input';
 const searchedIngredient = 'ingredient-search-radio';
 
-async function accessToMeals() {
-  const email = screen.getByTestId('email-input');
-  const password = screen.getByTestId('password-input');
-  const button = screen.getByTestId('login-submit-btn');
-
-  userEvent.type(email, 'test@test.com');
-  userEvent.type(password, '123456789');
-  userEvent.click(button);
-
-  await waitFor(() => expect(screen.getByTestId(searchButton)).toBeInTheDocument());
-}
-
 describe('test component <SearchBar />', () => {
   beforeEach(() => {
     global.fetch = jest.fn().mockResolvedValue({
       json: jest.fn().mockResolvedValue({
-        meals: mockMeals,
-        drinks: mockDrinks,
+        meals: dataMeals,
+        drinks: dataDrinks,
       }),
     });
   });
   it('should inputs in screen', async () => {
-    renderWithRouter(<App />);
+    const { history } = renderWithRouter(<App />);
+    act(() => history.push('/meals'));
 
-    await accessToMeals();
     userEvent.click(screen.getByTestId(searchButton));
 
     const searchInput = screen.getByTestId(searchedInput);
@@ -47,9 +35,9 @@ describe('test component <SearchBar />', () => {
     expect(firstLetter).toBeInTheDocument();
   });
   it('should test if api is called with endpoint correct in meals', async () => {
-    renderWithRouter(<App />);
+    const { history } = renderWithRouter(<App />);
+    act(() => history.push('/meals'));
 
-    await accessToMeals();
     userEvent.click(screen.getByTestId(searchButton));
 
     const searchInput = screen.getByTestId(searchedInput);
@@ -59,18 +47,16 @@ describe('test component <SearchBar />', () => {
     expect(searchInput).toBeInTheDocument();
     expect(ingredientInput).toBeInTheDocument();
 
-    userEvent.type(searchInput, 'lamb');
+    userEvent.type(searchInput, 'chicken');
     userEvent.click(ingredientInput);
     userEvent.click(buttonSearch);
 
-    expect(global.fetch).toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/filter.php?i=lamb');
+    expect(ingredientInput).toBeChecked();
+    expect(global.fetch).toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/filter.php?i=chicken');
+    expect(screen.getByText('Chicken & mushroom Hotpot')).toHaveLength(2);
+    expect(screen.getByText('Chicken Basquaise')).toBeInTheDocument();
   });
   it('should test if api is called with endpoint correct in drinks', async () => {
-    global.fetch = jest.fn().mockResolvedValue({
-      json: jest.fn().mockResolvedValue({
-        meals: mockDrinks,
-      }),
-    });
     const { history } = renderWithRouter(<App />);
     act(() => history.push('/drinks'));
 

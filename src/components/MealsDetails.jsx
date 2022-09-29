@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import YoutubeEmbed from './YoutubeEmbed';
 import AppRecipesContext from '../context/AppRecipesContext';
-import numbers from '../tests/helpers/numbers';
+import { ingredients } from '../tests/helpers/numbers';
 
 function MealsDetails({ match: { params: { id } } }) {
   const { mealsCards } = useContext(AppRecipesContext);
@@ -56,7 +56,7 @@ function MealsDetails({ match: { params: { id } } }) {
             {item.strCategory}
           </p>
           <ul>
-            {numbers.map((indexI) => returnApiMeals[`strIngredient${indexI}`]?.length
+            {ingredients.map((indexI) => returnApiMeals[`strIngredient${indexI}`]?.length
             > 0 && (
               <li
                 key={ returnApiMeals[`strIngredient${indexI}`] }
