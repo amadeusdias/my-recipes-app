@@ -60,6 +60,18 @@ function DrinksDetails({ match: { params: { id } } }) {
 
   return (
     <div>
+      <button
+        type="button"
+        data-testid="share-btn"
+      >
+        Compartilhar Receita
+      </button>
+      <button
+        type="button"
+        data-testid="favorite-btn"
+      >
+        Favoritar Receita
+      </button>
       {cleanEmpty(returnApiDrinks).map((item, index) => (
         <div key={ index }>
           <h3 data-testid="recipe-title">

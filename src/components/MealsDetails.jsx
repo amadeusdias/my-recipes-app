@@ -65,6 +65,18 @@ function MealsDetails({ match: { params: { id } } }) {
 
   return (
     <div className="container-meals-details">
+      <button
+        type="button"
+        data-testid="share-btn"
+      >
+        Compartilhar Receita
+      </button>
+      <button
+        type="button"
+        data-testid="favorite-btn"
+      >
+        Favoritar Receita
+      </button>
       {cleanEmpty(returnApiMeals).map((item, index) => (
         <div key={ index }>
           <img src={ share } alt="favorite" className="icon-share" />
