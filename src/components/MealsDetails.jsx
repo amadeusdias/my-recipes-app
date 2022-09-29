@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import { useHistory, useParams } from 'react-router-dom';
 import copy from 'clipboard-copy';
-import YoutubeEmbed from './YoutubeEmbed';
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import YoutubeEmbed from './YoutubeEmbed';
+
 import AppRecipesContext from '../context/AppRecipesContext';
 import '../css/carousel.css';
 import '../css/mealsDetails.css';
@@ -11,16 +11,18 @@ import favorite from '../images/favorite2.svg';
 import shareIcon from '../images/shareIcon.svg';
 import share from '../images/share.svg';
 import { ingredients } from '../tests/helpers/numbers';
-import YoutubeEmbed from './YoutubeEmbed';
 
 const SIX = 6;
 function MealsDetails({ match: { params: { id } } }) {
-  const { mealsCards } = useContext(AppRecipesContext);
+  const {
+    mealsCards,
+    favoriteRecipes,
+    setFavoritesRecipes,
+  } = useContext(AppRecipesContext);
   const [findMeal, setFindMeal] = useState([]);
   const [returnApiMeals, setReturnApiMeals] = useState([]);
   const [returnAllDrinks, setReturnAllDrinks] = useState([]);
   const [shareCopy, setShareCopy] = useState(false);
-  const [favoriteRecipes, setFavoritesRecipes] = useState([{}]);
   const params = useParams();
   const history = useHistory();
 
@@ -56,12 +58,12 @@ function MealsDetails({ match: { params: { id } } }) {
     fetchSixDrinksRecommended();
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem(
-      'favoriteRecipes',
-      JSON.stringify(favoriteRecipes),
-    );
-  }, [favoriteRecipes]);
+  // useEffect(() => {
+  //   localStorage.setItem(
+  //     'favoriteRecipes',
+  //     JSON.stringify(favoriteRecipes),
+  //   );
+  // }, [favoriteRecipes]);
 
   const recipesDone = JSON.parse(localStorage.getItem('doneRecipes'));
   const recipesProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
@@ -82,16 +84,23 @@ function MealsDetails({ match: { params: { id } } }) {
   }
 
   function handleClickFavoriteRecipes() {
-    setFavoritesRecipes({
-      id: findMeal[0].idMeal,
-      type: 'meals',
-      nationatity: findMeal[0].strArea,
-      category: findMeal[0].strCategory,
-      alcoholicOrNot: 'not',
-      name: findMeal[0].strMeal,
-      image: findMeal[0].strMealThumb,
-    });
+    setFavoritesRecipes([
+      ...favoriteRecipes,
+      {
+        id: returnApiMeals.idMeal,
+        type: 'meal',
+        nationality: returnApiMeals.strArea,
+        category: returnApiMeals.strCategory,
+        alcoholicOrNot: '',
+        name: returnApiMeals.strMeal,
+        image: returnApiMeals.strMealThumb,
+      }]);
   }
+
+  localStorage.setItem(
+    'favoriteRecipes',
+    JSON.stringify(favoriteRecipes),
+  );
 
   const TRINTAEDOIS = 32;
 
