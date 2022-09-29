@@ -3,8 +3,12 @@ import { useLocation, useHistory } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
-import recipesApp from '../images/recipesApp.png';
-import headerIcon from '../images/headerIcon.png';
+import recipesApp from '../images/recipesApp.svg';
+import headerIcon from '../images/headerIcon.svg';
+import pageMeals from '../images/mealIcon.svg';
+import pageDrinks from '../images/drinkIcon.svg';
+import pageProfile from '../images/pageProfile.svg';
+
 import '../css/header.css';
 
 function Header() {
@@ -13,6 +17,7 @@ function Header() {
   const [showSearch, setShowSearch] = useState(false);
   const location = useLocation();
   const history = useHistory();
+  const hlp = history.location.pathname;
 
   function formatPageName(name) {
     const SEIS = 7;
@@ -42,6 +47,7 @@ function Header() {
     <button
       type="button"
       onClick={ handleSearch }
+      // className="btn-search"
     >
       <img
         src={ searchIcon }
@@ -60,9 +66,11 @@ function Header() {
         <img src={ headerIcon } alt="headerIcon" />
         <img src={ recipesApp } alt="recipesApp" />
         <div>
+          { showSearchIcon ? htmlSearchIcon : null }
           <button
             type="button"
             onClick={ handleClick }
+            // className="btn-profile"
           >
             <img
               src={ profileIcon }
@@ -71,11 +79,16 @@ function Header() {
             />
 
           </button>
-          { showSearchIcon ? htmlSearchIcon : null }
+
         </div>
       </div>
-      {showSearch ? <SearchBar /> : null}
-      <h2 data-testid="page-title" className="title-page-title">{pageName }</h2>
+      <div className="teste">
+        { hlp.includes('/meals') ? <img src={ pageMeals } alt="mealsIcon" /> : null}
+        { hlp.includes('/drinks') ? <img src={ pageDrinks } alt="drinksIcon" /> : null}
+        { hlp.includes('/profile') ? <img src={ pageProfile } alt="profileIcon" /> : null}
+        <h2 data-testid="page-title" className="title-page-title">{pageName }</h2>
+        {showSearch ? <SearchBar /> : null}
+      </div>
     </header>
   );
 }

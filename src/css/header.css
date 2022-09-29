@@ -18,3 +18,14 @@
   text-align: center;
   text-transform: uppercase;
 }
+
+.teste {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+header button {
+  background-color: transparent;
+  border: none;
+}

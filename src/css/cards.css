@@ -5,6 +5,11 @@
   width: 360px;
 }
 
+.testee {
+  height: 100vh;
+  overflow-y: scroll;
+}
+
 .recipe-card {
   background: white;
   border: 0.518px solid #b1b1b1;
@@ -15,11 +20,13 @@
 }
 
 .recipe-card img {
+  border-radius: 5px 5px 0 0;
   height: 134.85px;
   width: 163.35px;
 }
 
 .recipe-card h2 {
+  border-radius: 5px;
   color: #1a1b1c;
   font-family: Epilogue , sans-serif;
   font-size: 12px;
@@ -28,6 +35,8 @@
   line-height: 12px;
   margin-top: 9px; /* remover posteriormente */
   text-align: center;
+
+  /* border: 0.518px solid #b1b1b1; */
 }
 
 .Beef-icon, .Breakfast-icon, .Chicken-icon, .Dessert-icon, .Goat-icon, .All-icon {
@@ -49,42 +58,42 @@
 }
 
 .Beef-icon {
-  background-image: url('../images/beef.png');
+  background-image: url('../images/beef.svg');
 }
 
 .Breakfast-icon {
-  background-image: url('../images/breakfast.png');
+  background-image: url('../images/breakfast.svg');
   width: 54px;
 }
 
 .Chicken-icon {
-  background-image: url('../images/chicken.png');
+  background-image: url('../images/chicken.svg');
 }
 
 .Dessert-icon {
-  background-image: url('../images/dessert.png');
+  background-image: url('../images/dessert.svg');
 }
 
 .Goat-icon {
-  background-image: url('../images/lamb.png');
+  background-image: url('../images/lamb.svg');
 }
 
 .All-icon {
-  background-image: url('../images/All.png');
+  background-image: url('../images/All.svg');
 }
 
 .Cocoa-icon {
-  background-image: url('../images/cocoa.png');
+  background-image: url('../images/cocoa.svg');
 }
 
 .Shake-icon {
-  background-image: url('../images/shake.png');
+  background-image: url('../images/shake.svg');
 }
 
 .Cocktail-icon {
-  background-image: url('../images/cocktail.png');
+  background-image: url('../images/cocktail.svg');
 }
 
 .Ordinary {
-  background-image: url('../images/drink.png');
+  background-image: url('../images/drink.svg');
 }

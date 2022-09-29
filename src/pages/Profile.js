@@ -5,9 +5,9 @@ import Header from '../components/Header';
 import AppRecipesContext from '../context/AppRecipesContext';
 import useLocalStorage from '../hooks/useLocalStorage';
 import '../css/profile.css';
-import done from '../images/done.png';
-import favorite from '../images/favorite.png';
-import logout from '../images/logout.png';
+import done from '../images/done.svg';
+import favorite from '../images/favorite.svg';
+import logout from '../images/logout.svg';
 
 function Profile() {
   const { userEmail } = useContext(AppRecipesContext);

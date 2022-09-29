@@ -9,12 +9,14 @@
 
 .btns-footer {
   display: flex;
-  gap: 60px;
+  gap: 100px;
   justify-content: space-around;
   width: 360px;
 }
 
 .btns-footer button {
-  height: 40px;
+  background-color: transparent;
+  border: none;
+  margin-top: 5px; /* gambiarra */
 }
 
