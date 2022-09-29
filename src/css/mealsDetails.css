@@ -1,5 +1,6 @@
 .container-meals-details {
   background-color: white;
+  height: 250vh;
   width: 360px;
 }
 
@@ -24,17 +25,20 @@
   font-style: normal;
   font-weight: 700;
   line-height: 20px;
+  margin-left: 17px;
 }
 
-.youtube-video {
+/* .youtube-video {
   height: 200px;
   overflow: hidden;
   width: 336px;
-}
+} */
 
 .list-ingredients, .instructions {
   border: 0.554px solid #b1b1b1;
   border-radius: 5.351px;
+  margin-left: 13px; /* temporario */
+  width: 330px;
 }
 
 .title-food {
@@ -66,4 +70,11 @@
 
 .icon-favorite {
   left: 310px;
+}
+
+iframe {
+  height: 205.09px;
+  margin-bottom: 20px; /* temporario */
+  margin-left: 10px; /* temporario */
+  width: 336px;
 }

@@ -70,7 +70,7 @@ function Cards({ path }) {
     <div className="container-recipe-card">
 
       <button
-        className="All-icon"
+        className={ path === '/meals' ? 'All-icon-meals' : 'All-icon-drinks' }
         type="button"
         data-testid="All-category-filter"
         onClick={ handleClickResetFilters }
