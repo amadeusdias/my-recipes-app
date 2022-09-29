@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import AppRecipesContext from '../context/AppRecipesContext';
-import numbers from '../tests/helpers/numbers';
+import { ingredients } from '../tests/helpers/numbers';
 
 function DrinksDetails({ match: { params: { id } } }) {
   const { drinksCards } = useContext(AppRecipesContext);
@@ -44,7 +44,7 @@ function DrinksDetails({ match: { params: { id } } }) {
           <p data-testid="recipe-category">{item.strAlcoholic}</p>
           <p>{item.strInstructions}</p>
           <ul>
-            {numbers.map((indexI) => returnApiDrinks[`strIngredient${indexI}`]?.length
+            {ingredients.map((indexI) => returnApiDrinks[`strIngredient${indexI}`]?.length
             > 0 && (
               <li
                 key={ returnApiDrinks[`strIngredient${indexI}`] }

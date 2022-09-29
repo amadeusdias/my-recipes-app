@@ -1,4 +1,7 @@
-export default ['1',
+export const ZERO = 0;
+export const FIVE = 5;
+export const TWELVE = 12;
+export const ingredients = ['1',
   '2',
   '3',
   '4',

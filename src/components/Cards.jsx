@@ -4,11 +4,7 @@ import { Link } from 'react-router-dom';
 import AppRecipesContext from '../context/AppRecipesContext';
 import { fetchCategoryMeals, fetchCategoryDrinks } from '../service/fetchCards';
 import '../css/cards.css';
-
-const ZERO = 0;
-const FIVE = 5;
-const TWELVE = 12;
-// asdasdasd
+import { ZERO, FIVE, TWELVE } from '../tests/helpers/numbers';
 
 function Cards({ path }) {
   const { drinksCards,
