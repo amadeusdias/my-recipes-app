@@ -28,7 +28,6 @@ function MealsDetails({ match: { params: { id } } }) {
       const url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${params.id}`;
       const response = await fetch(url);
       const result = await response.json();
-      // setReturnAllMeals(result.meals);
       setReturnApiMeals(result.meals[0]);
     };
 
