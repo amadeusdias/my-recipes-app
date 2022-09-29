@@ -82,8 +82,6 @@ function MealsDetails({ match: { params: { id } } }) {
             {/* Category: */}
             {item.strCategory}
           </p>
-          
-            {numbers.map((indexI) => returnApiMeals[`strIngredient${indexI}`]?.length
             <h2 className="title-meals-details">Ingredients</h2>
             <ul className="list-ingredients">
             {ingredients.map((indexI) => returnApiMeals[`strIngredient${indexI}`]?.length
