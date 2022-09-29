@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import YoutubeEmbed from './YoutubeEmbed';
 import AppRecipesContext from '../context/AppRecipesContext';
-import numbers from '../tests/helpers/numbers';
 import '../css/carousel.css';
 import { ingredients } from '../tests/helpers/numbers';
 
