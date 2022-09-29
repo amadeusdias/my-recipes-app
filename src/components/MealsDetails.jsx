@@ -65,8 +65,14 @@ function MealsDetails({ match: { params: { id } } }) {
   // }, []);
 
   const recipesDone = JSON.parse(localStorage.getItem('doneRecipes'));
+  const recipesProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
+
   let startBtn = '';
+  const NameBtn = !recipesProgress ? 'Start Recipe' : 'Continue Recipe';
   if (recipesDone) startBtn = recipesDone.some((item) => item.id === params.id);
+  // if (recipesProgress) {
+
+  // }
 
   const TRINTAEDOIS = 32;
 
@@ -156,7 +162,7 @@ function MealsDetails({ match: { params: { id } } }) {
           type="button"
           data-testid="start-recipe-btn"
         >
-          Start Recipe
+          {NameBtn}
         </button>
       )}
     </div>
