@@ -4,10 +4,13 @@ import { useParams } from 'react-router-dom';
 import AppRecipesContext from '../context/AppRecipesContext';
 import { ingredients } from '../tests/helpers/numbers';
 
+const SIX = 6;
+
 function DrinksDetails({ match: { params: { id } } }) {
   const { drinksCards } = useContext(AppRecipesContext);
   const [findDrinks, setFindDrinks] = useState([]);
   const [returnApiDrinks, setReturnApiDrinks] = useState('');
+  const [returnAllMeals, setReturnAllMeals] = useState([]);
   const params = useParams();
 
   useEffect(() => {
@@ -25,7 +28,17 @@ function DrinksDetails({ match: { params: { id } } }) {
     fetchDrinksDetails();
   }, []); // eslint-disable-line
   console.log(findDrinks);
-  console.log(returnApiDrinks);
+
+  useEffect(() => {
+    const fetchSixMealsRecommended = async () => {
+      const url = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+      const response = await fetch(url);
+      const result = await response.json();
+      setReturnAllMeals(result.meals);
+    };
+
+    fetchSixMealsRecommended();
+  }, []);
 
   const cleanEmpty = (obj) => {
     const clean = Object.fromEntries(Object.entries(obj)
@@ -66,6 +79,36 @@ function DrinksDetails({ match: { params: { id } } }) {
           />
         </div>
       ))}
+      <div className="scroll">
+        {returnAllMeals.length > 0 && returnAllMeals.map((meal, index) => (
+          index < SIX && (
+            <div
+              className="scroll-child"
+              key={ meal.idMeal }
+              data-testid={ `${index}-recommendation-card` }
+            >
+              <p
+                className="p-scroll"
+                data-testid={ `${index}-recommendation-title` }
+              >
+                {meal.strMeal}
+              </p>
+              <img
+                className="img-scroll"
+                src={ meal.strMealThumb }
+                alt={ meal.strMeal }
+              />
+            </div>
+          )
+        ))}
+      </div>
+      <button
+        className="scroll-btn"
+        type="button"
+        data-testid="start-recipe-btn"
+      >
+        Start Recipe
+      </button>
     </div>
   );
 }
