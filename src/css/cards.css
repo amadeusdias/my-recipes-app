@@ -39,7 +39,7 @@
   /* border: 0.518px solid #b1b1b1; */
 }
 
-.Beef-icon, .Breakfast-icon, .Chicken-icon, .Dessert-icon, .Goat-icon, .All-icon {
+.Beef-icon, .Breakfast-icon, .Chicken-icon, .Dessert-icon, .Goat-icon, .All-icon-meals {
   background-color: white;
   background-repeat: no-repeat;
   border: none;
@@ -48,7 +48,7 @@
   width: 50px;
 }
 
-.Shake-icon, .Cocktail-icon, .other-icon, .Cocoa-icon, .Ordinary {
+.Shake-icon, .Cocktail-icon, .other-icon, .Cocoa-icon, .Ordinary, .All-icon-drinks {
   background-color: white;
   background-repeat: no-repeat;
   border: none;
@@ -78,10 +78,6 @@
   background-image: url('../images/lamb.svg');
 }
 
-.All-icon {
-  background-image: url('../images/All.svg');
-}
-
 .Cocoa-icon {
   background-image: url('../images/cocoa.svg');
 }
@@ -100,4 +96,12 @@
 
 .other-icon {
   background-image: url('../images/other.svg');
+}
+
+.All-icon-drinks {
+  background-image: url('../images/Alldrinks.svg');
+}
+
+.All-icon-meals {
+  background-image: url('../images/Allmeals.svg');
 }
