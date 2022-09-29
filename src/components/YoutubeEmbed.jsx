@@ -5,6 +5,7 @@ function YoutubeEmbed({ embedId }) {
   return (
     <div className="video-responsive">
       <iframe
+        data-testid="video"
         width="853"
         height="480"
         src={ `https://www.youtube.com/embed/${embedId}` }
