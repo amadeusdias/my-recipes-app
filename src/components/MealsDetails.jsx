@@ -5,6 +5,9 @@ import YoutubeEmbed from './YoutubeEmbed';
 import AppRecipesContext from '../context/AppRecipesContext';
 import '../css/carousel.css';
 import { ingredients } from '../tests/helpers/numbers';
+import '../css/mealsDetails.css';
+import share from '../images/share.svg';
+import favorite from '../images/favorite2.svg';
 
 const SIX = 6;
 function MealsDetails({ match: { params: { id } } }) {
@@ -78,15 +81,26 @@ function MealsDetails({ match: { params: { id } } }) {
   // console.log(ingredients);
 
   return (
-    <div>
+    <div className="container-meals-details">
       {cleanEmpty(returnApiMeals).map((item, index) => (
         <div key={ index }>
-          <h3 data-testid="recipe-title">{item.strMeal}</h3>
+          <img src={ share } alt="favorite" className="icon-share" />
+          <img src={ favorite } alt="favorite" className="icon-favorite" />
+          <div className="container-img-meals">
+            <img
+              className="img-meals-details"
+              data-testid="recipe-photo"
+              src={ item.strMealThumb }
+              alt={ item.strMeal }
+            />
+          </div>
+          <h3 data-testid="recipe-title" className="title-food">{item.strMeal}</h3>
           <p data-testid="recipe-category">
-            Category:
+            {/* Category: */}
             {item.strCategory}
           </p>
-          <ul>
+            <h2 className="title-meals-details">Ingredients</h2>
+            <ul className="list-ingredients">
             {ingredients.map((indexI) => returnApiMeals[`strIngredient${indexI}`]?.length
             > 0 && (
               <li
@@ -98,16 +112,12 @@ function MealsDetails({ match: { params: { id } } }) {
               </li>
             ))}
           </ul>
-          <p data-testid="instructions">
-            Instructions:
+          <h2 className="title-meals-details">Instructions:</h2>
+          <p data-testid="instructions" className="instructions">
             {item.strInstructions}
           </p>
-          <img
-            data-testid="recipe-photo"
-            src={ item.strMealThumb }
-            alt={ item.strMeal }
-          />
-          <div>
+          <div className="youtube-video">
+            <h2 className="title-meals-details">Video:</h2>
             <YoutubeEmbed
               data-testid="video"
               embedId={ item.strYoutube

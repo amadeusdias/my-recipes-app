@@ -6,6 +6,8 @@ import { fetchCategoryMeals, fetchCategoryDrinks } from '../service/fetchCards';
 import '../css/cards.css';
 import { ZERO, FIVE, TWELVE } from '../tests/helpers/numbers';
 
+const tres = 3;
+
 function Cards({ path }) {
   const { drinksCards,
     mealsCards,
@@ -98,7 +100,7 @@ function Cards({ path }) {
           id=""
         >
           <button
-            className={ `${item.strCategory}-icon` }
+            className={ `${index === tres ? 'other' : item.strCategory}-icon` }
             type="button"
             data-testid={ `${item.strCategory}-category-filter` }
             onClick={ handleClickFiltered }
