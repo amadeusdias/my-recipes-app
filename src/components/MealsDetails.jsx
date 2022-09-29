@@ -3,19 +3,7 @@ import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import YoutubeEmbed from './YoutubeEmbed';
 import AppRecipesContext from '../context/AppRecipesContext';
-// import numbers from '../tests/helpers/numbers';
-
-const ingredients = ['1',
-  '2',
-  '3',
-  '4',
-  '5',
-  '6',
-  '7',
-  '8',
-  '9',
-  '10',
-  '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'];
+import numbers from '../tests/helpers/numbers';
 
 function MealsDetails({ match: { params: { id } } }) {
   const { mealsCards } = useContext(AppRecipesContext);
@@ -75,7 +63,7 @@ function MealsDetails({ match: { params: { id } } }) {
             {item.strCategory}
           </p>
           <ul>
-            {ingredients.map((indexI) => returnApiMeals[`strIngredient${indexI}`]?.length
+            {numbers.map((indexI) => returnApiMeals[`strIngredient${indexI}`]?.length
             > 0 && (
               <li
                 key={ returnApiMeals[`strIngredient${indexI}`] }
@@ -107,19 +95,6 @@ function MealsDetails({ match: { params: { id } } }) {
       ))}
     </div>
   );
-//   return (
-//     <div>
-//       {ingredients.map((index) => returnApiMeals[`strIngredient${index}`]?.length > 0 && (
-//         <li
-//           key={ returnApiMeals[`strIngredient${index}`] }
-//           data-testid={ `${index - 1}-ingredient0-name-and-measure` }
-//         >
-//           {returnApiMeals[`strIngredient${index}`]}
-//           {returnApiMeals[`strMeasure${index}`]}
-//         </li>
-//       ))}
-//     </div>
-//   );
 }
 
 MealsDetails.propTypes = {
