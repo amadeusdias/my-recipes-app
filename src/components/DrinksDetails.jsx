@@ -9,7 +9,9 @@ import shareIcon from '../images/shareIcon.svg';
 const SIX = 6;
 
 function DrinksDetails({ match: { params: { id } } }) {
-  const { drinksCards } = useContext(AppRecipesContext);
+  const { drinksCards, favoriteRecipes,
+    setFavoritesRecipes,
+  } = useContext(AppRecipesContext);
   const [findDrinks, setFindDrinks] = useState([]);
   const [returnApiDrinks, setReturnApiDrinks] = useState('');
   const [returnAllMeals, setReturnAllMeals] = useState([]);
@@ -69,6 +71,25 @@ function DrinksDetails({ match: { params: { id } } }) {
     }
   }
 
+  function handleClickFavoriteRecipes() {
+    setFavoritesRecipes([
+      ...favoriteRecipes,
+      {
+        id: returnApiDrinks.idDrink,
+        type: 'drink',
+        nationality: '',
+        category: returnApiDrinks.strCategory,
+        alcoholicOrNot: returnApiDrinks.strAlcoholic,
+        name: returnApiDrinks.strDrink,
+        image: returnApiDrinks.strDrinkThumb,
+      }]);
+  }
+
+  localStorage.setItem(
+    'favoriteRecipes',
+    JSON.stringify(favoriteRecipes),
+  );
+
   return (
     <div>
       <button
@@ -85,6 +106,7 @@ function DrinksDetails({ match: { params: { id } } }) {
       <button
         type="button"
         data-testid="favorite-btn"
+        onClick={ handleClickFavoriteRecipes }
       >
         Favoritar Receita
       </button>
