@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, useParams } from 'react-router-dom';
+import copy from 'clipboard-copy';
 import YoutubeEmbed from './YoutubeEmbed';
 import AppRecipesContext from '../context/AppRecipesContext';
 import '../css/carousel.css';
@@ -8,6 +9,7 @@ import { ingredients } from '../tests/helpers/numbers';
 import '../css/mealsDetails.css';
 import share from '../images/share.svg';
 import favorite from '../images/favorite2.svg';
+import shareIcon from '../images/shareIcon.svg';
 
 const SIX = 6;
 function MealsDetails({ match: { params: { id } } }) {
@@ -15,6 +17,7 @@ function MealsDetails({ match: { params: { id } } }) {
   const [findMeal, setFindMeal] = useState([]);
   const [returnApiMeals, setReturnApiMeals] = useState([]);
   const [returnAllDrinks, setReturnAllDrinks] = useState([]);
+  const [shareCopy, setShareCopy] = useState(false);
   const params = useParams();
   const history = useHistory();
 
@@ -61,6 +64,13 @@ function MealsDetails({ match: { params: { id } } }) {
     history.push(`/meals/${params.id}/in-progress`);
   }
 
+  function handleClickShareBtn() {
+    if (findMeal) {
+      copy(`http://localhost:3000${window.location.pathname}`);
+      setShareCopy(!shareCopy);
+    }
+  }
+
   const TRINTAEDOIS = 32;
 
   return (
@@ -68,9 +78,14 @@ function MealsDetails({ match: { params: { id } } }) {
       <button
         type="button"
         data-testid="share-btn"
+        onClick={ handleClickShareBtn }
       >
-        Compartilhar Receita
+        <img
+          src={ shareIcon }
+          alt="comida"
+        />
       </button>
+      {shareCopy && <p>Link copied!</p>}
       <button
         type="button"
         data-testid="favorite-btn"
