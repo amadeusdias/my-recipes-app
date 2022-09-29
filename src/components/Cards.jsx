@@ -8,6 +8,7 @@ import '../css/cards.css';
 const ZERO = 0;
 const FIVE = 5;
 const TWELVE = 12;
+const tres = 3;
 // asdasdasd
 
 function Cards({ path }) {
@@ -102,7 +103,7 @@ function Cards({ path }) {
           id=""
         >
           <button
-            className={ `${item.strCategory}-icon` }
+            className={ `${index === tres ? 'other' : item.strCategory}-icon` }
             type="button"
             data-testid={ `${item.strCategory}-category-filter` }
             onClick={ handleClickFiltered }

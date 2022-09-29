@@ -97,3 +97,7 @@
 .Ordinary {
   background-image: url('../images/drink.svg');
 }
+
+.other-icon {
+  background-image: url('../images/other.svg');
+}

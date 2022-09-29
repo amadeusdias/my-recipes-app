@@ -1,0 +1,69 @@
+.container-meals-details {
+  background-color: white;
+  width: 360px;
+}
+
+.img-meals-details {
+  height: auto;
+  margin-bottom: 10px;
+  max-width: 360px;
+  position: relative;
+  top: -70px;
+  width: auto;
+}
+
+.container-img-meals {
+  max-height: 180px;
+  overflow: hidden;
+}
+
+.title-meals-details {
+  color: #1a1b1c;
+  font-family: Epilogue , sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px;
+}
+
+.youtube-video {
+  height: 200px;
+  overflow: hidden;
+  width: 336px;
+}
+
+.list-ingredients, .instructions {
+  border: 0.554px solid #b1b1b1;
+  border-radius: 5.351px;
+}
+
+.title-food {
+  background-color: rgba(0, 0, 0, 0.32);
+  color: white;
+  font-family: Epilogue , sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 900;
+  letter-spacing: 0.105em;
+  line-height: 20px;
+  padding: 6px;
+  position: absolute;
+  text-align: center;
+  text-transform: uppercase;
+  top: 60px;
+  width: 360px;
+}
+
+.icon-share, .icon-favorite {
+  position: absolute;
+  top: 66px;
+  z-index: 2;
+}
+
+.icon-share {
+  left: 277px;
+}
+
+.icon-favorite {
+  left: 310px;
+}
