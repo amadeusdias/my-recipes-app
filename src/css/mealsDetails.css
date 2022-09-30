@@ -1,6 +1,6 @@
 .container-meals-details {
   background-color: white;
-  height: 250vh;
+  height: 220vh;
   width: 360px;
 }
 
@@ -38,9 +38,21 @@
 .instructions {
   border: 0.554px solid #b1b1b1;
   border-radius: 5.351px;
+  /* temporario */
+
   margin-left: 13px;
   /* temporario */
+  overflow-y: scroll;
   width: 330px;
+}
+
+.list-ingredients {
+  height: 175px;
+}
+
+.instructions {
+  height: 275px;
+  overflow-y: scroll;
 }
 
 .title-food {

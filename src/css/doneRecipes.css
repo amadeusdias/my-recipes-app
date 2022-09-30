@@ -1,0 +1,114 @@
+.container-donerecipes {
+  align-items: center;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+
+  /* min-height: 100vh; */
+  width: 360px;
+}
+
+.btn-donerecipes, .btn-shareIcon {
+  background-color: transparent;
+  border: none;
+}
+
+.btn-shareIcon {
+  position: absolute;
+  right: 8px;
+  top: 6px;
+  width: 30px;
+}
+
+.card-donerecipes {
+  align-items: flex-start;
+  background: white;
+  display: flex;
+  height: 135px;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  position: relative;
+  width: 318px;
+}
+
+.img-donerecipes {
+  border-radius: 5px 0 0 5px;
+  height: 134.85px;
+  width: 163.35px;
+}
+
+.container-donerecipes-info {
+  align-items: flex-start;
+  border: 0.518px solid #b1b1b1;
+  border-radius: 0 5px 5px 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  padding: 8px;
+  width: 155px;
+
+}
+
+.container-donerecipes-info p {
+  margin: 0;
+}
+
+.menu-btn-donerecipes {
+  margin-bottom: 20px;
+}
+
+.title-dr {
+  color: #1a1b1c;
+  font-family: Epilogue , sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 12px;
+}
+
+.date-dr {
+  color: #1a1b1c;
+  font-family: Epilogue , sans-serif;
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 9px;
+  text-align: center;
+}
+
+.tags {
+  display: flex;
+  gap: 5px;
+  margin-top: 35px;
+}
+
+.tag {
+  align-items: center;
+  background: #d9d9d9;
+  border-radius: 10px;
+  color: #797d86;
+  display: flex;
+  font-family: Epilogue , sans-serif;
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 9px;
+  padding: 3px;
+}
+
+.pirocoptero {
+  color: #797d86;
+  display: flex;
+  font-family: Epilogue , sans-serif;
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 300;
+  gap: 5px;
+  line-height: 9px;
+  margin-bottom: 23px;
+  text-align: center;
+  width: 100%;
+}
+

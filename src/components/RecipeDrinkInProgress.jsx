@@ -48,6 +48,7 @@ function RecipeInProgress() {
 
       <button type="button" data-testid="finish-recipe-btn">Finalizar</button>
     </div>
+
   );
 }
 

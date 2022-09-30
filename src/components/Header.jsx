@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
-import profileIcon from '../images/profileIcon.svg';
-import searchIcon from '../images/searchIcon.svg';
-import SearchBar from './SearchBar';
-import recipesApp from '../images/recipesApp.svg';
+import { useHistory, useLocation } from 'react-router-dom';
+import pageDrinks from '../images/drinkIcon.svg';
 import headerIcon from '../images/headerIcon.svg';
 import pageMeals from '../images/mealIcon.svg';
-import pageDrinks from '../images/drinkIcon.svg';
+import pageDone from '../images/pageDone.svg';
 import pageProfile from '../images/pageProfile.svg';
+import profileIcon from '../images/profileIcon.svg';
+import recipesApp from '../images/recipesApp.svg';
+import searchIcon from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 
 import '../css/header.css';
 
@@ -86,6 +87,7 @@ function Header() {
         { hlp.includes('/meals') ? <img src={ pageMeals } alt="mealsIcon" /> : null}
         { hlp.includes('/drinks') ? <img src={ pageDrinks } alt="drinksIcon" /> : null}
         { hlp.includes('/profile') ? <img src={ pageProfile } alt="profileIcon" /> : null}
+        { hlp.includes('/done-recipes') ? <img src={ pageDone } alt="pageDone" /> : null}
         <h2 data-testid="page-title" className="title-page-title">{pageName }</h2>
         {showSearch ? <SearchBar /> : null}
       </div>
