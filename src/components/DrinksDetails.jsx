@@ -5,22 +5,21 @@ import copy from 'clipboard-copy';
 import whiteHearthIcon from '../images/whiteHeartIcon.svg';
 import blackHearthIcon from '../images/blackHeartIcon.svg';
 import AppRecipesContext from '../context/AppRecipesContext';
-import { ingredients } from '../tests/helpers/numbers';
+import { ingredients, SIX } from '../tests/helpers/numbers';
 import shareIcon from '../images/shareIcon.svg';
 
-const SIX = 6;
-
 function DrinksDetails({ match: { params: { id } } }) {
-  const { drinksCards, favoriteRecipes,
+  const { drinksCards,
+    favoriteRecipes,
     setFavoritesRecipes,
   } = useContext(AppRecipesContext);
+  const params = useParams();
+  const history = useHistory();
   const [findDrinks, setFindDrinks] = useState([]);
   const [returnApiDrinks, setReturnApiDrinks] = useState('');
   const [returnAllMeals, setReturnAllMeals] = useState([]);
   const [shareCopy, setShareCopy] = useState(false);
   const [iconHeart, setIconHeart] = useState(false);
-  const params = useParams();
-  const history = useHistory();
 
   useEffect(() => {
     setFindDrinks(drinksCards.filter((drink) => drink.idDrink === id));
@@ -33,10 +32,8 @@ function DrinksDetails({ match: { params: { id } } }) {
       const result = await response.json();
       setReturnApiDrinks(result.drinks[0]);
     };
-
     fetchDrinksDetails();
   }, []); // eslint-disable-line
-  console.log(findDrinks);
 
   useEffect(() => {
     const fetchSixMealsRecommended = async () => {
@@ -62,19 +59,13 @@ function DrinksDetails({ match: { params: { id } } }) {
         name: returnApiDrinks.strDrink,
         image: returnApiDrinks.strDrinkThumb,
       }].filter((item) => item.id));
-  }, [returnApiDrinks]);
+  }, [returnApiDrinks]); // eslint-disable-line
 
   useEffect(() => {
     const favoriteDrinks = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     const isFavorite = favoriteDrinks.some((drink) => drink.id === params.id);
     setIconHeart(isFavorite);
-  }, [favoriteRecipes]);
-
-  const cleanEmpty = (obj) => {
-    const clean = Object.fromEntries(Object.entries(obj)
-      .filter(([, v]) => v != null || v !== '' || v !== ' '));
-    return Array(clean);
-  };
+  }, [favoriteRecipes, params.id]);
 
   const recipesDone = JSON.parse(localStorage.getItem('doneRecipes'));
   const recipesProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
@@ -82,6 +73,12 @@ function DrinksDetails({ match: { params: { id } } }) {
   let startBtn = '';
   const NameBtn = !recipesProgress ? 'Start Recipe' : 'Continue Recipe';
   if (recipesDone) startBtn = recipesDone.some((item) => item.id === params.id);
+
+  const cleanEmpty = (obj) => {
+    const clean = Object.fromEntries(Object.entries(obj)
+      .filter(([, v]) => v != null || v !== '' || v !== ' '));
+    return Array(clean);
+  };
 
   function handleClickToInProgress() {
     history.push(`/drinks/${params.id}/in-progress`);
@@ -109,16 +106,13 @@ function DrinksDetails({ match: { params: { id } } }) {
 
   return (
     <div>
-      <button
-        type="button"
+      <img
+        src={ shareIcon }
+        alt="bebida"
+        role="presentation"
         data-testid="share-btn"
         onClick={ handleClickShareBtn }
-      >
-        <img
-          src={ shareIcon }
-          alt="bebida"
-        />
-      </button>
+      />
       {shareCopy && <p>Link copied!</p>}
       <img
         className="favorite"
@@ -132,7 +126,6 @@ function DrinksDetails({ match: { params: { id } } }) {
         <div key={ index }>
           <h3 data-testid="recipe-title">
             {item.strDrink}
-
           </h3>
           <p data-testid="recipe-category">{item.strAlcoholic}</p>
           <p>{item.strInstructions}</p>

@@ -8,6 +8,7 @@ import { ZERO, TWELVE } from '../tests/helpers/numbers';
 const alertWarning = 'Sorry, we haven\'t found any recipes for these filters.';
 
 function AppRecipesProvider({ children }) {
+  const history = useHistory();
   const [userEmail, setUserEmail] = useState({
     email: '',
   });
@@ -15,7 +16,6 @@ function AppRecipesProvider({ children }) {
   const [mealsCards, setMealsCards] = useState([]);
   const [searchInput, setSearchInput] = useState('');
   const [radioInput, setRadioInput] = useState('');
-  const history = useHistory();
   const [favoriteRecipes, setFavoritesRecipes] = useState([]);
 
   useEffect(() => {

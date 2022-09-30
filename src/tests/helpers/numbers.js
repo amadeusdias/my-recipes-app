@@ -1,6 +1,9 @@
 export const ZERO = 0;
 export const FIVE = 5;
+export const SIX = 6;
 export const TWELVE = 12;
+export const VINTE = 20;
+export const TRINTAEDOIS = 32;
 export const ingredients = ['1',
   '2',
   '3',

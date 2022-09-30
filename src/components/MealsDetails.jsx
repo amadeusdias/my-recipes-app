@@ -11,29 +11,21 @@ import '../css/mealsDetails.css';
 import favorite from '../images/favorite2.svg';
 import shareIcon from '../images/shareIcon.svg';
 import share from '../images/share.svg';
-import { ingredients } from '../tests/helpers/numbers';
+import { ingredients, SIX, TRINTAEDOIS } from '../tests/helpers/numbers';
 
-const SIX = 6;
 function MealsDetails({ match: { params: { id } } }) {
   const {
     mealsCards,
     favoriteRecipes,
     setFavoritesRecipes,
   } = useContext(AppRecipesContext);
+  const params = useParams();
+  const history = useHistory();
   const [findMeal, setFindMeal] = useState([]);
   const [returnApiMeals, setReturnApiMeals] = useState([]);
   const [returnAllDrinks, setReturnAllDrinks] = useState([]);
   const [shareCopy, setShareCopy] = useState(false);
   const [iconHeart, setIconHeart] = useState(false);
-  const params = useParams();
-  const history = useHistory();
-
-  const cleanEmpty = (obj) => {
-    const clean = Object.fromEntries(Object.entries(obj)
-      .filter(([, v]) => v != null || v !== '' || v !== ' '));
-    return Array(clean);
-  };
-  console.log(findMeal);
 
   useEffect(() => {
     setFindMeal(mealsCards.filter((meal) => meal.idMeal === id));
@@ -73,15 +65,13 @@ function MealsDetails({ match: { params: { id } } }) {
         name: returnApiMeals.strMeal,
         image: returnApiMeals.strMealThumb,
       }].filter((item) => item.id));
-  }, [returnApiMeals]);
+  }, [returnApiMeals]); // eslint-disable-line
 
   useEffect(() => {
     const favoriteFoods = JSON.parse(localStorage.getItem(('favoriteRecipes'))) || [];
     const isFavorite = favoriteFoods.some((f) => f.id === params.id);
     setIconHeart(isFavorite);
-    // if (isFavorite) isF = blackHearthIcon;
-    // else isF = whiteHearthIcon;
-  }, [favoriteRecipes]);
+  }, [favoriteRecipes]); // eslint-disable-line
 
   const recipesDone = JSON.parse(localStorage.getItem('doneRecipes'));
   const recipesProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
@@ -89,6 +79,12 @@ function MealsDetails({ match: { params: { id } } }) {
   let startBtn = '';
   const NameBtn = !recipesProgress ? 'Start Recipe' : 'Continue Recipe';
   if (recipesDone) startBtn = recipesDone.some((item) => item.id === params.id);
+
+  const cleanEmpty = (obj) => {
+    const clean = Object.fromEntries(Object.entries(obj)
+      .filter(([, v]) => v != null || v !== '' || v !== ' '));
+    return Array(clean);
+  };
 
   function handleClickToInProgress() {
     history.push(`/meals/${params.id}/in-progress`);
@@ -114,20 +110,15 @@ function MealsDetails({ match: { params: { id } } }) {
     setIconHeart(!iconHeart);
   }
 
-  const TRINTAEDOIS = 32;
-
   return (
     <div className="container-meals-details">
-      <button
-        type="button"
+      <img
+        src={ shareIcon }
+        alt="comida"
+        role="presentation"
         data-testid="share-btn"
         onClick={ handleClickShareBtn }
-      >
-        <img
-          src={ shareIcon }
-          alt="comida"
-        />
-      </button>
+      />
       {shareCopy && <p>Link copied!</p>}
       <img
         className="favorite"
@@ -151,7 +142,6 @@ function MealsDetails({ match: { params: { id } } }) {
           </div>
           <h3 data-testid="recipe-title" className="title-food">{item.strMeal}</h3>
           <p data-testid="recipe-category">
-            {/* Category: */}
             {item.strCategory}
           </p>
           <h2 className="title-meals-details">Ingredients</h2>
