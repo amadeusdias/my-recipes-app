@@ -1,16 +1,15 @@
-import PropTypes from 'prop-types';
-import { useHistory, useParams } from 'react-router-dom';
 import copy from 'clipboard-copy';
+import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
-import YoutubeEmbed from './YoutubeEmbed';
-import whiteHearthIcon from '../images/whiteHeartIcon.svg';
-import blackHearthIcon from '../images/blackHeartIcon.svg';
+import { useHistory, useParams } from 'react-router-dom';
 import AppRecipesContext from '../context/AppRecipesContext';
 import '../css/carousel.css';
 import '../css/mealsDetails.css';
-import favorite from '../images/favorite2.svg';
+import blackHearthIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
-import share from '../images/share.svg';
+import whiteHearthIcon from '../images/whiteHeartIcon.svg';
+import YoutubeEmbed from './YoutubeEmbed';
+// import share from '../images/share.svg';
 import { ingredients, SIX, TRINTAEDOIS } from '../tests/helpers/numbers';
 
 function MealsDetails({ match: { params: { id } } }) {
@@ -113,6 +112,7 @@ function MealsDetails({ match: { params: { id } } }) {
   return (
     <div className="container-meals-details">
       <img
+        className="icon-share"
         src={ shareIcon }
         alt="comida"
         role="presentation"
@@ -121,7 +121,7 @@ function MealsDetails({ match: { params: { id } } }) {
       />
       {shareCopy && <p>Link copied!</p>}
       <img
-        className="favorite"
+        className="icon-favorite"
         src={ iconHeart ? blackHearthIcon : whiteHearthIcon }
         alt="favorite food"
         role="presentation"
@@ -130,8 +130,8 @@ function MealsDetails({ match: { params: { id } } }) {
       />
       {cleanEmpty(returnApiMeals).map((item, index) => (
         <div key={ index }>
-          <img src={ share } alt="favorite" className="icon-share" />
-          <img src={ favorite } alt="favorite" className="icon-favorite" />
+          {/* <img src={ share } alt="favorite" className="icon-share" /> */}
+          {/* <img src={ favorite } alt="favorite" className="icon-favorite" /> */}
           <div className="container-img-meals">
             <img
               className="img-meals-details"
@@ -168,7 +168,6 @@ function MealsDetails({ match: { params: { id } } }) {
               embedId={ item.strYoutube
                 ? item.strYoutube.slice(TRINTAEDOIS) : null }
             />
-
           </div>
         </div>
       ))}
