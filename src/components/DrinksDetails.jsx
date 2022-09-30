@@ -1,23 +1,26 @@
-import React, { useContext, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { useHistory, useParams } from 'react-router-dom';
 import copy from 'clipboard-copy';
+import PropTypes from 'prop-types';
+import React, { useContext, useEffect, useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import AppRecipesContext from '../context/AppRecipesContext';
-import { ingredients } from '../tests/helpers/numbers';
+import blackHearthIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
-
-const SIX = 6;
+import whiteHearthIcon from '../images/whiteHeartIcon.svg';
+import { ingredients, SIX } from '../tests/helpers/numbers';
+import YoutubeEmbed from './YoutubeEmbed';
 
 function DrinksDetails({ match: { params: { id } } }) {
-  const { drinksCards, favoriteRecipes,
+  const { drinksCards,
+    favoriteRecipes,
     setFavoritesRecipes,
   } = useContext(AppRecipesContext);
+  const params = useParams();
+  const history = useHistory();
   const [findDrinks, setFindDrinks] = useState([]);
   const [returnApiDrinks, setReturnApiDrinks] = useState('');
   const [returnAllMeals, setReturnAllMeals] = useState([]);
   const [shareCopy, setShareCopy] = useState(false);
-  const params = useParams();
-  const history = useHistory();
+  const [iconHeart, setIconHeart] = useState(false);
 
   useEffect(() => {
     setFindDrinks(drinksCards.filter((drink) => drink.idDrink === id));
@@ -30,10 +33,8 @@ function DrinksDetails({ match: { params: { id } } }) {
       const result = await response.json();
       setReturnApiDrinks(result.drinks[0]);
     };
-
     fetchDrinksDetails();
   }, []); // eslint-disable-line
-  console.log(findDrinks);
 
   useEffect(() => {
     const fetchSixMealsRecommended = async () => {
@@ -46,11 +47,26 @@ function DrinksDetails({ match: { params: { id } } }) {
     fetchSixMealsRecommended();
   }, []);
 
-  const cleanEmpty = (obj) => {
-    const clean = Object.fromEntries(Object.entries(obj)
-      .filter(([, v]) => v != null || v !== '' || v !== ' '));
-    return Array(clean);
-  };
+  useEffect(() => {
+    setFavoritesRecipes('');
+    setFavoritesRecipes([
+      ...favoriteRecipes,
+      {
+        id: returnApiDrinks.idDrink,
+        type: 'drink',
+        nationality: '',
+        category: returnApiDrinks.strCategory,
+        alcoholicOrNot: returnApiDrinks.strAlcoholic,
+        name: returnApiDrinks.strDrink,
+        image: returnApiDrinks.strDrinkThumb,
+      }].filter((item) => item.id));
+  }, [returnApiDrinks]); // eslint-disable-line
+
+  useEffect(() => {
+    const favoriteDrinks = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+    const isFavorite = favoriteDrinks.some((drink) => drink.id === params.id);
+    setIconHeart(isFavorite);
+  }, [favoriteRecipes, params.id]);
 
   const recipesDone = JSON.parse(localStorage.getItem('doneRecipes'));
   const recipesProgress = JSON.parse(localStorage.getItem('inProgressRecipes'));
@@ -58,6 +74,12 @@ function DrinksDetails({ match: { params: { id } } }) {
   let startBtn = '';
   const NameBtn = !recipesProgress ? 'Start Recipe' : 'Continue Recipe';
   if (recipesDone) startBtn = recipesDone.some((item) => item.id === params.id);
+
+  const cleanEmpty = (obj) => {
+    const clean = Object.fromEntries(Object.entries(obj)
+      .filter(([, v]) => v != null || v !== '' || v !== ' '));
+    return Array(clean);
+  };
 
   function handleClickToInProgress() {
     history.push(`/drinks/${params.id}/in-progress`);
@@ -72,53 +94,54 @@ function DrinksDetails({ match: { params: { id } } }) {
   }
 
   function handleClickFavoriteRecipes() {
-    setFavoritesRecipes([
-      ...favoriteRecipes,
-      {
-        id: returnApiDrinks.idDrink,
-        type: 'drink',
-        nationality: '',
-        category: returnApiDrinks.strCategory,
-        alcoholicOrNot: returnApiDrinks.strAlcoholic,
-        name: returnApiDrinks.strDrink,
-        image: returnApiDrinks.strDrinkThumb,
-      }]);
+    localStorage.setItem(
+      'favoriteRecipes',
+      JSON.stringify(favoriteRecipes),
+    );
+    const toggleHeart = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (toggleHeart.find((local) => local.id !== params.id)) {
+      localStorage.removeItem('favoriteRecipes');
+    }
+    setIconHeart(!iconHeart);
   }
 
-  localStorage.setItem(
-    'favoriteRecipes',
-    JSON.stringify(favoriteRecipes),
-  );
-
   return (
-    <div>
-      <button
-        type="button"
+    <div className="container-meals-details">
+      <img
+        className="icon-share"
+        src={ shareIcon }
+        alt="bebida"
+        role="presentation"
         data-testid="share-btn"
         onClick={ handleClickShareBtn }
-      >
-        <img
-          src={ shareIcon }
-          alt="bebida"
-        />
-      </button>
+      />
       {shareCopy && <p>Link copied!</p>}
-      <button
-        type="button"
+      <img
+        className="icon-favorite"
+        src={ iconHeart ? blackHearthIcon : whiteHearthIcon }
+        alt="favorite drink"
+        role="presentation"
         data-testid="favorite-btn"
         onClick={ handleClickFavoriteRecipes }
-      >
-        Favoritar Receita
-      </button>
+      />
       {cleanEmpty(returnApiDrinks).map((item, index) => (
         <div key={ index }>
-          <h3 data-testid="recipe-title">
+          {/* <img src={ share } alt="favorite" className="icon-share" /> */}
+          {/* <img src={ favorite } alt="favorite" className="icon-favorite" /> */}
+          <div className="container-img-meals">
+            <img
+              className="img-meals-details"
+              src={ item.strDrinkThumb }
+              alt={ item.strDrink }
+              data-testid="recipe-photo"
+            />
+          </div>
+          <h3 data-testid="recipe-title" className="title-food">
             {item.strDrink}
-
           </h3>
           <p data-testid="recipe-category">{item.strAlcoholic}</p>
-          <p>{item.strInstructions}</p>
-          <ul>
+          <h2 className="title-meals-details">Ingredients</h2>
+          <ul className="list-ingredients">
             {ingredients.map((indexI) => returnApiDrinks[`strIngredient${indexI}`]?.length
             > 0 && (
               <li
@@ -130,17 +153,22 @@ function DrinksDetails({ match: { params: { id } } }) {
               </li>
             ))}
           </ul>
-          <p data-testid="instructions">
-            Instructions:
+          <h2 className="title-meals-details">Instructions:</h2>
+          <p data-testid="instructions" className="instructions">
             {item.strInstructions}
           </p>
-          <img
-            src={ item.strDrinkThumb }
-            alt={ item.strDrink }
-            data-testid="recipe-photo"
-          />
+          <div className="youtube-video">
+            <h2 className="title-meals-details">Video:</h2>
+            <YoutubeEmbed
+              data-testid="video"
+              embedId={ item.strYoutube
+                ? item.strYoutube.slice(TRINTAEDOIS) : null }
+            />
+
+          </div>
         </div>
       ))}
+      <h2 className="title-meals-details">Recommended</h2>
       <div className="scroll">
         {returnAllMeals.length > 0 && returnAllMeals.map((meal, index) => (
           index < SIX && (

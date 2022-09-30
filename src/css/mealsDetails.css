@@ -20,7 +20,7 @@
 
 .title-meals-details {
   color: #1a1b1c;
-  font-family: Epilogue, sans-serif;
+  font-family: Epilogue , sans-serif;
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
@@ -34,13 +34,13 @@
   width: 336px;
 } */
 
-.list-ingredients,
-.instructions {
+.list-ingredients, .instructions {
   border: 0.554px solid #b1b1b1;
   border-radius: 5.351px;
-  /* temporario */
 
+  /* temporario */
   margin-left: 13px;
+
   /* temporario */
   overflow-y: scroll;
   width: 330px;
@@ -58,7 +58,7 @@
 .title-food {
   background-color: rgba(0, 0, 0, 0.32);
   color: white;
-  font-family: Epilogue, sans-serif;
+  font-family: Epilogue , sans-serif;
   font-size: 20px;
   font-style: normal;
   font-weight: 900;
@@ -72,8 +72,9 @@
   width: 360px;
 }
 
-.icon-share,
-.icon-favorite {
+.icon-share, .icon-favorite {
+  background-color: transparent;
+  border: none;
   position: absolute;
   top: 66px;
   z-index: 2;
@@ -90,8 +91,10 @@
 iframe {
   height: 205.09px;
   margin-bottom: 20px;
+
   /* temporario */
   margin-left: 10px;
+
   /* temporario */
   width: 336px;
 }
