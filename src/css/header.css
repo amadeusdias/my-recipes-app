@@ -1,4 +1,5 @@
-.container-top-bar { /* temporario ---- */
+.container-top-bar {
+  /* temporario ---- */
   align-items: center;
   background-color: #fcdc36;
   display: flex;
@@ -6,7 +7,9 @@
   margin-bottom: 20px;
   padding: 8px;
   width: 360px;
-} /* temporario ----------------------- */
+}
+
+/* temporario ----------------------- */
 
 .title-page-title {
   color: #41197f;
@@ -15,7 +18,8 @@
   font-weight: 900;
   letter-spacing: 0.105em;
   line-height: 20px;
-  margin: 20px; /* temporario */
+  margin: 20px;
+  /* temporario */
   text-align: center;
   text-transform: uppercase;
 }
