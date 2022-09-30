@@ -1,10 +1,9 @@
-/* .container-donerecipes {
+.container-donerecipes {
   align-items: center;
   background-color: white;
   display: flex;
   flex-direction: column;
   height: auto;
-
   min-height: 100vh;
   width: 360px;
 }
@@ -110,9 +109,9 @@
   margin-bottom: 23px;
   text-align: center;
   width: 100%;
-} */
+}
 
-.img-fdp {
-  height: 200px;
-  width: 200px;
+.fake-footer {
+  bottom: 0;
+  position: fixed;
 }
