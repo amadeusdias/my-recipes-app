@@ -1,129 +1,125 @@
-import React, { useState } from 'react';
+import copy from 'clipboard-copy';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import '../css/doneRecipes.css';
-import doneAllIcon from '../images/doneAllIcon.svg';
-import doneDrinkIcon from '../images/doneDrinkIcon.svg';
-import doneFoodIcon from '../images/doneFoodIcon.svg';
-import footerimg from '../images/footer.svg';
+// import doneAllIcon from '../images/doneAllIcon.svg';
+// import doneDrinkIcon from '../images/doneDrinkIcon.svg';
+// import doneFoodIcon from '../images/doneFoodIcon.svg';
+// import footerimg from '../images/footer.svg';
 import shareIcon from '../images/shareIcon.svg';
 
-const allMocks = [
-  {
-    id: 11064,
-    type: 'Drinks',
-    nationality: '',
-    category: 'Ordinary Drink',
-    alcoholicOrNot: 'Alcoholic',
-    name: 'Banana Daiquiri',
-    image: 'https://www.thecocktaildb.com/images/media/drink/k1xatq1504389300.jpg',
-    doneDate: '29/09/2022',
-    tags: ['Fruity'],
-  },
-  {
-    id: 53013,
-    type: 'Meals',
-    nationality: 'American',
-    category: 'Beef',
-    alcoholicOrNot: '',
-    name: 'Big Mac',
-    image: 'https://www.themealdb.com/images/media/meals/urzj1d1587670726.jpg',
-    doneDate: '29/09/2022',
-    tags: [''],
-  },
-];
-const hor = 'horizontal-tag'; // const criada para contornar problema de caracteres maximos em uma linha
+// const hor = 'horizontal-tag'; // const criada para contornar problema de caracteres maximos
 
 function DoneRecipes() {
-  const [render, setRender] = useState(allMocks);
+  const history = useHistory();
+  const [doneRecipes, setDoneRecipes] = useState([]);
+  const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [shareCopy, setShareCopy] = useState('');
+
+  useEffect(() => {
+    const getLocalStorage = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (getLocalStorage === null) {
+      setDoneRecipes([]);
+      setFilteredRecipes([]);
+      return null;
+    }
+    setDoneRecipes(getLocalStorage);
+    setFilteredRecipes(getLocalStorage);
+  }, []);
 
   function toRender({ target }) {
     const { name } = target;
-    setRender(allMocks.filter((recipe) => recipe.type.includes(name)));
+    console.log(name);
+    setFilteredRecipes(doneRecipes.filter((recipe) => recipe.type.includes(name)));
   }
+
+  function saveClip(type, item) {
+    copy(`http://localhost:3000/${type}/${item}`);
+  }
+
+  function pushToFoodDetails(type, id) {
+    if (type === 'meal') {
+      return history.push(`/meals/${id}`);
+    }
+    return history.push(`/drinks/${id}`);
+  }
+
   return (
     <div className="container-donerecipes">
       <Header />
-      <div className="menu-btn-donerecipes">
-        <button
-          className="btn-donerecipes"
-          type="button"
-          data-testid="filter-by-all-btn"
-          name=""
-          onClick={ toRender }
-        >
-          <img src={ doneAllIcon } alt={ doneAllIcon } />
-        </button>
-        <button
-          className="btn-donerecipes"
-          type="button"
-          data-testid="filter-by-meal-btn"
-          name="Meals"
-          onClick={ toRender }
-        >
-          <img src={ doneFoodIcon } alt={ doneFoodIcon } />
-        </button>
-        <button
-          className="btn-donerecipes"
-          type="button"
-          data-testid="filter-by-drink-btn"
-          name="Drinks"
-          onClick={ toRender }
-        >
-          <img src={ doneDrinkIcon } alt={ doneDrinkIcon } />
-        </button>
-      </div>
-
-      {/* //! AQUI DEVE ENTRAR UM MAP DESCENTE COM O QUE VIRÁ DA TELA DE PROGRESSO! */}
-      <div className="container-cards-donerecipes">
-        {render.map((item, index) => (
-          <div className="card-donerecipes" key={ index }>
-            <img
-              className="img-donerecipes"
-              data-testid={ `${item}-horizontal-image` }
-              alt="imagem"
-              src={ item.image }
-            />
-            <div className="container-donerecipes-info">
-              <p className="title-dr" data-testid={ `${index}-${hor}` }>{ item.name }</p>
-              <div className="pirocoptero">
-                { item.type === 'Meals' ? <p>{item.nationality}</p>
-                  : <p>{item.alcoholicOrNot}</p> }
-                <p data-testid={ `${index}-horizontal-top-text` }>{ item.category }</p>
-              </div>
-              <p className="date-dr" data-testid={ `${index}-${hor}` }>
-                {`Done in: ${item.doneDate}` }
-              </p>
-              <div className="tags">
-                { !item.tags[0] ? null
-                  : (
-                    <p className="tag" data-testid={ `${index}-${item.tags}-${hor}` }>
-                      { item.tags[0] }
-                    </p>)}
-                { !item.tags[1] ? null
-                  : (
-                    <p className="tag" data-testid={ `${index}-${item.tags}-${hor}` }>
-                      { item.tags[1] }
-                    </p>)}
-              </div>
-              <button
-                className="btn-shareIcon"
-                type="button"
-                data-testid={ `${item}-horizontal-share-btn` }
-                onClick={ (() => {
-                  setShareCopy(index);
-                  return item.type.includes('Meals') ? saveClip('meals', item.id)
-                    : saveClip('drinks', item.id);
-                }) }
-              >
-                <img src={ shareIcon } alt="shareIcon" />
-              </button>
-              { shareCopy === index && <p>Link copied!</p> }
-            </div>
-          </div>
-        ))}
-      </div>
-      <img src={ footerimg } alt="footer de mentirinha" />
+      <button
+        type="button"
+        data-testid="filter-by-all-btn"
+        name=""
+        onClick={ toRender }
+      >
+        All
+      </button>
+      <button
+        type="button"
+        data-testid="filter-by-meal-btn"
+        name="meal"
+        onClick={ toRender }
+      >
+        Meals
+      </button>
+      <button
+        type="button"
+        data-testid="filter-by-drink-btn"
+        name="drink"
+        onClick={ toRender }
+      >
+        Drinks
+      </button>
+      { filteredRecipes.map((item, index) => (
+        <div key={ index }>
+          <img
+            className="img-fdp"
+            onClick={ () => pushToFoodDetails(item.type, item.id) }
+            role="presentation"
+            data-testid={ `${index}-horizontal-image` }
+            alt={ item.name }
+            src={ item.image }
+          />
+          <p
+            role="presentation"
+            onClick={ () => pushToFoodDetails(item.type, item.id) }
+            data-testid={ `${index}-horizontal-name` }
+          >
+            { item.name }
+          </p>
+          <p data-testid={ `${index}-horizontal-top-text` }>
+            { item.nationality
+              ? `${item.nationality} - ${item.category} ${item.alcoholicOrNot}`
+              : `${item.category} ${item.alcoholicOrNot}`}
+          </p>
+          { item.alcoholicOrNot ? <p>{item.alcoholicOrNot}</p> : null }
+          <p data-testid={ `${index}-horizontal-done-date` }>{ item.doneDate }</p>
+          { !item.tags[0] ? null
+            : (
+              <p data-testid={ `${index}-${item.tags[0]}-horizontal-tag` }>
+                { item.tags[0] }
+              </p>)}
+          { !item.tags[1] ? null
+            : (
+              <p data-testid={ `${index}-${item.tags[1]}-horizontal-tag` }>
+                { item.tags[1] }
+              </p>)}
+          <button
+            type="button"
+            src={ shareIcon }
+            alt="share-icon"
+            data-testid={ `${index}-horizontal-share-btn` }
+            onClick={ (() => {
+              setShareCopy(index);
+              return item.type.includes('meal') ? saveClip('meals', item.id)
+                : saveClip('drinks', item.id);
+            }) }
+          />
+          { shareCopy === index && <p>Link copied!</p> }
+        </div>
+      ))}
     </div>
   );
 }
