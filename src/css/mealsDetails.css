@@ -73,6 +73,8 @@
 }
 
 .icon-share, .icon-favorite {
+  background-color: transparent;
+  border: none;
   position: absolute;
   top: 66px;
   z-index: 2;
