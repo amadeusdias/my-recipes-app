@@ -1,8 +1,5 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import renderWithRouter from './helpers/renderWithRouter';
-// import RecipeInProgress from '../components/RecipeDrinkInProgress';
 import dataMeals from './helpers/mockMeals';
 import dataDrinks from './helpers/mockDrinks';
 import App from '../App';
