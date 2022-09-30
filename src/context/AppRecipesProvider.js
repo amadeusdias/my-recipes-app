@@ -16,10 +16,7 @@ function AppRecipesProvider({ children }) {
   const [searchInput, setSearchInput] = useState('');
   const [radioInput, setRadioInput] = useState('');
   const history = useHistory();
-  const [favoriteRecipes, setFavoritesRecipes] = useState(() => {
-    const local = localStorage.getItem('favoritesRecipes');
-    return local || mealsCards;
-  });
+  const [favoriteRecipes, setFavoritesRecipes] = useState([]);
 
   useEffect(() => {
     async function mealsDataForCards() {
