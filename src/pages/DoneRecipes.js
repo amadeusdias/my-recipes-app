@@ -9,7 +9,7 @@ import '../css/doneRecipes.css';
 // import footerimg from '../images/footer.svg';
 import shareIcon from '../images/shareIcon.svg';
 
-// const hor = 'horizontal-tag'; // const criada para contornar problema de caracteres maximos em uma linha
+// const hor = 'horizontal-tag'; // const criada para contornar problema de caracteres maximos
 
 function DoneRecipes() {
   const history = useHistory();
