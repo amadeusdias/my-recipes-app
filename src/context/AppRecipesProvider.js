@@ -16,6 +16,7 @@ function AppRecipesProvider({ children }) {
   const [searchInput, setSearchInput] = useState('');
   const [radioInput, setRadioInput] = useState('');
   const history = useHistory();
+  const [favoriteRecipes, setFavoritesRecipes] = useState([]);
 
   useEffect(() => {
     async function mealsDataForCards() {
@@ -119,6 +120,8 @@ function AppRecipesProvider({ children }) {
     setRadioInput,
     apiDrinks,
     apiMeals,
+    favoriteRecipes,
+    setFavoritesRecipes,
   };
 
   return (

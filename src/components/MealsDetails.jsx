@@ -3,6 +3,9 @@ import { useHistory, useParams } from 'react-router-dom';
 import copy from 'clipboard-copy';
 import React, { useContext, useEffect, useState } from 'react';
 import YoutubeEmbed from './YoutubeEmbed';
+import whiteHearthIcon from '../images/whiteHeartIcon.svg';
+import blackHearthIcon from '../images/blackHeartIcon.svg';
+
 import AppRecipesContext from '../context/AppRecipesContext';
 import '../css/carousel.css';
 import '../css/mealsDetails.css';
@@ -13,12 +16,16 @@ import { ingredients } from '../tests/helpers/numbers';
 
 const SIX = 6;
 function MealsDetails({ match: { params: { id } } }) {
-  const { mealsCards } = useContext(AppRecipesContext);
+  const {
+    mealsCards,
+    favoriteRecipes,
+    setFavoritesRecipes,
+  } = useContext(AppRecipesContext);
   const [findMeal, setFindMeal] = useState([]);
   const [returnApiMeals, setReturnApiMeals] = useState([]);
   const [returnAllDrinks, setReturnAllDrinks] = useState([]);
   const [shareCopy, setShareCopy] = useState(false);
-  const [favoriteRecipes, setFavoritesRecipes] = useState([{}]);
+  const [iconHeart, setIconHeart] = useState(false);
   const params = useParams();
   const history = useHistory();
 
@@ -55,10 +62,26 @@ function MealsDetails({ match: { params: { id } } }) {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem(
-      'favoriteRecipes',
-      JSON.stringify(favoriteRecipes),
-    );
+    setFavoritesRecipes('');
+    setFavoritesRecipes([
+      ...favoriteRecipes,
+      {
+        id: returnApiMeals.idMeal,
+        type: 'meal',
+        nationality: returnApiMeals.strArea,
+        category: returnApiMeals.strCategory,
+        alcoholicOrNot: '',
+        name: returnApiMeals.strMeal,
+        image: returnApiMeals.strMealThumb,
+      }].filter((item) => item.id));
+  }, [returnApiMeals]);
+
+  useEffect(() => {
+    const favoriteFoods = JSON.parse(localStorage.getItem(('favoriteRecipes'))) || [];
+    const isFavorite = favoriteFoods.some((f) => f.id === params.id);
+    setIconHeart(isFavorite);
+    // if (isFavorite) isF = blackHearthIcon;
+    // else isF = whiteHearthIcon;
   }, [favoriteRecipes]);
 
   const recipesDone = JSON.parse(localStorage.getItem('doneRecipes'));
@@ -80,15 +103,11 @@ function MealsDetails({ match: { params: { id } } }) {
   }
 
   function handleClickFavoriteRecipes() {
-    setFavoritesRecipes({
-      id: findMeal[0].idMeal,
-      type: 'meals',
-      nationatity: findMeal[0].strArea,
-      category: findMeal[0].strCategory,
-      alcoholicOrNot: 'not',
-      name: findMeal[0].strMeal,
-      image: findMeal[0].strMealThumb,
-    });
+    localStorage.setItem(
+      'favoriteRecipes',
+      JSON.stringify(favoriteRecipes),
+    );
+    setIconHeart(!iconHeart);
   }
 
   const TRINTAEDOIS = 32;
@@ -111,7 +130,11 @@ function MealsDetails({ match: { params: { id } } }) {
         data-testid="favorite-btn"
         onClick={ handleClickFavoriteRecipes }
       >
-        Favoritos
+        <img
+          className="favorite"
+          src={ iconHeart ? blackHearthIcon : whiteHearthIcon }
+          alt="favorite food"
+        />
       </button>
       {cleanEmpty(returnApiMeals).map((item, index) => (
         <div key={ index }>
