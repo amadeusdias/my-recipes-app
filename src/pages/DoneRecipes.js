@@ -118,6 +118,7 @@ function DoneRecipes() {
               >
                 <img src={ shareIcon } alt="shareIcon" />
               </button>
+              { shareCopy === index && <p>Link copied!</p> }
             </div>
           </div>
         ))}
