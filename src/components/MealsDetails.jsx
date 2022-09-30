@@ -5,7 +5,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import YoutubeEmbed from './YoutubeEmbed';
 import whiteHearthIcon from '../images/whiteHeartIcon.svg';
 import blackHearthIcon from '../images/blackHeartIcon.svg';
-
 import AppRecipesContext from '../context/AppRecipesContext';
 import '../css/carousel.css';
 import '../css/mealsDetails.css';
@@ -107,6 +106,11 @@ function MealsDetails({ match: { params: { id } } }) {
       'favoriteRecipes',
       JSON.stringify(favoriteRecipes),
     );
+    const toggleHeart = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    console.log(toggleHeart);
+    if (toggleHeart.find((local) => local.id !== params.id)) {
+      localStorage.removeItem('favoriteRecipes');
+    } // lógica para retirar item do localStorage;
     setIconHeart(!iconHeart);
   }
 
@@ -125,17 +129,14 @@ function MealsDetails({ match: { params: { id } } }) {
         />
       </button>
       {shareCopy && <p>Link copied!</p>}
-      <button
-        type="button"
+      <img
+        className="favorite"
+        src={ iconHeart ? blackHearthIcon : whiteHearthIcon }
+        alt="favorite food"
+        role="presentation"
         data-testid="favorite-btn"
         onClick={ handleClickFavoriteRecipes }
-      >
-        <img
-          className="favorite"
-          src={ iconHeart ? blackHearthIcon : whiteHearthIcon }
-          alt="favorite food"
-        />
-      </button>
+      />
       {cleanEmpty(returnApiMeals).map((item, index) => (
         <div key={ index }>
           <img src={ share } alt="favorite" className="icon-share" />

@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, useParams } from 'react-router-dom';
 import copy from 'clipboard-copy';
+import whiteHearthIcon from '../images/whiteHeartIcon.svg';
+import blackHearthIcon from '../images/blackHeartIcon.svg';
 import AppRecipesContext from '../context/AppRecipesContext';
 import { ingredients } from '../tests/helpers/numbers';
 import shareIcon from '../images/shareIcon.svg';
@@ -16,6 +18,7 @@ function DrinksDetails({ match: { params: { id } } }) {
   const [returnApiDrinks, setReturnApiDrinks] = useState('');
   const [returnAllMeals, setReturnAllMeals] = useState([]);
   const [shareCopy, setShareCopy] = useState(false);
+  const [iconHeart, setIconHeart] = useState(false);
   const params = useParams();
   const history = useHistory();
 
@@ -46,6 +49,27 @@ function DrinksDetails({ match: { params: { id } } }) {
     fetchSixMealsRecommended();
   }, []);
 
+  useEffect(() => {
+    setFavoritesRecipes('');
+    setFavoritesRecipes([
+      ...favoriteRecipes,
+      {
+        id: returnApiDrinks.idDrink,
+        type: 'drink',
+        nationality: '',
+        category: returnApiDrinks.strCategory,
+        alcoholicOrNot: returnApiDrinks.strAlcoholic,
+        name: returnApiDrinks.strDrink,
+        image: returnApiDrinks.strDrinkThumb,
+      }].filter((item) => item.id));
+  }, [returnApiDrinks]);
+
+  useEffect(() => {
+    const favoriteDrinks = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+    const isFavorite = favoriteDrinks.some((drink) => drink.id === params.id);
+    setIconHeart(isFavorite);
+  }, [favoriteRecipes]);
+
   const cleanEmpty = (obj) => {
     const clean = Object.fromEntries(Object.entries(obj)
       .filter(([, v]) => v != null || v !== '' || v !== ' '));
@@ -72,23 +96,16 @@ function DrinksDetails({ match: { params: { id } } }) {
   }
 
   function handleClickFavoriteRecipes() {
-    setFavoritesRecipes([
-      ...favoriteRecipes,
-      {
-        id: returnApiDrinks.idDrink,
-        type: 'drink',
-        nationality: '',
-        category: returnApiDrinks.strCategory,
-        alcoholicOrNot: returnApiDrinks.strAlcoholic,
-        name: returnApiDrinks.strDrink,
-        image: returnApiDrinks.strDrinkThumb,
-      }]);
+    localStorage.setItem(
+      'favoriteRecipes',
+      JSON.stringify(favoriteRecipes),
+    );
+    const toggleHeart = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (toggleHeart.find((local) => local.id !== params.id)) {
+      localStorage.removeItem('favoriteRecipes');
+    }
+    setIconHeart(!iconHeart);
   }
-
-  localStorage.setItem(
-    'favoriteRecipes',
-    JSON.stringify(favoriteRecipes),
-  );
 
   return (
     <div>
@@ -103,13 +120,14 @@ function DrinksDetails({ match: { params: { id } } }) {
         />
       </button>
       {shareCopy && <p>Link copied!</p>}
-      <button
-        type="button"
+      <img
+        className="favorite"
+        src={ iconHeart ? blackHearthIcon : whiteHearthIcon }
+        alt="favorite drink"
+        role="presentation"
         data-testid="favorite-btn"
         onClick={ handleClickFavoriteRecipes }
-      >
-        Favoritar Receita
-      </button>
+      />
       {cleanEmpty(returnApiDrinks).map((item, index) => (
         <div key={ index }>
           <h3 data-testid="recipe-title">
