@@ -43,7 +43,7 @@ function RecipeMealsInProgress() {
     const favoriteFoods = JSON.parse(localStorage.getItem(('favoriteRecipes'))) || [];
     const isFavorite = favoriteFoods.some((f) => f.id === params.id);
     setIconHeart(isFavorite);
-    }, [favoriteRecipes]); // eslint-disable-line
+  }, [favoriteRecipes]);
 
   useEffect(() => {
     setFavoritesRecipes('');
