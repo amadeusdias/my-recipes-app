@@ -32,6 +32,7 @@ function DoneRecipes() {
     const { name } = target;
     console.log(name);
     setFilteredRecipes(doneRecipes.filter((recipe) => recipe.type.includes(name)));
+    console.log(filteredRecipes);
   }
 
   function saveClip(type, item) {
@@ -49,33 +50,37 @@ function DoneRecipes() {
     <div className="container-donerecipes">
       <Header />
       <div className="menu-btn-donerecipes">
-        <button
+        <img
           className="btn-donerecipes"
           type="button"
           data-testid="filter-by-all-btn"
           name=""
+          role="presentation"
           onClick={ toRender }
-        >
-          <img src={ doneAllIcon } alt={ doneAllIcon } />
-        </button>
-        <button
+          src={ doneAllIcon }
+          alt={ doneAllIcon }
+        />
+        <img
           className="btn-donerecipes"
           type="button"
           data-testid="filter-by-meal-btn"
           name="meal"
+          role="presentation"
           onClick={ toRender }
-        >
-          <img src={ doneFoodIcon } alt={ doneFoodIcon } />
-        </button>
-        <button
+          src={ doneFoodIcon }
+          alt={ doneFoodIcon }
+        />
+        <img
           className="btn-donerecipes"
           type="button"
           data-testid="filter-by-drink-btn"
           name="drink"
+          role="presentation"
           onClick={ toRender }
-        >
-          <img src={ doneDrinkIcon } alt={ doneDrinkIcon } />
-        </button>
+          src={ doneDrinkIcon }
+          alt={ doneDrinkIcon }
+        />
+
       </div>
       <div className="container-cards-donerecipes">
         { filteredRecipes.map((item, index) => (

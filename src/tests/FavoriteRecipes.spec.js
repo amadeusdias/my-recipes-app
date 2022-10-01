@@ -27,7 +27,7 @@ const mockSetLocalStorage = () => global.localStorage.setItem('favoriteRecipes',
   },
 ]));
 
-describe('<DoneRecipes />', () => {
+describe('<Favorite />', () => {
   it('should test elements in screen', () => {
     const { history } = render(<App />);
     mockSetLocalStorage();
@@ -35,23 +35,16 @@ describe('<DoneRecipes />', () => {
 
     expect(screen.getByTestId('page-title')).toBeInTheDocument();
   });
-  it('should click in MEALS have just six image in page', async () => {
+  it('should click in MEALS have just one image ', async () => {
     const { history } = render(<App />);
     mockSetLocalStorage();
     act(() => history.push(favoriteRecipe));
-    const mealsButton = screen.getByTestId('filter-by-meal-btn');
-    const drinkImg = screen.queryByAltText(/banana daiquiri/i);
-    const mealImg = screen.queryByAltText(/big mac/i);
+    userEvent.click(screen.getByTestId('filter-by-meal-btn'));
 
-    expect(drinkImg).toBeInTheDocument();
-    expect(mealImg).toBeInTheDocument();
-
-    userEvent.click(mealsButton);
-
-    expect(screen.queryByAltText(/big mac/i)).toBeInTheDocument();
     expect(screen.queryByAltText(/banana daiquiri/i)).not.toBeInTheDocument();
+    expect(screen.getByAltText(/big mac/i)).toBeInTheDocument();
   });
-  it('should click DRINKS button and have just one food image', async () => {
+  it('should click DRINKS button and have just one food image', () => {
     const { history } = render(<App />);
     mockSetLocalStorage();
     act(() => history.push(favoriteRecipe));
@@ -67,7 +60,7 @@ describe('<DoneRecipes />', () => {
     expect(screen.queryByAltText(/big mac/i)).not.toBeInTheDocument();
     expect(screen.queryByAltText(/banana daiquiri/i)).toBeInTheDocument();
   });
-  it('should click in DRINK card and redirect to page of it', async () => {
+  it('should click in DRINK card and redirect to page of it', () => {
     const { history } = render(<App />);
     mockSetLocalStorage();
     act(() => history.push(favoriteRecipe));
@@ -120,7 +113,7 @@ describe('<DoneRecipes />', () => {
 
     expect(history.location.pathname).toBe('/drinks/11064');
   });
-  it('should go to donerecipes with localstorage equal NULL', async () => {
+  it('should go to favoriterecipes with localstorage equal NULL', async () => {
     const { history } = render(<App />);
     global.localStorage.clear();
     act(() => history.push(favoriteRecipe));
