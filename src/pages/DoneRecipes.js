@@ -9,7 +9,7 @@ import doneFoodIcon from '../images/doneFoodIcon.svg';
 import footerimg from '../images/footer.svg';
 import shareIcon from '../images/shareIcon.svg';
 
-// const hor = 'horizontal-tag'; // const criada para contornar problema de caracteres maximos
+// const hor = 'horizontal-tag'; // const criada para contornar problema de caracteres maximo
 
 function DoneRecipes() {
   const history = useHistory();
