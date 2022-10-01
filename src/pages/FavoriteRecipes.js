@@ -42,11 +42,6 @@ function FavoriteRecipes() {
 
   function desfavorite(idItem) {
     const getLocalStorage = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    // if (!getLocalStorage) {
-    //   setDoneRecipes([]);
-    //   setFilteredRecipes([]);
-    //   return null;
-    // }
     const storageFiltered = getLocalStorage.filter((recipe) => recipe.id !== idItem);
     localStorage.setItem('favoriteRecipes', JSON.stringify(storageFiltered));
     setDoneRecipes(storageFiltered);
