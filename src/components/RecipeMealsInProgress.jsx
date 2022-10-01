@@ -1,13 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import favorite from '../images/favorite2.svg';
+import copy from 'clipboard-copy';
+import React, { useEffect, useState, useContext } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+import AppRecipesContext from '../context/AppRecipesContext';
+import blackHearthIcon from '../images/blackHeartIcon.svg';
 import share from '../images/share.svg';
+import whiteHearthIcon from '../images/whiteHeartIcon.svg';
 import { VINTE } from '../tests/helpers/numbers';
 
 function RecipeMealsInProgress() {
+  const {
+    favoriteRecipes,
+    setFavoritesRecipes,
+  } = useContext(AppRecipesContext);
+  const history = useHistory();
   const params = useParams();
   const idParams = params.id;
   const [returnApiMeals, setReturnApiMeals] = useState([]);
+  const [shareCopy, setShareCopy] = useState(false);
+  const [iconHeart, setIconHeart] = useState(false);
   const [test1, setTes1] = useState([]);
   const [test2, setTest2] = useState('');
   const [checked, setChecked] = useState('');
@@ -29,10 +39,51 @@ function RecipeMealsInProgress() {
     fetchMealsDetails();
   }, []); // eslint-disable-line
 
+  useEffect(() => {
+    const favoriteFoods = JSON.parse(localStorage.getItem(('favoriteRecipes'))) || [];
+    const isFavorite = favoriteFoods.some((f) => f.id === params.id);
+    setIconHeart(isFavorite);
+    }, [favoriteRecipes]); // eslint-disable-line
+
+  useEffect(() => {
+    setFavoritesRecipes('');
+    setFavoritesRecipes([
+      ...favoriteRecipes,
+      {
+        id: returnApiMeals.idMeal,
+        type: 'meal',
+        nationality: returnApiMeals.strArea,
+        category: returnApiMeals.strCategory,
+        alcoholicOrNot: '',
+        name: returnApiMeals.strMeal,
+        image: returnApiMeals.strMealThumb,
+      }].filter((item) => item.id));
+  }, [returnApiMeals]);
+
   for (let index = 0; index <= VINTE; index += 1) {
     if (returnApiMeals && returnApiMeals[`strIngredient${index}`]) {
       ingredients.push(returnApiMeals[`strIngredient${index}`]);
     }
+  }
+
+  function handleClickFavoriteRecipes() {
+    localStorage.setItem(
+      'favoriteRecipes',
+      JSON.stringify(favoriteRecipes),
+    );
+    const toggleHeart = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    console.log(toggleHeart);
+    if (toggleHeart.find((local) => local.id !== params.id)) {
+      localStorage.removeItem('favoriteRecipes');
+    } // lógica para retirar item do localStorage;
+    setIconHeart(!iconHeart);
+  }
+
+  function handleClickShareBtn() {
+    const inProgress = window.location.pathname.indexOf('/in-progress');
+    const link = window.location.pathname.slice(0, inProgress);
+    copy(`http://localhost:3000${link}`);
+    setShareCopy(!shareCopy);
   }
 
   useEffect(() => {
@@ -82,16 +133,19 @@ function RecipeMealsInProgress() {
           type="button"
           className="icon-share"
           data-testid="share-btn"
+          onClick={ handleClickShareBtn }
         >
           <img src={ share } alt="favorite" />
         </button>
-        <button
-          type="button"
+        {shareCopy && <p>Link copied!</p>}
+        <img
           className="icon-favorite"
+          src={ iconHeart ? blackHearthIcon : whiteHearthIcon }
+          alt="favorite food"
+          role="presentation"
           data-testid="favorite-btn"
-        >
-          <img src={ favorite } alt="favorite" />
-        </button>
+          onClick={ handleClickFavoriteRecipes }
+        />
         <div className="container-img-meals">
           <img
             className="img-meals-details"
@@ -137,8 +191,9 @@ function RecipeMealsInProgress() {
         className="scroll-btn"
         type="button"
         data-testid="finish-recipe-btn"
+        onClick={ () => history.push('/done-recipes') }
       >
-        Finalizar
+        Finish Recipe
 
       </button>
     </div>
