@@ -5,8 +5,18 @@ import share from '../images/share.svg';
 import { VINTE } from '../tests/helpers/numbers';
 
 function RecipeMealsInProgress() {
-  const [returnApiMeals, setReturnApiMeals] = useState([]);
   const params = useParams();
+  const idParams = params.id;
+  const [returnApiMeals, setReturnApiMeals] = useState([]);
+  const [test1, setTes1] = useState([]);
+  const [test2, setTest2] = useState('');
+  const [checked, setChecked] = useState('');
+  // const [ingredientsChecked, setIngredientsChecked] = useState(() => {
+  //   const local = localStorage.getItem('inProgressRecipes');
+  //   return local || { meals: {
+  //     [idParams]: [],
+  //   } };
+  // });
   const ingredients = [];
 
   useEffect(() => {
@@ -24,6 +34,46 @@ function RecipeMealsInProgress() {
       ingredients.push(returnApiMeals[`strIngredient${index}`]);
     }
   }
+
+  useEffect(() => {
+    if (JSON.parse(localStorage.getItem('inProgressRecipes'))) {
+      const aa = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      setTes1(aa.meals[idParams]);
+      setChecked(aa.meals[idParams]);
+    }
+  }, [test2]);
+
+  // useEffect(() => {
+  //   localStorage.setItem('inProgressRecipes', JSON.stringify({
+  //     meals: {
+  //       [idParams]: [...test1],
+  //     },
+  //   }));
+  // }, [test1]);
+
+  useEffect(() => {
+    localStorage.getItem('inProgressRecipes');
+  }, []);
+
+  function handleChange({ target: { name } }) {
+    // const test = ingredientsChecked.meals.idParams;
+    // console.log(ingredientsChecked);
+    // console.log(test);
+    // const local = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
+    // console.log(local && local.meals[idParams]);
+    const filtro = test1.filter((item) => item !== name);
+    localStorage.setItem('inProgressRecipes', JSON.stringify({
+      meals: {
+        [idParams]: [...filtro, name],
+      },
+    }));
+    setTest2(filtro);
+    // setTes1(filtro);
+  }
+
+  // function handleChangeChecked() {
+  //   checked.some((item) => item);
+  // }
 
   return (
     <div className="container-meals-details">
@@ -55,7 +105,7 @@ function RecipeMealsInProgress() {
         </h3>
         <p data-testid="recipe-category">{ returnApiMeals.strCategory }</p>
 
-        {ingredients.map((element) => (
+        {ingredients.map((element, index) => (
           <label
             key={ element }
             htmlFor={ element }
@@ -66,6 +116,10 @@ function RecipeMealsInProgress() {
               name={ element }
               id={ element }
               type="checkbox"
+              onClick={ handleChange }
+              checked={ checked && checked.some((item) => item === element) }
+              // onChange={ handleChangeChecked }
+              data-testid={ `${index}-ingredient-step` }
             />
           </label>
         ))}
