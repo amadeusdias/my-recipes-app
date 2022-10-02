@@ -158,7 +158,6 @@ function RecipeInProgress() {
       >
         Finish Recipe
       </button>
-
     </div>
 
   );
