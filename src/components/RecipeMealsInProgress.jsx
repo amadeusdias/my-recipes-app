@@ -1,5 +1,5 @@
 import copy from 'clipboard-copy';
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import AppRecipesContext from '../context/AppRecipesContext';
 import blackHearthIcon from '../images/blackHeartIcon.svg';
@@ -43,7 +43,7 @@ function RecipeMealsInProgress() {
     const favoriteFoods = JSON.parse(localStorage.getItem(('favoriteRecipes'))) || [];
     const isFavorite = favoriteFoods.some((f) => f.id === params.id);
     setIconHeart(isFavorite);
-  }, [favoriteRecipes]);
+  }, [favoriteRecipes]);// eslint-disable-line
 
   useEffect(() => {
     setFavoritesRecipes('');
@@ -58,7 +58,7 @@ function RecipeMealsInProgress() {
         name: returnApiMeals.strMeal,
         image: returnApiMeals.strMealThumb,
       }].filter((item) => item.id));
-  }, [returnApiMeals]);
+  }, [returnApiMeals]);// eslint-disable-line
 
   for (let index = 0; index <= VINTE; index += 1) {
     if (returnApiMeals && returnApiMeals[`strIngredient${index}`]) {
@@ -92,7 +92,7 @@ function RecipeMealsInProgress() {
       setTes1(aa.meals[idParams]);
       setChecked(aa.meals[idParams]);
     }
-  }, [test2]);
+  }, [test2]);// eslint-disable-line
 
   // useEffect(() => {
   //   localStorage.setItem('inProgressRecipes', JSON.stringify({
@@ -163,7 +163,8 @@ function RecipeMealsInProgress() {
           <label
             key={ element }
             htmlFor={ element }
-            data-testid="ingredient-step"
+            data-testid={ `${index}-ingredient-step` }
+
           >
             {element}
             <input
@@ -173,7 +174,6 @@ function RecipeMealsInProgress() {
               onClick={ handleChange }
               checked={ checked && checked.some((item) => item === element) }
               // onChange={ handleChangeChecked }
-              data-testid={ `${index}-ingredient-step` }
             />
           </label>
         ))}
