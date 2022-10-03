@@ -22,6 +22,7 @@ function RecipeMealsInProgress() {
   const [test2, setTest2] = useState('');
   const [checked, setChecked] = useState('');
   const [validateFinish, setValidateFinish] = useState(0);
+
   // const validateFinish = [];
   // const [ingredientsChecked, setIngredientsChecked] = useState(() => {
   //   const local = localStorage.getItem('inProgressRecipes');
