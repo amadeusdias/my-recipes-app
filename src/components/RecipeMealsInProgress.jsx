@@ -22,7 +22,7 @@ function RecipeMealsInProgress() {
   const [test1, setTes1] = useState([]);
   const [test2, setTest2] = useState('');
   const [checked, setChecked] = useState('');
-  const [validateFinish, setValidateFinish] = useState(0);
+  const [validateFinish, setValidateFinish] = useState([]);
 
   // const validateFinish = [];
   // const [ingredientsChecked, setIngredientsChecked] = useState(() => {
@@ -124,8 +124,6 @@ function RecipeMealsInProgress() {
       },
     }));
     setTest2(filtro);
-    console.log(validateFinish);
-    console.log(ingredients.length);
 
     // setTes1(filtro);
   }
@@ -133,6 +131,23 @@ function RecipeMealsInProgress() {
   // function handleChangeChecked() {
   //   checked.some((item) => item);
   // }
+  function handleClickFinishRecipe() {
+    localStorage.setItem('doneRecipes', JSON.stringify([{
+      // ...JSON.parse(localStorage.getItem('doneRecipes')),
+      id: returnApiMeals.idMeal,
+      type: 'meal',
+      nationality: returnApiMeals.strArea,
+      category: returnApiMeals.strCategory,
+      alcoholicOrNot: '',
+      name: returnApiMeals.strMeal,
+      image: returnApiMeals.strMealThumb,
+      doneDate: new Date((Date.now())).toDateString(),
+      tags: [],
+    }]));
+    history.push('/done-recipes');
+  }
+  console.log(validateFinish);
+  console.log(validateFinish.length === ingredients.length);
 
   return (
     <div className="container-meals-details">
@@ -178,11 +193,9 @@ function RecipeMealsInProgress() {
           <div key={ element }>
             <label
               htmlFor={ element }
-              data-testid={ `${index}-ingredient-step` }
               className={ checked && checked.includes(element) && 'test' }
-
+              data-testid={ `${index}-ingredient-step` }
             >
-              {element}
               <input
                 name={ element }
                 id={ element }
@@ -191,11 +204,10 @@ function RecipeMealsInProgress() {
                 checked={ checked && checked.some((item) => item === element) }
                 // onChange={ handleChangeChecked }
               />
+              {element}
             </label>
           </div>
-
         ))}
-
         <h2 className="title-meals-details">Instructions:</h2>
         <p
           data-testid="instructions"
@@ -209,8 +221,8 @@ function RecipeMealsInProgress() {
         className="scroll-btn"
         type="button"
         data-testid="finish-recipe-btn"
-        disabled={ validateFinish !== ingredients.length }
-        onClick={ () => history.push('/done-recipes') }
+        disabled={ validateFinish.length !== ingredients.length }
+        onClick={ handleClickFinishRecipe }
       >
         Finish Recipe
 
