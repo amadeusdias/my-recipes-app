@@ -1,10 +1,11 @@
 import copy from 'clipboard-copy';
 import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import AppRecipesContext from '../context/AppRecipesContext';
 import blackHearthIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
+import volta from '../images/volta.svg';
 import whiteHearthIcon from '../images/whiteHeartIcon.svg';
 import { ingredients, SIX } from '../tests/helpers/numbers';
 import YoutubeEmbed from './YoutubeEmbed';
@@ -107,6 +108,13 @@ function DrinksDetails({ match: { params: { id } } }) {
 
   return (
     <div className="container-meals-details">
+      <Link to="/drinks">
+        <img
+          className="volta"
+          src={ volta }
+          alt="return"
+        />
+      </Link>
       <img
         className="icon-share"
         src={ shareIcon }
