@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
+import '../css/header.css';
 import pageDrinks from '../images/drinkIcon.svg';
 import headerIcon from '../images/headerIcon.svg';
 import pageMeals from '../images/mealIcon.svg';
@@ -9,8 +10,6 @@ import profileIcon from '../images/profileIcon.svg';
 import recipesApp from '../images/recipesApp.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
-
-import '../css/header.css';
 
 function Header() {
   const [showSearchIcon, setShowSearchIcon] = useState(false);
@@ -64,8 +63,12 @@ function Header() {
   return (
     <header>
       <div className="container-top-bar">
-        <img src={ headerIcon } alt="headerIcon" />
-        <img src={ recipesApp } alt="recipesApp" />
+        <Link to="/meals">
+          <img src={ headerIcon } alt="headerIcon" />
+        </Link>
+        <Link to="/meals">
+          <img src={ recipesApp } alt="recipesApp" />
+        </Link>
         <div>
           { showSearchIcon ? htmlSearchIcon : null }
           <button

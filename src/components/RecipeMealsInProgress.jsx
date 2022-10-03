@@ -1,9 +1,10 @@
 import copy from 'clipboard-copy';
 import React, { useContext, useEffect, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import AppRecipesContext from '../context/AppRecipesContext';
 import blackHearthIcon from '../images/blackHeartIcon.svg';
 import share from '../images/share.svg';
+import volta from '../images/volta.svg';
 import whiteHearthIcon from '../images/whiteHeartIcon.svg';
 import { VINTE } from '../tests/helpers/numbers';
 
@@ -135,6 +136,13 @@ function RecipeMealsInProgress() {
 
   return (
     <div className="container-meals-details">
+      <Link to={ `/meals/${params.id}` }>
+        <img
+          className="volta"
+          src={ volta }
+          alt="return"
+        />
+      </Link>
       <div>
         <button
           type="button"
