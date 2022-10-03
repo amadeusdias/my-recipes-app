@@ -5,7 +5,7 @@ import { Link, useHistory, useParams } from 'react-router-dom';
 import AppRecipesContext from '../context/AppRecipesContext';
 import '../css/carousel.css';
 import '../css/mealsDetails.css';
-import blackHearthIcon from '../images/blackHeartIcon.svg';
+import blackHearthIcon from '../images/favorite2.svg';
 import shareIcon from '../images/shareIcon.svg';
 import volta from '../images/volta.svg';
 import whiteHearthIcon from '../images/whiteHeartIcon.svg';
@@ -127,7 +127,6 @@ function MealsDetails({ match: { params: { id } } }) {
         data-testid="share-btn"
         onClick={ handleClickShareBtn }
       />
-      {shareCopy && <p>Link copied!</p>}
       <img
         className="icon-favorite"
         src={ iconHeart ? blackHearthIcon : whiteHearthIcon }
@@ -148,6 +147,7 @@ function MealsDetails({ match: { params: { id } } }) {
               alt={ item.strMeal }
             />
           </div>
+          {shareCopy && <p className="copied">Link copied!</p>}
           <h3 data-testid="recipe-title" className="title-food">{item.strMeal}</h3>
           <p data-testid="recipe-category">
             {item.strCategory}
