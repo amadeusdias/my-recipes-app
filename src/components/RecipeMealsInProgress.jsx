@@ -21,6 +21,8 @@ function RecipeMealsInProgress() {
   const [test1, setTes1] = useState([]);
   const [test2, setTest2] = useState('');
   const [checked, setChecked] = useState('');
+  const [validateFinish, setValidateFinish] = useState(0);
+  // const validateFinish = [];
   // const [ingredientsChecked, setIngredientsChecked] = useState(() => {
   //   const local = localStorage.getItem('inProgressRecipes');
   //   return local || { meals: {
@@ -107,6 +109,7 @@ function RecipeMealsInProgress() {
   }, []);
 
   function handleChange({ target: { name } }) {
+    setValidateFinish(validateFinish + 1);
     // const test = ingredientsChecked.meals.idParams;
     // console.log(ingredientsChecked);
     // console.log(test);
@@ -119,6 +122,9 @@ function RecipeMealsInProgress() {
       },
     }));
     setTest2(filtro);
+    console.log(validateFinish);
+    console.log(ingredients.length);
+
     // setTes1(filtro);
   }
 
@@ -191,6 +197,7 @@ function RecipeMealsInProgress() {
         className="scroll-btn"
         type="button"
         data-testid="finish-recipe-btn"
+        disabled={ validateFinish !== ingredients.length }
         onClick={ () => history.push('/done-recipes') }
       >
         Finish Recipe

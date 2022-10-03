@@ -21,7 +21,9 @@ function RecipeInProgress() {
   const [test1, setTes1] = useState([]);
   const [test2, setTest2] = useState('');
   const [checked, setChecked] = useState('');
+  const [validateFinish, setValidateFinish] = useState(0);
   const ingredients = [];
+  // const validateFinish = [];
 
   useEffect(() => {
     const fetchDrinksDetails = async () => {
@@ -90,6 +92,7 @@ function RecipeInProgress() {
   }
 
   function handleChange({ target: { name } }) {
+    setValidateFinish(validateFinish + 1);
     // const test = ingredientsChecked.meals.idParams;
     // console.log(ingredientsChecked);
     // console.log(test);
@@ -103,6 +106,7 @@ function RecipeInProgress() {
     }));
     setTest2(filtro);
     console.log(filtro);
+    console.log(validateFinish);
     // setTes1(filtro);
   }
 
@@ -154,6 +158,7 @@ function RecipeInProgress() {
       <button
         type="button"
         data-testid="finish-recipe-btn"
+        disabled={ validateFinish !== ingredients.length }
         onClick={ () => history.push('/done-recipes') }
       >
         Finish Recipe
