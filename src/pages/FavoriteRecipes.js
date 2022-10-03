@@ -108,7 +108,9 @@ function FavoriteRecipes() {
               return item.type.includes('meal') ? saveClip('meals', item.id)
                 : saveClip('drinks', item.id);
             }) }
-          />
+          >
+            Share
+          </button>
           { shareCopy === index && <p>Link copied!</p> }
           <button
             type="button"
@@ -116,7 +118,7 @@ function FavoriteRecipes() {
             data-testid={ `${index}-horizontal-favorite-btn` }
             src={ black }
           >
-            Desfavoritar
+            Desfavor
           </button>
         </div>
       ))}

@@ -111,7 +111,7 @@ function RecipeMealsInProgress() {
   }, []);
 
   function handleChange({ target: { name } }) {
-    setValidateFinish(validateFinish + 1);
+    setValidateFinish([...validateFinish, name]);
     // const test = ingredientsChecked.meals.idParams;
     // console.log(ingredientsChecked);
     // console.log(test);
@@ -175,22 +175,25 @@ function RecipeMealsInProgress() {
         <p data-testid="recipe-category">{ returnApiMeals.strCategory }</p>
 
         {ingredients.map((element, index) => (
-          <label
-            key={ element }
-            htmlFor={ element }
-            data-testid={ `${index}-ingredient-step` }
+          <div key={ element }>
+            <label
+              htmlFor={ element }
+              data-testid={ `${index}-ingredient-step` }
+              className={ checked && checked.includes(element) && 'test' }
 
-          >
-            {element}
-            <input
-              name={ element }
-              id={ element }
-              type="checkbox"
-              onClick={ handleChange }
-              checked={ checked && checked.some((item) => item === element) }
-              // onChange={ handleChangeChecked }
-            />
-          </label>
+            >
+              {element}
+              <input
+                name={ element }
+                id={ element }
+                type="checkbox"
+                onClick={ handleChange }
+                checked={ checked && checked.some((item) => item === element) }
+                // onChange={ handleChangeChecked }
+              />
+            </label>
+          </div>
+
         ))}
 
         <h2 className="title-meals-details">Instructions:</h2>

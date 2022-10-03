@@ -126,3 +126,8 @@ iframe {
   text-align: center;
   text-transform: uppercase;
 }
+
+.test {
+  text-decoration: line-through;
+}
+
