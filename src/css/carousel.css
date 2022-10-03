@@ -37,6 +37,12 @@
   width: 336px;
 }
 
+.scroll-btn:disabled {
+  background-color: #ccc;
+  border: 1px solid #999;
+  color: #666;
+}
+
 .img-scroll {
   border-radius: 5px 5px 0 0;
   height: auto;

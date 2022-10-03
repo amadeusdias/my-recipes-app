@@ -1,9 +1,10 @@
 import copy from 'clipboard-copy';
 import React, { useContext, useEffect, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import AppRecipesContext from '../context/AppRecipesContext';
 import '../css/doneRecipes.css';
 import blackHearthIcon from '../images/blackHeartIcon.svg';
+import volta from '../images/volta.svg';
 import whiteHearthIcon from '../images/whiteHeartIcon.svg';
 import { VINTE } from '../tests/helpers/numbers';
 
@@ -112,6 +113,13 @@ function RecipeInProgress() {
 
   return (
     <div>
+      <Link to={ `/drinks/${params.id}` }>
+        <img
+          className="volta"
+          src={ volta }
+          alt="return"
+        />
+      </Link>
       <p data-testid="recipe-title">{returnApiDrinks.strDrink}</p>
       <img
         data-testid="recipe-photo"
