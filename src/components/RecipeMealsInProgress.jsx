@@ -1,5 +1,5 @@
 import copy from 'clipboard-copy';
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import AppRecipesContext from '../context/AppRecipesContext';
 import blackHearthIcon from '../images/blackHeartIcon.svg';
@@ -21,6 +21,9 @@ function RecipeMealsInProgress() {
   const [test1, setTes1] = useState([]);
   const [test2, setTest2] = useState('');
   const [checked, setChecked] = useState('');
+  const [validateFinish, setValidateFinish] = useState(0);
+
+  // const validateFinish = [];
   // const [ingredientsChecked, setIngredientsChecked] = useState(() => {
   //   const local = localStorage.getItem('inProgressRecipes');
   //   return local || { meals: {
@@ -43,7 +46,7 @@ function RecipeMealsInProgress() {
     const favoriteFoods = JSON.parse(localStorage.getItem(('favoriteRecipes'))) || [];
     const isFavorite = favoriteFoods.some((f) => f.id === params.id);
     setIconHeart(isFavorite);
-  }, [favoriteRecipes]);
+  }, [favoriteRecipes]);// eslint-disable-line
 
   useEffect(() => {
     setFavoritesRecipes('');
@@ -58,7 +61,7 @@ function RecipeMealsInProgress() {
         name: returnApiMeals.strMeal,
         image: returnApiMeals.strMealThumb,
       }].filter((item) => item.id));
-  }, [returnApiMeals]);
+  }, [returnApiMeals]);// eslint-disable-line
 
   for (let index = 0; index <= VINTE; index += 1) {
     if (returnApiMeals && returnApiMeals[`strIngredient${index}`]) {
@@ -92,7 +95,7 @@ function RecipeMealsInProgress() {
       setTes1(aa.meals[idParams]);
       setChecked(aa.meals[idParams]);
     }
-  }, [test2]);
+  }, [test2]);// eslint-disable-line
 
   // useEffect(() => {
   //   localStorage.setItem('inProgressRecipes', JSON.stringify({
@@ -107,6 +110,7 @@ function RecipeMealsInProgress() {
   }, []);
 
   function handleChange({ target: { name } }) {
+    setValidateFinish(validateFinish + 1);
     // const test = ingredientsChecked.meals.idParams;
     // console.log(ingredientsChecked);
     // console.log(test);
@@ -119,6 +123,9 @@ function RecipeMealsInProgress() {
       },
     }));
     setTest2(filtro);
+    console.log(validateFinish);
+    console.log(ingredients.length);
+
     // setTes1(filtro);
   }
 
@@ -163,7 +170,8 @@ function RecipeMealsInProgress() {
           <label
             key={ element }
             htmlFor={ element }
-            data-testid="ingredient-step"
+            data-testid={ `${index}-ingredient-step` }
+
           >
             {element}
             <input
@@ -173,7 +181,6 @@ function RecipeMealsInProgress() {
               onClick={ handleChange }
               checked={ checked && checked.some((item) => item === element) }
               // onChange={ handleChangeChecked }
-              data-testid={ `${index}-ingredient-step` }
             />
           </label>
         ))}
@@ -191,6 +198,7 @@ function RecipeMealsInProgress() {
         className="scroll-btn"
         type="button"
         data-testid="finish-recipe-btn"
+        disabled={ validateFinish !== ingredients.length }
         onClick={ () => history.push('/done-recipes') }
       >
         Finish Recipe

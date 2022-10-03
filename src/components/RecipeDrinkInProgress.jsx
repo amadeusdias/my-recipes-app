@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
 import copy from 'clipboard-copy';
+import React, { useContext, useEffect, useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import AppRecipesContext from '../context/AppRecipesContext';
-import { VINTE } from '../tests/helpers/numbers';
+import '../css/doneRecipes.css';
 import blackHearthIcon from '../images/blackHeartIcon.svg';
 import whiteHearthIcon from '../images/whiteHeartIcon.svg';
-import '../css/doneRecipes.css';
+import { VINTE } from '../tests/helpers/numbers';
 
 function RecipeInProgress() {
   const {
@@ -13,11 +13,17 @@ function RecipeInProgress() {
     setFavoritesRecipes,
   } = useContext(AppRecipesContext);
   const history = useHistory();
+  const params = useParams();
+  const idParams = params.id;
   const [returnApiDrinks, setReturnApiDrinks] = useState('');
   const [shareCopy, setShareCopy] = useState(false);
   const [iconHeart, setIconHeart] = useState(false);
-  const params = useParams();
+  const [test1, setTes1] = useState([]);
+  const [test2, setTest2] = useState('');
+  const [checked, setChecked] = useState('');
+  const [validateFinish, setValidateFinish] = useState(0);
   const ingredients = [];
+  // const validateFinish = [];
 
   useEffect(() => {
     const fetchDrinksDetails = async () => {
@@ -49,7 +55,15 @@ function RecipeInProgress() {
         name: returnApiDrinks.strDrink,
         image: returnApiDrinks.strDrinkThumb,
       }].filter((item) => item.id));
-  }, [returnApiDrinks]);
+  }, [returnApiDrinks]); // eslint-disable-line
+
+  useEffect(() => {
+    if (JSON.parse(localStorage.getItem('inProgressRecipes'))) {
+      const aa = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      setTes1(aa.meals[idParams]);
+      setChecked(aa.meals[idParams]);
+    }
+  }, [test2]);// eslint-disable-line
 
   for (let index = 0; index <= VINTE; index += 1) {
     if (returnApiDrinks && returnApiDrinks[`strIngredient${index}`]) {
@@ -75,6 +89,25 @@ function RecipeInProgress() {
     const link = window.location.pathname.slice(0, inProgress);
     copy(`http://localhost:3000${link}`);
     setShareCopy(!shareCopy);
+  }
+
+  function handleChange({ target: { name } }) {
+    setValidateFinish(validateFinish + 1);
+    // const test = ingredientsChecked.meals.idParams;
+    // console.log(ingredientsChecked);
+    // console.log(test);
+    // const local = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
+    // console.log(local && local.meals[idParams]);
+    const filtro = test1.filter((item) => item !== name);
+    localStorage.setItem('inProgressRecipes', JSON.stringify({
+      meals: {
+        [idParams]: [...filtro, name],
+      },
+    }));
+    setTest2(filtro);
+    console.log(filtro);
+    console.log(validateFinish);
+    // setTes1(filtro);
   }
 
   return (
@@ -105,17 +138,19 @@ function RecipeInProgress() {
       <p data-testid="recipe-category">{ returnApiDrinks.strCategory }</p>
       <p data-testid="instructions">{returnApiDrinks.strInstructions}</p>
 
-      {ingredients.map((element) => (
+      {ingredients.map((element, index) => (
         <label
           key={ element }
           htmlFor={ element }
-          data-testid="ingredient-step"
+          data-testid={ `${index}-ingredient-step` }
         >
           {element}
           <input
             name={ element }
             id={ element }
             type="checkbox"
+            onClick={ handleChange }
+            checked={ checked && checked.some((item) => item === element) }
           />
         </label>
       ))}
@@ -123,6 +158,7 @@ function RecipeInProgress() {
       <button
         type="button"
         data-testid="finish-recipe-btn"
+        disabled={ validateFinish !== ingredients.length }
         onClick={ () => history.push('/done-recipes') }
       >
         Finish Recipe
