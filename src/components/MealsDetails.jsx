@@ -5,7 +5,7 @@ import { Link, useHistory, useParams } from 'react-router-dom';
 import AppRecipesContext from '../context/AppRecipesContext';
 import '../css/carousel.css';
 import '../css/mealsDetails.css';
-import blackHearthIcon from '../images/favorite2.svg';
+import blackHearthIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 import volta from '../images/volta.svg';
 import whiteHearthIcon from '../images/whiteHeartIcon.svg';
