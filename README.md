@@ -1,10 +1,15 @@
-# :construction: README em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto.
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+# My Recipes App 
+Esse projeto é um aplicativo de receitas completo, conta com diversas funcionalidades como: favoritar receitas, acompanhar o progresso de suas receitas, filtrar por diversos paramêtros e receber dicas de pratos e bebidas para acompanhar sua receita atual. 
+
+### Disponível apenas na versão Mobile!
+
+# 📄 Sobre
+
+Projeto desenvolvido por _[Rafael França](https://github.com/rafaelftourinho)_, _[Fernando Dornelles](https://github.com/dornellesfr)_, _[Fábio Mateus](https://github.com/FabioMateus1510)_ e _[Lucas Faria](https://github.com/lucasfaria95)_.
+
+# Ferramentas
+Foram utilizados React, React Router, Context API e CSS puro no desenvolvimento. O projeto também conta com cobertura de testes desenvolvida utilizando Jest e RTL. Para chegar as receitas de commidas e bebidas foram utilizadas as seguintes APIs: 
+
+TheMealDB API: https://www.themealdb.com/
+
+The CockTailDB API: https://www.thecocktaildb.com/
